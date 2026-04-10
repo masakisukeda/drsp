@@ -11,12 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: FTP Deploy
+      - name: SFTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.DRSP_FTP_HOST }}
           username: ${{ secrets.DRSP_FTP_USER }}
           password: ${{ secrets.DRSP_FTP_PASS }}
+          port: 22
+          protocol: sftp
           server-dir: /virtual/sukeda/public_html/drsp.cc/
           exclude: |
             **/.git*
