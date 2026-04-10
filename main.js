@@ -272,10 +272,21 @@ for (const el of targets) {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+  const formatDateLabel = (value) => {
+    if (!value) return '';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return '';
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}.${m}.${day}`;
+  };
+
   const normalizeItems = (items) => items
     .map((item) => ({
       title: (item.title || '').trim(),
-      link: (item.link || '').trim()
+      link: (item.link || '').trim(),
+      date: formatDateLabel(item.pubDate || item.isoDate || item.date || '')
     }))
     .filter((item) => item.title && item.link)
     .slice(0, 3);
@@ -287,7 +298,8 @@ for (const el of targets) {
 
     const items = Array.from(xml.querySelectorAll('channel > item')).map((item) => ({
       title: item.querySelector('title')?.textContent || '',
-      link: item.querySelector('link')?.textContent || ''
+      link: item.querySelector('link')?.textContent || '',
+      pubDate: item.querySelector('pubDate')?.textContent || ''
     }));
 
     return normalizeItems(items);
@@ -327,7 +339,10 @@ for (const el of targets) {
 
   const renderItems = (items) => {
     list.innerHTML = items
-      .map((item) => `<li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)}</a></li>`)
+      .map((item) => {
+        const datePrefix = item.date ? `${escapeHtml(item.date)}｜` : '';
+        return `<li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${datePrefix}${escapeHtml(item.title)}</a></li>`;
+      })
       .join('');
   };
 
