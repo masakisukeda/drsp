@@ -108,6 +108,62 @@
   }
 })();
 
+// ── モバイル: ハンバーガーメニュー ──
+(function () {
+  const wraps = document.querySelectorAll('.site-header .header-wrap');
+  if (wraps.length === 0) return;
+
+  const mq = window.matchMedia('(max-width: 960px)');
+  const closeAll = () => {
+    for (const wrap of wraps) {
+      const btn = wrap.querySelector('.menu-toggle');
+      if (!btn) continue;
+      wrap.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'メニューを開く');
+    }
+  };
+
+  for (const wrap of wraps) {
+    const nav = wrap.querySelector('nav');
+    if (!nav) continue;
+
+    let btn = wrap.querySelector('.menu-toggle');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'menu-toggle';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'メニューを開く');
+      btn.innerHTML = '<span class="menu-toggle-bar" aria-hidden="true"></span>';
+      wrap.insertBefore(btn, nav);
+    }
+
+    btn.addEventListener('click', function () {
+      const open = wrap.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    nav.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        if (!mq.matches) return;
+        closeAll();
+      });
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!mq.matches) return;
+    const insideHeader = e.target instanceof Element && e.target.closest('.site-header .header-wrap');
+    if (!insideHeader) closeAll();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!mq.matches) closeAll();
+  });
+})();
+
 // ── タイプ文字: 画面内に入ったら開始 ──
 (function () {
   const lines = document.querySelectorAll('.typing-line');
@@ -122,8 +178,8 @@
       }
     },
     {
-      threshold: 0.01,
-      rootMargin: '0px 0px 22% 0px'
+      threshold: 0,
+      rootMargin: '0px 0px 40% 0px'
     }
   );
 
@@ -272,10 +328,21 @@ for (const el of targets) {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+  const formatDateLabel = (value) => {
+    if (!value) return '';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return '';
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}.${m}.${day}`;
+  };
+
   const normalizeItems = (items) => items
     .map((item) => ({
       title: (item.title || '').trim(),
-      link: (item.link || '').trim()
+      link: (item.link || '').trim(),
+      date: formatDateLabel(item.pubDate || item.isoDate || item.date || '')
     }))
     .filter((item) => item.title && item.link)
     .slice(0, 3);
@@ -287,7 +354,8 @@ for (const el of targets) {
 
     const items = Array.from(xml.querySelectorAll('channel > item')).map((item) => ({
       title: item.querySelector('title')?.textContent || '',
-      link: item.querySelector('link')?.textContent || ''
+      link: item.querySelector('link')?.textContent || '',
+      pubDate: item.querySelector('pubDate')?.textContent || ''
     }));
 
     return normalizeItems(items);
@@ -327,7 +395,10 @@ for (const el of targets) {
 
   const renderItems = (items) => {
     list.innerHTML = items
-      .map((item) => `<li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)}</a></li>`)
+      .map((item) => {
+        const datePrefix = item.date ? `${escapeHtml(item.date)}｜` : '';
+        return `<li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${datePrefix}${escapeHtml(item.title)}</a></li>`;
+      })
       .join('');
   };
 

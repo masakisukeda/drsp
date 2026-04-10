@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="一般社団法人ディレクションサポート協会（DiSA）へのお問い合わせページ。サービス相談・見積依頼・活動に関するご連絡を受け付けています。">
   <title>お問い合わせ | DiSA</title>
-  <link rel="icon" type="image/png" href="https://drsp.cc/wp-content/uploads/2022/10/favicon-150x150.png">
-  <link rel="shortcut icon" href="https://drsp.cc/wp-content/uploads/2022/10/favicon-150x150.png">
+  <link rel="icon" type="image/png" href="/assets/wp/favicon-150x150.png">
+  <link rel="shortcut icon" href="/assets/wp/favicon-150x150.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -36,6 +36,14 @@
   }
   </script>
   <!-- /SEO/OGP: managed -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RW001PHEV0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-RW001PHEV0");
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -59,11 +67,16 @@
       <p class="eyebrow">INQUIRY</p>
       <h1 class="page-title">お問い合わせはこちら</h1>
       <div class="content-stack">
-        <p>お問い合わせ内容を、なるべく詳細をお伝えください。<br>お打ち合わせ前にオンラインにて「課題を整理する」対話をしてから進みます。お見積依頼、DiSA活動、DiSAメンバーへのご質問もお気軽にどうぞ。</p>
-        <p class="inquiry-note">※チャットでのお問い合わせは<a href="https://note.com/disa_pr" target="_blank" rel="noopener noreferrer">noteのメッセージ</a>からも受け付けています</p>
+        <p>・お問い合わせ後、なるべく早い返信を行います。</p>
+        <p>・お打ち合わせに関してはオンラインにて対応させて頂いておりますので、日時確定後、ZoomのURLを発行させていただきます。</p>
+        <p>・メールの内容次第ではご返信がない場合もありますのでご了承くださいませ。</p>
+        <p class="inquiry-note">※チャット経由のお問い合わせもご利用可能です（<a href="https://go.crisp.chat/chat/embed/?website_id=d6dfcd29-0b28-40b4-bfc3-a606a2042078" target="_blank" rel="noopener noreferrer">こちら</a>）</p>
       </div>
 
-      <form action="https://formspree.io/f/xvgpkajd" method="POST">
+      <form action="https://formspree.io/f/mzdklrnd" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_subject" value="DiSAサイトからお問い合わせ">
+        <input type="hidden" name="_language" value="ja">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
         <div class="form-field">
           <label for="name">お名前</label>
           <input type="text" id="name" name="name" placeholder="山田 太郎" required>
