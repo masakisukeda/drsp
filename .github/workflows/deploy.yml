@@ -25,6 +25,8 @@ jobs:
               - 'styles.css'
               - 'main.js'
               - 'llms.txt'
+              - 'sitemap.xml'
+              - 'robots.txt'
             about:
               - 'about/**'
             assets:
@@ -44,6 +46,8 @@ jobs:
               - 'styles.css'
               - 'main.js'
               - 'llms.txt'
+              - 'sitemap.xml'
+              - 'robots.txt'
               - 'about/**'
               - 'assets/**'
               - 'eiri/**'
@@ -108,6 +112,8 @@ jobs:
               echo "put -O . styles.css"
               echo "put -O . main.js"
               echo "put -O . llms.txt"
+              echo "put -O . sitemap.xml"
+              echo "put -O . robots.txt"
             fi
             if [ "$CH_ABOUT" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms about about"
