@@ -946,6 +946,10 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .sns-grid {
+    grid-template-columns: 1fr;
+  }
+
   .profile-row {
     grid-template-columns: 1fr;
   }
@@ -1955,12 +1959,6 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .spot-summary-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 680px) {
   .spot-summary-grid {
     grid-template-columns: 1fr;
   }
