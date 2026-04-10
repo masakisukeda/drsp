@@ -2202,3 +2202,29 @@ nav a,
 .voice-tile-role {
   font-size: var(--fs-5);
 }
+
+/* ── モバイル最終上書き（カード崩れ対策） ── */
+@media (max-width: 960px) {
+  .member-grid,
+  .cards,
+  .partner-grid,
+  .about-row,
+  .footer-wrap,
+  .tile-grid,
+  .member-cards,
+  .solution-grid,
+  .mvv-grid,
+  .support-grid,
+  .service-grid,
+  .law-grid,
+  .sns-grid,
+  .profile-row,
+  .concept-grid,
+  .concept-grid--2,
+  .concept-grid--3,
+  .faq-grid,
+  .support-grid--3,
+  .spot-summary-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
