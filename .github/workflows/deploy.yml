@@ -27,6 +27,8 @@ jobs:
               - 'llms.txt'
               - 'sitemap.xml'
               - 'robots.txt'
+              - 'favicon.png'
+              - 'favicon.ico'
             about:
               - 'about/**'
             assets:
@@ -48,6 +50,8 @@ jobs:
               - 'llms.txt'
               - 'sitemap.xml'
               - 'robots.txt'
+              - 'favicon.png'
+              - 'favicon.ico'
               - 'about/**'
               - 'assets/**'
               - 'eiri/**'
@@ -114,6 +118,8 @@ jobs:
               echo "put -O . llms.txt"
               echo "put -O . sitemap.xml"
               echo "put -O . robots.txt"
+              echo "put -O . favicon.png"
+              echo "put -O . favicon.ico"
             fi
             if [ "$CH_ABOUT" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms about about"
