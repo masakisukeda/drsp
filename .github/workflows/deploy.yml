@@ -11,6 +11,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Remove WordPress Core Files
+        env:
+          FTP_HOST: ${{ secrets.DRSP_FTP_HOST }}
+          FTP_USER: ${{ secrets.DRSP_FTP_USER }}
+          FTP_PASS: ${{ secrets.DRSP_FTP_PASS }}
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
+          set ssl:verify-certificate no
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set net:max-retries 2
+          set net:timeout 20
+          cd /virtual/sukeda/public_html/drsp.cc/
+          rm -f index.php .htaccess wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt
+          rm -rf wp-admin wp-content wp-includes
+          bye
+          EOF
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
