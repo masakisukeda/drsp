@@ -5,16 +5,62 @@ on:
     branches:
       - main
 
+concurrency:
+  group: deploy-drsp-cc
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
+      - name: Detect changed paths
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            root:
+              - 'index.html'
+              - 'styles.css'
+              - 'main.js'
+              - 'llms.txt'
+            about:
+              - 'about/**'
+            assets:
+              - 'assets/**'
+            eiri:
+              - 'eiri/**'
+            hieiri:
+              - 'hieiri/**'
+            inquiry:
+              - 'inquiry/**'
+            member:
+              - 'member/**'
+            any:
+              - 'index.html'
+              - 'styles.css'
+              - 'main.js'
+              - 'llms.txt'
+              - 'about/**'
+              - 'assets/**'
+              - 'eiri/**'
+              - 'hieiri/**'
+              - 'inquiry/**'
+              - 'member/**'
+
+      - name: Install lftp (if missing)
+        if: steps.changes.outputs.any == 'true'
+        run: |
+          if command -v lftp >/dev/null 2>&1; then
+            echo "lftp already installed"
+            exit 0
+          fi
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
       - name: Remove WordPress Core Files
+        if: steps.changes.outputs.root == 'true'
         env:
           FTP_HOST: ${{ secrets.DRSP_FTP_HOST }}
           FTP_USER: ${{ secrets.DRSP_FTP_USER }}
@@ -32,30 +78,52 @@ jobs:
           EOF
 
       - name: Upload Static Site Files
+        if: steps.changes.outputs.any == 'true'
         env:
           FTP_HOST: ${{ secrets.DRSP_FTP_HOST }}
           FTP_USER: ${{ secrets.DRSP_FTP_USER }}
           FTP_PASS: ${{ secrets.DRSP_FTP_PASS }}
+          CH_ROOT: ${{ steps.changes.outputs.root }}
+          CH_ABOUT: ${{ steps.changes.outputs.about }}
+          CH_ASSETS: ${{ steps.changes.outputs.assets }}
+          CH_EIRI: ${{ steps.changes.outputs.eiri }}
+          CH_HIEIRI: ${{ steps.changes.outputs.hieiri }}
+          CH_INQUIRY: ${{ steps.changes.outputs.inquiry }}
+          CH_MEMBER: ${{ steps.changes.outputs.member }}
         run: |
-          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
-          set ssl:verify-certificate no
-          set ftp:ssl-force true
-          set ftp:ssl-protect-data true
-          set net:max-retries 2
-          set net:timeout 20
-          cd /public_html/drsp.cc/
-          lcd .
+          {
+            echo "set ssl:verify-certificate no"
+            echo "set ftp:ssl-force true"
+            echo "set ftp:ssl-protect-data true"
+            echo "set net:max-retries 2"
+            echo "set net:timeout 20"
+            echo "cd /public_html/drsp.cc/"
+            echo "lcd ."
+            if [ "$CH_ROOT" = "true" ]; then
+              echo "put -O . index.html"
+              echo "put -O . styles.css"
+              echo "put -O . main.js"
+              echo "put -O . llms.txt"
+            fi
+            if [ "$CH_ABOUT" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms about about"
+            fi
+            if [ "$CH_ASSETS" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms assets assets"
+            fi
+            if [ "$CH_EIRI" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms eiri eiri"
+            fi
+            if [ "$CH_HIEIRI" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms hieiri hieiri"
+            fi
+            if [ "$CH_INQUIRY" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms inquiry inquiry"
+            fi
+            if [ "$CH_MEMBER" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms member member"
+            fi
+            echo "bye"
+          } > /tmp/upload.lftp
 
-          put -O . index.html
-          put -O . styles.css
-          put -O . main.js
-          put -O . llms.txt
-
-          mirror -R --delete --verbose about about
-          mirror -R --delete --verbose assets assets
-          mirror -R --delete --verbose eiri eiri
-          mirror -R --delete --verbose hieiri hieiri
-          mirror -R --delete --verbose inquiry inquiry
-          mirror -R --delete --verbose member member
-          bye
-          EOF
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -f /tmp/upload.lftp

@@ -1030,11 +1030,11 @@ h2 {
   }
 
   .hero {
-    height: 320px;
+    height: 256px;
   }
 
   .page-top .hero {
-    height: 256px;
+    height: 205px;
   }
 
   .bars .typing-line {
@@ -1314,11 +1314,15 @@ h2 {
 .inquiry-note {
   font-size: 13px;
   line-height: 1.8;
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 .inquiry-note a {
   color: var(--blue);
+}
+
+.page-main .panel > form {
+  margin-top: 14px;
 }
 
 .form-field {
