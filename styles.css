@@ -144,6 +144,10 @@ nav a.nav-cta:hover {
   place-items: center;
 }
 
+.page-top .hero {
+  height: 384px;
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -956,6 +960,10 @@ h2 {
 
   .hero {
     height: 320px;
+  }
+
+  .page-top .hero {
+    height: 256px;
   }
 
   .bars .typing-line {
