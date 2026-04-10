@@ -122,8 +122,8 @@
       }
     },
     {
-      threshold: 0.01,
-      rootMargin: '0px 0px 22% 0px'
+      threshold: 0,
+      rootMargin: '0px 0px 40% 0px'
     }
   );
 
