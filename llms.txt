@@ -1,0 +1,24 @@
+# 一般社団法人ディレクションサポート協会（DiSA）
+
+このサイトは、ディレクションを軸にした営利・非営利の活動、サービス情報、メンバー情報を提供します。
+
+## Primary Pages
+- https://drsp.cc/
+- https://drsp.cc/about
+- https://drsp.cc/eiri
+- https://drsp.cc/hieiri
+- https://drsp.cc/member
+- https://drsp.cc/inquiry
+
+## Service Pages
+- https://drsp.cc/eiri/membership
+- https://drsp.cc/eiri/spot
+- https://drsp.cc/eiri/community
+- https://drsp.cc/eiri/lport
+- https://drsp.cc/eiri/speakingcircles
+
+## Policy
+- https://drsp.cc/eiri/membership/kiyaku
+
+## Contact
+- https://drsp.cc/inquiry
