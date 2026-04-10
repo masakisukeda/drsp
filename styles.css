@@ -2228,3 +2228,20 @@ nav a,
     grid-template-columns: 1fr !important;
   }
 }
+
+@media (max-width: 640px) {
+  .bars .typing-line {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    overflow: visible;
+    border-right: 0;
+    line-height: 1.45;
+    animation: none !important;
+  }
+  .hero-content p {
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+}
