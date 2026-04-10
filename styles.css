@@ -2050,6 +2050,11 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .concept-grid--2,
+  .concept-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
   .spot-summary-grid {
     grid-template-columns: 1fr;
   }
