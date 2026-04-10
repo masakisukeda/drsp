@@ -126,4 +126,4 @@ jobs:
             echo "bye"
           } > /tmp/upload.lftp
 
-          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -f /tmp/upload.lftp
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" < /tmp/upload.lftp
