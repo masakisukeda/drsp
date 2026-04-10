@@ -37,6 +37,8 @@ jobs:
               - 'inquiry/**'
             member:
               - 'member/**'
+            membership:
+              - 'membership/**'
             any:
               - 'index.html'
               - 'styles.css'
@@ -48,6 +50,7 @@ jobs:
               - 'hieiri/**'
               - 'inquiry/**'
               - 'member/**'
+              - 'membership/**'
 
       - name: Install lftp (if missing)
         if: steps.changes.outputs.any == 'true'
@@ -66,7 +69,7 @@ jobs:
           FTP_USER: ${{ secrets.DRSP_FTP_USER }}
           FTP_PASS: ${{ secrets.DRSP_FTP_PASS }}
         run: |
-          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF2'
           set ssl:verify-certificate no
           set ftp:ssl-force true
           set ftp:ssl-protect-data true
@@ -75,7 +78,7 @@ jobs:
           cd /public_html/drsp.cc/
           rm -f index.php .htaccess wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt
           bye
-          EOF
+          EOF2
 
       - name: Upload Static Site Files
         if: steps.changes.outputs.any == 'true'
@@ -90,6 +93,7 @@ jobs:
           CH_HIEIRI: ${{ steps.changes.outputs.hieiri }}
           CH_INQUIRY: ${{ steps.changes.outputs.inquiry }}
           CH_MEMBER: ${{ steps.changes.outputs.member }}
+          CH_MEMBERSHIP: ${{ steps.changes.outputs.membership }}
         run: |
           {
             echo "set ssl:verify-certificate no"
@@ -122,6 +126,9 @@ jobs:
             fi
             if [ "$CH_MEMBER" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms member member"
+            fi
+            if [ "$CH_MEMBERSHIP" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms membership membership"
             fi
             echo "bye"
           } > /tmp/upload.lftp
