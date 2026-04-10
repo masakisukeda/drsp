@@ -11,24 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
-      - name: Deploy via SFTP
-        run: |
-          lftp -c "
-            set sftp:auto-confirm yes;
-            set net:timeout 30;
-            set net:max-retries 3;
-            open sftp://${{ secrets.DRSP_FTP_USER }}:${{ secrets.DRSP_FTP_PASS }}@${{ secrets.DRSP_FTP_HOST }};
-            mirror -R \
-              --exclude=^\.git \
-              --exclude=^wp-source/ \
-              --exclude=^\.DS_Store \
-              --exclude=^\.claude/ \
-              --exclude=^app/ \
-              --exclude=^dic/ \
-              --exclude=^mng/ \
-              --exclude=^chat/ \
-              . /virtual/sukeda/public_html/drsp.cc/
-          "
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DRSP_FTP_HOST }}
+          username: ${{ secrets.DRSP_FTP_USER }}
+          password: ${{ secrets.DRSP_FTP_PASS }}
+          port: 21
+          protocol: ftps
+          server-dir: /virtual/sukeda/public_html/drsp.cc/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/wp-source/**
+            **/.DS_Store
+            **/.claude/**
+            app/**
+            dic/**
+            mng/**
+            chat/**
