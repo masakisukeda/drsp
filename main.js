@@ -108,6 +108,62 @@
   }
 })();
 
+// ── モバイル: ハンバーガーメニュー ──
+(function () {
+  const wraps = document.querySelectorAll('.site-header .header-wrap');
+  if (wraps.length === 0) return;
+
+  const mq = window.matchMedia('(max-width: 960px)');
+  const closeAll = () => {
+    for (const wrap of wraps) {
+      const btn = wrap.querySelector('.menu-toggle');
+      if (!btn) continue;
+      wrap.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'メニューを開く');
+    }
+  };
+
+  for (const wrap of wraps) {
+    const nav = wrap.querySelector('nav');
+    if (!nav) continue;
+
+    let btn = wrap.querySelector('.menu-toggle');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'menu-toggle';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'メニューを開く');
+      btn.innerHTML = '<span class="menu-toggle-bar" aria-hidden="true"></span>';
+      wrap.insertBefore(btn, nav);
+    }
+
+    btn.addEventListener('click', function () {
+      const open = wrap.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    nav.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        if (!mq.matches) return;
+        closeAll();
+      });
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!mq.matches) return;
+    const insideHeader = e.target instanceof Element && e.target.closest('.site-header .header-wrap');
+    if (!insideHeader) closeAll();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!mq.matches) closeAll();
+  });
+})();
+
 // ── タイプ文字: 画面内に入ったら開始 ──
 (function () {
   const lines = document.querySelectorAll('.typing-line');
