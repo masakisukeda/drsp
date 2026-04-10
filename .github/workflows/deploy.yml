@@ -28,7 +28,6 @@ jobs:
           set net:timeout 20
           cd /public_html/drsp.cc/
           rm -f index.php .htaccess wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt
-          rm -rf wp-admin wp-content wp-includes
           bye
           EOF
 
