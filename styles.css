@@ -2055,6 +2055,10 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .page-lport .concept-grid {
+    grid-template-columns: 1fr !important;
+  }
+
   .spot-summary-grid {
     grid-template-columns: 1fr;
   }
