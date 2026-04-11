@@ -189,7 +189,7 @@ nav a.nav-cta:hover {
 }
 
 .page-top .hero h1.hero-title-long {
-  font-size: clamp(30px, 6.1vw, 64px);
+  font-size: clamp(30px, 16.1vw, 64px);
   line-height: 1.2;
   letter-spacing: 0.01em;
   max-width: min(94%, 980px);
@@ -461,7 +461,7 @@ h2 {
 }
 
 .page-breadcrumb {
-  margin: 0 0 14px;
+  margin: 0 0 1px;
   font-size: 12px;
   font-weight: 700;
   color: #6a6a6a;
@@ -496,7 +496,7 @@ h2 {
   line-height: 1.8;
 }
 
-.page-main > .panel:first-of-type,
+.page-main>.panel:first-of-type,
 .about-intro-dark {
   background: transparent;
   border: 0;
@@ -512,23 +512,23 @@ h2 {
   align-items: start;
 }
 
-.page-main > .panel:first-of-type .eyebrow,
+.page-main>.panel:first-of-type .eyebrow,
 .about-intro-dark .eyebrow {
   display: none;
 }
 
-.page-main > .panel:first-of-type .page-title,
+.page-main>.panel:first-of-type .page-title,
 .about-intro-dark .page-title {
   color: #111;
   margin: 0;
 }
 
-.page-main > .panel:first-of-type .content-stack,
+.page-main>.panel:first-of-type .content-stack,
 .about-intro-dark .content-stack {
   margin-top: 0;
 }
 
-.page-main > .panel:first-of-type .content-stack p,
+.page-main>.panel:first-of-type .content-stack p,
 .about-intro-dark .content-stack p {
   color: #111;
   text-align: left;
@@ -536,7 +536,8 @@ h2 {
 }
 
 @media (max-width: 720px) {
-  .page-main > .panel:first-of-type,
+
+  .page-main>.panel:first-of-type,
   .about-intro-dark {
     row-gap: 8px;
   }
@@ -606,7 +607,7 @@ h2 {
 }
 
 .member-card h3 {
-  margin: 0 0 6px;
+  margin: 0 0 2px;
   font-size: 18px;
   font-weight: 900;
   line-height: 1.3;
@@ -653,7 +654,7 @@ h2 {
 }
 
 .site-footer h3 {
-  margin: 0 0 14px;
+  margin: 0 0 2px;
   font-size: clamp(18px, 1.7vw, 28px);
 }
 
@@ -1510,7 +1511,7 @@ h2 {
 .membership-hero-img h3 {
   font-size: 24px;
   font-weight: 900;
-  margin: 0 0 14px;
+  margin: 0 0 2px;
 }
 
 .membership-hero-img .tag {
@@ -1542,7 +1543,7 @@ h2 {
 }
 
 .membership-hero-content dd {
-  margin: 0 0 14px;
+  margin: 0 0 2px;
   color: #444;
 }
 
@@ -2228,12 +2229,12 @@ body {
 }
 
 .page-title {
-  font-size: var(--fs-1);
+  font-size: clamp(32px, 3.6vw, 52px);
 }
 
 .page-main h2,
 .panel h2 {
-  font-size: var(--fs-2);
+  font-size: clamp(20px, 2.2vw, 32px);
 }
 
 .mvv-card h3,
