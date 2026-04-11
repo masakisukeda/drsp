@@ -6,7 +6,7 @@
   --blue: #1f62b8;
   --site-max: 1140px;
   --gutter: 15px;
-  --fs-1: clamp(28px, 3.4vw, 50px);
+  --fs-1: clamp(38px, 4.4vw, 64px);
   --fs-2: clamp(22px, 2.5vw, 34px);
   --fs-3: clamp(17px, 1.8vw, 20px);
   --fs-4: clamp(14px, 1.1vw, 17px);
@@ -465,6 +465,7 @@ h2 {
   font-size: 12px;
   font-weight: 700;
   color: #6a6a6a;
+  border-radius: 0;
 }
 
 .page-breadcrumb a {
@@ -494,6 +495,53 @@ h2 {
   font-size: clamp(14px, 1vw, 17px);
   line-height: 1.8;
 }
+
+.page-main > .panel:first-of-type,
+.about-intro-dark {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  align-items: start;
+}
+
+.page-main > .panel:first-of-type .eyebrow,
+.about-intro-dark .eyebrow {
+  display: none;
+}
+
+.page-main > .panel:first-of-type .page-title,
+.about-intro-dark .page-title {
+  color: #111;
+  margin: 0;
+}
+
+.page-main > .panel:first-of-type .content-stack,
+.about-intro-dark .content-stack {
+  margin-top: 0;
+}
+
+.page-main > .panel:first-of-type .content-stack p,
+.about-intro-dark .content-stack p {
+  color: #111;
+  text-align: left;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .page-main > .panel:first-of-type,
+  .about-intro-dark {
+    row-gap: 8px;
+  }
+}
+
 
 .plain-list {
   margin: 0;
@@ -1329,7 +1377,7 @@ h2 {
   color: var(--blue);
 }
 
-.page-main .panel > form {
+.page-main .panel>form {
   margin-top: 14px;
 }
 
@@ -1576,7 +1624,7 @@ h2 {
   text-align: left;
 }
 
-.detail-card p + p {
+.detail-card p+p {
   margin-top: 8px;
 }
 
@@ -2222,6 +2270,7 @@ nav a,
 
 /* ── モバイル最終上書き（カード崩れ対策） ── */
 @media (max-width: 960px) {
+
   .member-grid,
   .cards,
   .partner-grid,
@@ -2256,6 +2305,7 @@ nav a,
     line-height: 1.45;
     animation: none !important;
   }
+
   .hero-content p {
     font-size: 13px;
     line-height: 1.5;
