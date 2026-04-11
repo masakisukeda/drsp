@@ -1563,6 +1563,23 @@ h2 {
   margin: 0;
 }
 
+/* Reusable detail card template: centered title + left-aligned body */
+.detail-card {
+  padding: 24px 18px;
+}
+
+.detail-card h3 {
+  text-align: center;
+}
+
+.detail-card p {
+  text-align: left;
+}
+
+.detail-card p + p {
+  margin-top: 8px;
+}
+
 .page-community .related-projects .concept-card {
   padding: 0;
   overflow: hidden;
