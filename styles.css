@@ -664,7 +664,7 @@ h2 {
 .footer-wrap {
   width: 100%;
   max-width: var(--site-max);
-  padding: 34px var(--gutter) 30px;
+  padding: 36px var(--gutter) 34px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -733,10 +733,10 @@ h2 {
 .copyright {
   margin: 0;
   text-align: center;
-  border-top: 1px solid #252525;
+  border-top: 0;
   color: #bcbcbc;
   font-size: 12px;
-  padding: 12px 0 14px;
+  padding: 0 0 18px;
 }
 
 [data-aos] {
@@ -2390,10 +2390,12 @@ nav a,
 
 .footer-legal {
   margin: 0;
-  padding: 10px 0 4px;
+  padding: 16px 0 12px;
+  border-top: 1px solid #252525;
   text-align: center;
   color: #bcbcbc;
   font-size: 12px;
+  line-height: 1.7;
 }
 
 .footer-legal a {
