@@ -39,6 +39,8 @@ jobs:
               - 'hieiri/**'
             inquiry:
               - 'inquiry/**'
+            privacy:
+              - 'privacy/**'
             member:
               - 'member/**'
             membership:
@@ -57,6 +59,7 @@ jobs:
               - 'eiri/**'
               - 'hieiri/**'
               - 'inquiry/**'
+              - 'privacy/**'
               - 'member/**'
               - 'membership/**'
 
@@ -147,6 +150,7 @@ jobs:
           CH_EIRI: ${{ steps.changes.outputs.eiri }}
           CH_HIEIRI: ${{ steps.changes.outputs.hieiri }}
           CH_INQUIRY: ${{ steps.changes.outputs.inquiry }}
+          CH_PRIVACY: ${{ steps.changes.outputs.privacy }}
           CH_MEMBER: ${{ steps.changes.outputs.member }}
           CH_MEMBERSHIP: ${{ steps.changes.outputs.membership }}
         run: |
@@ -183,6 +187,9 @@ jobs:
             fi
             if [ "$CH_INQUIRY" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms inquiry inquiry"
+            fi
+            if [ "$CH_PRIVACY" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms privacy privacy"
             fi
             if [ "$CH_MEMBER" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms member member"
