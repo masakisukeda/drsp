@@ -179,21 +179,18 @@ nav a.nav-cta:hover {
   letter-spacing: 0.01em;
 }
 
-.page-top .hero h1 {
-  font-size: clamp(46px, 9vw, 108px);
-  letter-spacing: 0.06em;
-  text-shadow:
-    0 0 16px rgba(255, 255, 255, 0.42),
-    0 0 38px rgba(58, 128, 255, 0.34);
-  animation: hero-update-pop 2.8s ease-in-out infinite;
-}
-
-.page-top .hero h1.hero-title-long {
+.page-top .hero .hero-update-label {
+  margin: 0;
   font-size: clamp(30px, 6.1vw, 64px);
+  font-weight: 900;
   line-height: 1.2;
   letter-spacing: 0.01em;
   max-width: min(94%, 980px);
   margin-inline: auto;
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.42),
+    0 0 38px rgba(58, 128, 255, 0.34);
+  animation: hero-update-pop 2.8s ease-in-out infinite;
 }
 
 .hero p {
