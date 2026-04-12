@@ -514,18 +514,18 @@ h2 {
 
 .page-main>.panel:first-of-type,
 .about-intro-dark {
-  margin-top: 12px;
+  margin-top: 8px;
   background: transparent;
   border: 0;
   box-shadow: none;
   overflow: visible;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 6px;
+  padding-bottom: 4px;
   padding-left: 0;
   padding-right: 0;
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 10px;
+  row-gap: 6px;
   align-items: start;
 }
 
@@ -552,11 +552,16 @@ h2 {
   font-weight: 700;
 }
 
+.page-main>.panel:first-of-type + .panel,
+.about-intro-dark + .panel {
+  margin-top: 24px;
+}
+
 @media (max-width: 720px) {
 
   .page-main>.panel:first-of-type,
   .about-intro-dark {
-    row-gap: 8px;
+    row-gap: 5px;
   }
 }
 
