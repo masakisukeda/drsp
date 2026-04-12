@@ -1186,9 +1186,7 @@ h2 {
   border: 2px solid #111;
   display: grid;
   place-items: center;
-  font-size: 30px;
-  font-weight: 900;
-  line-height: 1;
+  overflow: hidden;
 }
 
 .support-icon img {
@@ -1197,6 +1195,7 @@ h2 {
   border-radius: 999px;
   object-fit: cover;
 }
+
 
 .support-card .en-label {
   display: block;
