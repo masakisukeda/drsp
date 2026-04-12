@@ -60,6 +60,53 @@ jobs:
               - 'member/**'
               - 'membership/**'
 
+      - name: Update sitemap lastmod from git history
+        if: steps.changes.outputs.any == 'true'
+        run: |
+          python3 <<'PY'
+          from xml.etree import ElementTree as ET
+          from datetime import datetime, timezone
+          import subprocess
+          from pathlib import Path
+
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          tree = ET.parse('sitemap.xml')
+          root = tree.getroot()
+
+          def page_file_from_loc(loc: str) -> str:
+            if loc.endswith('/'):
+              rel = loc.replace('https://drsp.cc', '').lstrip('/')
+              if rel == '':
+                return 'index.html'
+              return f'{rel}index.html'
+            rel = loc.replace('https://drsp.cc', '').lstrip('/')
+            return rel
+
+          today = datetime.now(timezone.utc).date().isoformat()
+
+          for url in root.findall('sm:url', ns):
+            loc = url.find('sm:loc', ns)
+            lastmod = url.find('sm:lastmod', ns)
+            if loc is None or lastmod is None:
+              continue
+
+            page_file = page_file_from_loc(loc.text.strip())
+            if not Path(page_file).exists():
+              lastmod.text = today
+              continue
+
+            try:
+              out = subprocess.check_output(
+                ['git', 'log', '-1', '--format=%cs', '--', page_file],
+                text=True
+              ).strip()
+              lastmod.text = out if out else today
+            except Exception:
+              lastmod.text = today
+
+          tree.write('sitemap.xml', encoding='UTF-8', xml_declaration=True)
+          PY
+
       - name: Install lftp (if missing)
         if: steps.changes.outputs.any == 'true'
         run: |
@@ -116,11 +163,12 @@ jobs:
               echo "put -O . styles.css"
               echo "put -O . main.js"
               echo "put -O . llms.txt"
-              echo "put -O . sitemap.xml"
               echo "put -O . robots.txt"
               echo "put -O . favicon.png"
               echo "put -O . favicon.ico"
             fi
+            # sitemap is regenerated in workflow; always upload when deploy runs
+            echo "put -O . sitemap.xml"
             if [ "$CH_ABOUT" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms about about"
             fi
