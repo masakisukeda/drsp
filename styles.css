@@ -477,7 +477,7 @@ h2 {
 }
 
 .page-breadcrumb {
-  margin: 0 0 1px;
+  margin: 0;
   font-size: 12px;
   font-weight: 700;
   color: #6a6a6a;
@@ -514,6 +514,7 @@ h2 {
 
 .page-main>.panel:first-of-type,
 .about-intro-dark {
+  margin-top: 12px;
   background: transparent;
   border: 0;
   box-shadow: none;
