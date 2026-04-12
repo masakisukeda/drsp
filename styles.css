@@ -2387,3 +2387,20 @@ nav a,
   object-fit: cover;
   object-position: center 22%;
 }
+
+.footer-legal {
+  margin: 0;
+  padding: 10px 0 4px;
+  text-align: center;
+  color: #bcbcbc;
+  font-size: 12px;
+}
+
+.footer-legal a {
+  color: #e6e6e6;
+  text-decoration: none;
+}
+
+.footer-legal a:hover {
+  text-decoration: underline;
+}
