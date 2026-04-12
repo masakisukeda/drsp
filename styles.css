@@ -202,7 +202,7 @@ nav a.nav-cta:hover {
   font-weight: 700;
 }
 
-.page-top .hero h1.hero-subtitle {
+.page-top .hero .hero-subtitle {
   margin: 22px 0 0;
   font-size: clamp(15px, 1.7vw, 26px);
   font-weight: 700;
