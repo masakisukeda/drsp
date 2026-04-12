@@ -202,6 +202,16 @@ nav a.nav-cta:hover {
   font-weight: 700;
 }
 
+.page-top .hero h1.hero-subtitle {
+  margin: 22px 0 0;
+  font-size: clamp(15px, 1.7vw, 26px);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-shadow: none;
+  animation: none;
+}
+
 .panel {
   margin-top: 34px;
   background: var(--panel);
