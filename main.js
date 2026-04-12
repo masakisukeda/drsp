@@ -93,8 +93,6 @@
     '/eiri/community': 'eiri/community/index.html',
     '/eiri/lport': 'eiri/lport/index.html',
     '/eiri/speakingcircles': 'eiri/speakingcircles/index.html',
-    '/eiri/membership': 'eiri/membership/index.html',
-    '/eiri/membership/kiyaku': 'eiri/membership/kiyaku/index.html'
   };
 
   for (const a of document.querySelectorAll('a[href^="/"]')) {
