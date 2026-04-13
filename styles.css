@@ -120,6 +120,7 @@ nav a.nav-cta:hover {
 }
 
 .disa-news-band {
+  display: none;
   position: sticky;
   top: 66px;
   z-index: 19;
