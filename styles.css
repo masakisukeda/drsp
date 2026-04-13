@@ -138,6 +138,11 @@ nav a.nav-cta:hover {
 .disa-news-label {
   margin: 0;
   flex: 0 0 auto;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #111;
+  padding-right: 8px;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1228,6 +1233,28 @@ h2 {
   .service-grid,
   .law-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .disa-news-inner {
+    gap: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .disa-news-label {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .disa-news-track {
+    gap: 20px;
+  }
+
+  .disa-news-item {
+    font-size: 10px;
+    line-height: 1.25;
   }
 }
 
