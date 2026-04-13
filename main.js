@@ -248,6 +248,16 @@
   for (const video of normalVideos) observer.observe(video);
 })();
 
+// ── モバイル: スワイプ干渉回避のため flip 系AOSを無効化 ──
+(function () {
+  if (!window.matchMedia('(max-width: 768px)').matches) return;
+  const flipTargets = document.querySelectorAll('[data-aos^="flip"]');
+  for (const el of flipTargets) {
+    el.removeAttribute('data-aos');
+    el.removeAttribute('data-aos-delay');
+  }
+})();
+
 const targets = document.querySelectorAll("[data-aos]");
 
 if (targets.length > 0) {
