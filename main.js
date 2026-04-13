@@ -258,6 +258,124 @@
   }
 })();
 
+// ── モバイル: Swiper.js 共通カルーセル化（ドット + 矢印） ──
+(function () {
+  if (!window.matchMedia('(max-width: 768px)').matches) return;
+
+  const carouselTargets = [
+    { selector: '.partner-grid', slideSelector: ':scope > div', slidesPerView: 2.2 },
+    { selector: '.member-grid', slideSelector: ':scope > video', slidesPerView: 1.25 },
+    { selector: '.page-spot .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.page-member .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.page-sukeda .tile-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.page-membership .support-grid--3', slideSelector: ':scope > div', slidesPerView: 1.1 },
+    { selector: '.page-speakingcircles .concept-grid--3', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.page-speakingcircles .mvv-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.service-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.page-about .support-grid', slideSelector: ':scope > div', slidesPerView: 1.1 }
+  ];
+
+  const ensureCss = () => {
+    if (document.getElementById('mobile-swiper-style')) return;
+    const style = document.createElement('style');
+    style.id = 'mobile-swiper-style';
+    style.textContent = `
+      .mobile-rich-swiper.swiper { overflow: hidden; }
+      .mobile-swiper-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+      .mobile-swiper-btn { width: 34px; height: 34px; border-radius: 999px; border: 1px solid #222; background: #fff; color: #111; font-size: 20px; line-height: 1; cursor: pointer; }
+      .mobile-swiper-pagination { position: static; width: auto; }
+      .mobile-swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; margin: 0 4px !important; background: #bdbdbd; opacity: 1; }
+      .mobile-swiper-pagination .swiper-pagination-bullet-active { background: #111; }
+    `;
+    document.head.appendChild(style);
+  };
+
+  const loadSwiper = () => new Promise((resolve, reject) => {
+    if (window.Swiper) {
+      resolve();
+      return;
+    }
+
+    if (!document.querySelector('link[data-swiper-mobile="1"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      link.setAttribute('data-swiper-mobile', '1');
+      document.head.appendChild(link);
+    }
+
+    const existing = document.querySelector('script[data-swiper-mobile="1"]');
+    if (existing) {
+      existing.addEventListener('load', () => resolve(), { once: true });
+      existing.addEventListener('error', () => reject(new Error('Failed to load Swiper')), { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+    script.async = true;
+    script.setAttribute('data-swiper-mobile', '1');
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Failed to load Swiper'));
+    document.body.appendChild(script);
+  });
+
+  const toSwiper = (track, conf, idx) => {
+    if (!track || track.closest('.mobile-rich-swiper')) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mobile-rich-swiper swiper';
+    track.parentNode.insertBefore(wrapper, track);
+    wrapper.appendChild(track);
+
+    track.classList.add('swiper-wrapper');
+    track.style.overflowX = 'visible';
+    track.style.scrollSnapType = 'none';
+    track.style.paddingBottom = '0';
+    track.style.gap = '0';
+
+    const slides = Array.from(track.querySelectorAll(conf.slideSelector));
+    for (const slide of slides) {
+      slide.classList.add('swiper-slide');
+      slide.style.flex = '0 0 auto';
+      slide.style.scrollSnapAlign = 'unset';
+    }
+
+    const controls = document.createElement('div');
+    controls.className = 'mobile-swiper-controls';
+    controls.innerHTML = `
+      <button class="mobile-swiper-btn mobile-swiper-prev-${idx}" type="button" aria-label="前へ">‹</button>
+      <div class="mobile-swiper-pagination mobile-swiper-pagination-${idx}" aria-hidden="true"></div>
+      <button class="mobile-swiper-btn mobile-swiper-next-${idx}" type="button" aria-label="次へ">›</button>
+    `;
+    wrapper.insertAdjacentElement('afterend', controls);
+
+    new Swiper(wrapper, {
+      slidesPerView: conf.slidesPerView || 1.1,
+      spaceBetween: 12,
+      grabCursor: true,
+      watchOverflow: true,
+      pagination: { el: `.mobile-swiper-pagination-${idx}`, clickable: true },
+      navigation: { nextEl: `.mobile-swiper-next-${idx}`, prevEl: `.mobile-swiper-prev-${idx}` }
+    });
+  };
+
+  loadSwiper()
+    .then(() => {
+      if (!window.Swiper) return;
+      ensureCss();
+      let serial = 0;
+      for (const conf of carouselTargets) {
+        const tracks = document.querySelectorAll(conf.selector);
+        for (const track of tracks) {
+          serial += 1;
+          toSwiper(track, conf, serial);
+        }
+      }
+    })
+    .catch(() => {});
+})();
+
 const targets = document.querySelectorAll("[data-aos]");
 
 if (targets.length > 0) {
