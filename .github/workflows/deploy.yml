@@ -141,10 +141,12 @@ jobs:
           set ssl:verify-certificate no
           set ftp:ssl-force true
           set ftp:ssl-protect-data true
+          set cmd:interactive false
+          set cmd:fail-exit true
           set net:max-retries 2
           set net:timeout 20
           cd /public_html/mentor.drsp.cc/
-          rm -rf wp-admin wp-content wp-includes
+          glob -f rm -rf wp-admin wp-content wp-includes
           rm -f index.php wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt feed
           put -O . -o .htaccess /tmp/mentor.htaccess
           bye
