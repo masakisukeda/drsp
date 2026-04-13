@@ -2908,6 +2908,7 @@ nav a,
     grid-template-columns: auto 1fr;
     align-items: center;
     column-gap: 14px;
+    border-left: 3px solid transparent;
   }
 
   .x-post-meta {
@@ -2921,6 +2922,11 @@ nav a,
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.45;
+  }
+
+  .x-post:hover {
+    background: #eef4ff;
+    border-left-color: #1f62b8;
   }
 }
 
