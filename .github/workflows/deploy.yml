@@ -21,6 +21,7 @@ jobs:
         with:
           filters: |
             root:
+              - '.htaccess'
               - 'index.html'
               - 'styles.css'
               - 'main.js'
@@ -48,6 +49,7 @@ jobs:
               - 'membership/**'
             any:
               - '.github/workflows/deploy.yml'
+              - '.htaccess'
               - 'index.html'
               - 'styles.css'
               - 'main.js'
@@ -137,7 +139,7 @@ jobs:
           set net:max-retries 2
           set net:timeout 20
           cd /public_html/drsp.cc/
-          rm -f index.php .htaccess wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt
+          rm -f index.php wp-config.php wp-login.php wp-blog-header.php wp-comments-post.php wp-cron.php wp-links-opml.php wp-load.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php wp-activate.php xmlrpc.php readme.html license.txt
           bye
           EOF2
 
@@ -166,6 +168,7 @@ jobs:
             echo "cd /public_html/drsp.cc/"
             echo "lcd ."
             if [ "$CH_ROOT" = "true" ]; then
+              echo "put -O . .htaccess"
               echo "put -O . index.html"
               echo "put -O . styles.css"
               echo "put -O . main.js"

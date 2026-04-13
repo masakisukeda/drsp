@@ -1,0 +1,21 @@
+# drsp.cc redirect rules (static site)
+RewriteEngine On
+
+# Legacy service paths
+RedirectMatch 301 ^/eiri/membership/?$ /membership/
+RedirectMatch 301 ^/eiri/membership/kiyaku/?$ /membership/kiyaku/
+RedirectMatch 301 ^/eiri/1on1/?$ /eiri/
+RedirectMatch 301 ^/eiri/redesign/?$ /eiri/
+
+# Legacy WordPress endpoints
+RedirectMatch 301 ^/index\.php$ /
+RedirectMatch 301 ^/xmlrpc\.php$ /
+RedirectMatch 301 ^/wp-json/?$ /
+RedirectMatch 301 ^/feed/?$ /
+RedirectMatch 301 ^/comments/feed/?$ /
+
+# Legacy article URLs
+RedirectMatch 301 ^/archives/[0-9]+/?$ /hieiri/
+
+# Legacy FAQ page
+RedirectMatch 301 ^/faq/?$ /inquiry/
