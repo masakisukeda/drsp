@@ -1541,6 +1541,14 @@ h2 {
   background: #444;
 }
 
+.page-lport .service-banner-btn.line-green-cta {
+  background: #06c755;
+}
+
+.page-lport .service-banner-btn.line-green-cta:hover {
+  background: #05b54d;
+}
+
 .service-body {
   padding: 16px;
   flex: 1;
