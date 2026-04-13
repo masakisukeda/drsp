@@ -2459,6 +2459,76 @@ nav a,
     flex: 0 0 80vw;
     scroll-snap-align: start;
   }
+
+  .page-membership .support-grid--3 {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .page-membership .support-grid--3 > div {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
+
+  .page-speakingcircles .concept-grid--3 {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .page-speakingcircles .concept-grid--3 > article {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
+
+  .page-speakingcircles .mvv-grid {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .page-speakingcircles .mvv-grid > article {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
+
+  .service-grid {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .service-grid > article {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
+
+  .page-about .support-grid {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .page-about .support-grid > div {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
 }
 /* about: support avatar style aligned with eiri/hieiri */
 .page-about .support-icon {
