@@ -248,7 +248,7 @@
   for (const video of normalVideos) observer.observe(video);
 })();
 
-// ── TOP: X/noteポストをJSONから読み込み（最新1件） ──
+// ── TOP: X/noteポストをJSONから読み込み（最新6件） ──
 (function () {
   const list = document.querySelector('.x-posts-list');
   if (!list) return;
@@ -279,22 +279,12 @@
     avatar.src = post.avatar || './assets/wp/ushi_00_500.webp';
     avatar.alt = post.avatarAlt || post.name || 'アイコン';
 
-    const name = document.createElement('span');
-    name.className = 'x-post-name';
-    name.textContent = post.name || '';
-
-    const handle = document.createElement('span');
-    handle.className = 'x-post-handle';
-    handle.textContent = post.handle || '';
-
     const date = document.createElement('span');
     date.className = 'x-post-date';
     date.textContent = post.date || '';
 
     meta.appendChild(chip);
     meta.appendChild(avatar);
-    meta.appendChild(name);
-    meta.appendChild(handle);
 
     const text = document.createElement('p');
     text.className = 'x-post-text';
@@ -316,7 +306,7 @@
       const latest = posts
         .filter((post) => post && post.url && post.text)
         .sort((a, b) => parseDate(b.date) - parseDate(a.date))
-        .slice(0, 1);
+        .slice(0, 6);
 
       if (latest.length === 0) return;
 
