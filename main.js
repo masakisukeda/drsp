@@ -295,7 +295,6 @@
     meta.appendChild(avatar);
     meta.appendChild(name);
     meta.appendChild(handle);
-    meta.appendChild(date);
 
     const text = document.createElement('p');
     text.className = 'x-post-text';
@@ -303,6 +302,7 @@
 
     anchor.appendChild(meta);
     anchor.appendChild(text);
+    anchor.appendChild(date);
     return anchor;
   };
 

@@ -2892,7 +2892,8 @@ nav a,
 .x-post-date {
   font-size: 0.72rem;
   color: var(--clr-text-sub);
-  margin-left: auto;
+  margin-left: 0;
+  white-space: nowrap;
 }
 
 .x-post-text {
@@ -2905,7 +2906,7 @@ nav a,
 @media (min-width: 769px) {
   .x-post {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     column-gap: 14px;
     border-left: 3px solid transparent;
@@ -2922,6 +2923,10 @@ nav a,
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.45;
+  }
+
+  .x-post-date {
+    justify-self: end;
   }
 
   .x-post:hover {
@@ -2942,6 +2947,12 @@ nav a,
 
   .x-post-text {
     font-size: 0.8rem;
+  }
+
+  .x-post-date {
+    display: block;
+    margin-top: 4px;
+    text-align: right;
   }
 }
 
