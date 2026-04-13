@@ -159,9 +159,15 @@ nav a.nav-cta:hover {
 }
 
 .disa-news-item {
+  text-decoration: none;
   font-size: 12px;
   font-weight: 500;
   color: #ededed;
+  transition: color 0.2s ease;
+}
+
+.disa-news-item:hover {
+  color: #9fd1ff;
 }
 
 .disa-news-item::before {
