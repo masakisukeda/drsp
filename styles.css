@@ -2824,12 +2824,13 @@ nav a,
   background: #fff;
   border: 1px solid var(--clr-border);
   border-radius: 14px;
+  padding: 20px;
   overflow: hidden;
 }
 
 .x-post {
   display: block;
-  padding: 16px 12px;
+  padding: 14px 0;
   border-bottom: 1px solid var(--clr-border);
   text-decoration: none;
   color: inherit;
@@ -2934,8 +2935,12 @@ nav a,
 }
 
 @media (max-width: 768px) {
+  .x-posts-list {
+    padding: 10px;
+  }
+
   .x-post {
-    padding: 14px 8px;
+    padding: 12px 0;
   }
 
   .x-post-avatar {
