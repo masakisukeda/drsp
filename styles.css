@@ -2806,6 +2806,28 @@ nav a,
   box-sizing: border-box;
 }
 
+.slack-reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: 40px;
+}
+
+.slack-reaction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #d3d7de;
+  background: #eef2f7;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3d4652;
+  line-height: 1.2;
+}
+
 @media (max-width: 768px) {
   .slack-cards {
     grid-template-columns: 1fr;
@@ -2813,6 +2835,10 @@ nav a,
 
   .slack-card {
     padding: 18px 14px;
+  }
+
+  .slack-reactions {
+    margin-left: 0;
   }
 }
 
