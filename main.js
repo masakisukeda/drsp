@@ -248,7 +248,7 @@
   for (const video of normalVideos) observer.observe(video);
 })();
 
-// ── TOP: XポストをJSONから読み込み（最新3件） ──
+// ── TOP: X/noteポストをJSONから読み込み（最新6件） ──
 (function () {
   const list = document.querySelector('.x-posts-list');
   if (!list) return;
@@ -269,6 +269,11 @@
     const meta = document.createElement('div');
     meta.className = 'x-post-meta';
 
+    const chip = document.createElement('span');
+    const source = (post.source || 'x').toLowerCase();
+    chip.className = `social-chip social-chip--${source}`;
+    chip.textContent = source === 'note' ? 'note' : 'X';
+
     const avatar = document.createElement('img');
     avatar.className = 'x-post-avatar';
     avatar.src = post.avatar || './assets/wp/ushi_00_500.webp';
@@ -286,6 +291,7 @@
     date.className = 'x-post-date';
     date.textContent = post.date || '';
 
+    meta.appendChild(chip);
     meta.appendChild(avatar);
     meta.appendChild(name);
     meta.appendChild(handle);
@@ -310,17 +316,13 @@
       const latest = posts
         .filter((post) => post && post.url && post.text)
         .sort((a, b) => parseDate(b.date) - parseDate(a.date))
-        .slice(0, 3);
+        .slice(0, 6);
 
       if (latest.length === 0) return;
 
       list.textContent = '';
       for (const post of latest) {
         list.appendChild(createPostCard(post));
-      }
-
-      if (typeof window.initMobileRichSwipers === 'function') {
-        window.initMobileRichSwipers();
       }
     })
     .catch(() => {});
@@ -350,7 +352,6 @@
       { selector: '.page-membership .support-grid--3', slideSelector: ':scope > div', slidesPerView: 1.1 },
       { selector: '.page-speakingcircles .concept-grid--3', slideSelector: ':scope > article', slidesPerView: 1.1 },
       { selector: '.page-speakingcircles .mvv-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
-      { selector: '.x-posts-list', slideSelector: ':scope > .x-post', slidesPerView: 1.1 },
       { selector: '.service-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
       { selector: '.page-about .support-grid', slideSelector: ':scope > div', slidesPerView: 1.1 }
     ];
