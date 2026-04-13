@@ -271,6 +271,7 @@
     { selector: '.page-membership .support-grid--3', slideSelector: ':scope > div', slidesPerView: 1.1 },
     { selector: '.page-speakingcircles .concept-grid--3', slideSelector: ':scope > article', slidesPerView: 1.1 },
     { selector: '.page-speakingcircles .mvv-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+    { selector: '.x-posts-list', slideSelector: ':scope > .x-post', slidesPerView: 1.1 },
     { selector: '.service-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
     { selector: '.page-about .support-grid', slideSelector: ':scope > div', slidesPerView: 1.1 }
   ];
