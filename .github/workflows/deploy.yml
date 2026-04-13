@@ -27,6 +27,7 @@ jobs:
               - 'llms.txt'
               - 'sitemap.xml'
               - 'robots.txt'
+              - 'favicon.webp'
               - 'favicon.png'
               - 'favicon.ico'
             about:
@@ -52,6 +53,7 @@ jobs:
               - 'llms.txt'
               - 'sitemap.xml'
               - 'robots.txt'
+              - 'favicon.webp'
               - 'favicon.png'
               - 'favicon.ico'
               - 'about/**'
@@ -168,6 +170,7 @@ jobs:
               echo "put -O . main.js"
               echo "put -O . llms.txt"
               echo "put -O . robots.txt"
+              echo "put -O . favicon.webp"
               echo "put -O . favicon.png"
               echo "put -O . favicon.ico"
             fi
