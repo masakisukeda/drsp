@@ -248,7 +248,7 @@
   for (const video of normalVideos) observer.observe(video);
 })();
 
-// ── TOP: X/noteポストをJSONから読み込み（最新6件） ──
+// ── TOP: X/noteポストをJSONから読み込み（最新1件） ──
 (function () {
   const list = document.querySelector('.x-posts-list');
   if (!list) return;
@@ -316,7 +316,7 @@
       const latest = posts
         .filter((post) => post && post.url && post.text)
         .sort((a, b) => parseDate(b.date) - parseDate(a.date))
-        .slice(0, 6);
+        .slice(0, 1);
 
       if (latest.length === 0) return;
 
