@@ -2388,22 +2388,68 @@ nav a,
   }
 }
 
-/* member page: mobile cards as horizontal flick slider */
-@media (max-width: 960px) {
-  .page-member .member-cards {
-    display: flex !important;
-    gap: 14px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 8px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
+/* member page: Swiper carousel (dots + arrows) */
+.page-member .member-carousel {
+  margin-top: 18px;
+  overflow: hidden;
+}
 
-  .page-member .member-card {
-    flex: 0 0 82vw;
+.page-member .member-cards.swiper-wrapper {
+  display: flex !important;
+  gap: 0 !important;
+  margin-top: 0 !important;
+  grid-template-columns: none !important;
+}
+
+.page-member .member-card.swiper-slide {
+  height: auto;
+}
+
+.page-member .member-swiper-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.page-member .member-carousel.swiper-initialized+.member-swiper-controls {
+  display: flex;
+}
+
+.page-member .member-swiper-prev,
+.page-member .member-swiper-next {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #262626;
+  background: #fff;
+  color: #111;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.page-member .member-swiper-pagination {
+  position: static;
+  width: auto;
+}
+
+.page-member .member-swiper-pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px !important;
+  background: #b8b8b8;
+  opacity: 1;
+}
+
+.page-member .member-swiper-pagination .swiper-pagination-bullet-active {
+  background: #111;
+}
+
+@media (max-width: 960px) {
+  .page-member .member-card.swiper-slide {
     max-width: 82vw;
-    scroll-snap-align: start;
   }
 }
 /* about: support avatar style aligned with eiri/hieiri */
