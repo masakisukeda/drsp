@@ -1,0 +1,92 @@
+name: Update note posts
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # 6時間おきに実行
+  workflow_dispatch:  # 手動実行も可能
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch note RSS and update x-posts.json
+        run: |
+          python3 << 'PY'
+          import json
+          import urllib.request
+          import xml.etree.ElementTree as ET
+          from datetime import datetime
+          from email.utils import parsedate_to_datetime
+
+          RSS_URL   = 'https://note.com/disa_pr/rss'
+          JSON_PATH = 'assets/data/x-posts.json'
+          MAX_NOTE  = 3
+          MAX_TOTAL = 6
+          AVATAR    = './assets/wp/note.webp'
+          NAME      = 'DiSA'
+          HANDLE    = 'note.com/disa_pr'
+
+          # RSS取得
+          req = urllib.request.Request(RSS_URL, headers={'User-Agent': 'Mozilla/5.0'})
+          with urllib.request.urlopen(req, timeout=30) as resp:
+              xml_data = resp.read()
+
+          tree    = ET.fromstring(xml_data)
+          channel = tree.find('channel')
+
+          note_posts = []
+          for item in channel.findall('item')[:MAX_NOTE]:
+              title    = (item.findtext('title') or '').strip()
+              link     = (item.findtext('link')  or '').strip()
+              pub_date = (item.findtext('pubDate') or '').strip()
+              try:
+                  dt       = parsedate_to_datetime(pub_date)
+                  date_str = dt.strftime('%Y.%m.%d')
+              except Exception:
+                  date_str = datetime.now().strftime('%Y.%m.%d')
+
+              note_posts.append({
+                  'source':    'note',
+                  'url':       link,
+                  'date':      date_str,
+                  'name':      NAME,
+                  'handle':    HANDLE,
+                  'avatar':    AVATAR,
+                  'avatarAlt': 'note',
+                  'text':      title,
+              })
+
+          # 既存JSONを読み込み、noteエントリを差し替え
+          with open(JSON_PATH, encoding='utf-8') as f:
+              data = json.load(f)
+
+          x_posts   = [p for p in data['posts'] if p.get('source') != 'note']
+          all_posts = x_posts + note_posts
+
+          def parse_date(p):
+              try:
+                  return datetime.strptime(p.get('date', ''), '%Y.%m.%d')
+              except Exception:
+                  return datetime.min
+
+          all_posts.sort(key=parse_date, reverse=True)
+          data['posts'] = all_posts[:MAX_TOTAL]
+
+          with open(JSON_PATH, 'w', encoding='utf-8') as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+
+          print(f'Done: {len(note_posts)} note posts updated')
+          PY
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/x-posts.json
+          git diff --cached --quiet && echo "No changes" || \
+            git commit -m "Auto-update note posts from RSS" && git push
