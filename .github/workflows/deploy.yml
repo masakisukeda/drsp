@@ -170,10 +170,11 @@ jobs:
               echo "put -O . main.js"
               echo "put -O . llms.txt"
               echo "put -O . robots.txt"
-              echo "put -O . favicon.webp"
-              echo "put -O . favicon.png"
-              echo "put -O . favicon.ico"
             fi
+            # favicon files are tiny and should stay in sync even when only workflow changes
+            echo "put -O . favicon.webp"
+            echo "put -O . favicon.png"
+            echo "put -O . favicon.ico"
             # sitemap is regenerated in workflow; always upload when deploy runs
             echo "put -O . sitemap.xml"
             if [ "$CH_ABOUT" = "true" ]; then
