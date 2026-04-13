@@ -2876,6 +2876,19 @@ nav a,
   overflow: hidden;
 }
 
+.x-timeline-wrap {
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.x-timeline-wrap iframe {
+  display: block;
+  width: 100% !important;
+  border-radius: 14px;
+}
+
 .x-post {
   display: block;
   padding: 14px 0;
