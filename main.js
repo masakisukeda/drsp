@@ -248,6 +248,84 @@
   for (const video of normalVideos) observer.observe(video);
 })();
 
+// ── TOP: XポストをJSONから読み込み（最新3件） ──
+(function () {
+  const list = document.querySelector('.x-posts-list');
+  if (!list) return;
+
+  const parseDate = (value) => {
+    const normalized = String(value || '').trim().replace(/\./g, '-');
+    const timestamp = Date.parse(normalized);
+    return Number.isNaN(timestamp) ? 0 : timestamp;
+  };
+
+  const createPostCard = (post) => {
+    const anchor = document.createElement('a');
+    anchor.className = 'x-post';
+    anchor.href = post.url;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+
+    const meta = document.createElement('div');
+    meta.className = 'x-post-meta';
+
+    const avatar = document.createElement('img');
+    avatar.className = 'x-post-avatar';
+    avatar.src = post.avatar || './assets/wp/ushi_00_500.webp';
+    avatar.alt = post.avatarAlt || post.name || 'アイコン';
+
+    const name = document.createElement('span');
+    name.className = 'x-post-name';
+    name.textContent = post.name || '';
+
+    const handle = document.createElement('span');
+    handle.className = 'x-post-handle';
+    handle.textContent = post.handle || '';
+
+    const date = document.createElement('span');
+    date.className = 'x-post-date';
+    date.textContent = post.date || '';
+
+    meta.appendChild(avatar);
+    meta.appendChild(name);
+    meta.appendChild(handle);
+    meta.appendChild(date);
+
+    const text = document.createElement('p');
+    text.className = 'x-post-text';
+    text.textContent = post.text || '';
+
+    anchor.appendChild(meta);
+    anchor.appendChild(text);
+    return anchor;
+  };
+
+  fetch('./assets/data/x-posts.json', { cache: 'no-store' })
+    .then((res) => {
+      if (!res.ok) throw new Error('x-posts.json fetch failed');
+      return res.json();
+    })
+    .then((json) => {
+      const posts = Array.isArray(json?.posts) ? json.posts : [];
+      const latest = posts
+        .filter((post) => post && post.url && post.text)
+        .sort((a, b) => parseDate(b.date) - parseDate(a.date))
+        .slice(0, 3);
+
+      if (latest.length === 0) return;
+
+      list.textContent = '';
+      for (const post of latest) {
+        list.appendChild(createPostCard(post));
+      }
+
+      if (typeof window.initMobileRichSwipers === 'function') {
+        window.initMobileRichSwipers();
+      }
+    })
+    .catch(() => {});
+})();
+
 // ── モバイル: スワイプ干渉回避のため flip 系AOSを無効化 ──
 (function () {
   if (!window.matchMedia('(max-width: 768px)').matches) return;
@@ -260,121 +338,126 @@
 
 // ── モバイル: Swiper.js 共通カルーセル化（ドット + 矢印） ──
 (function () {
-  if (!window.matchMedia('(max-width: 768px)').matches) return;
+  const initMobileRichSwipers = () => {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
 
-  const carouselTargets = [
-    { selector: '.partner-grid', slideSelector: ':scope > div', slidesPerView: 2.2 },
-    { selector: '.member-grid', slideSelector: ':scope > video', slidesPerView: 1.25 },
-    { selector: '.page-spot .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.page-member .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.page-sukeda .tile-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.page-membership .support-grid--3', slideSelector: ':scope > div', slidesPerView: 1.1 },
-    { selector: '.page-speakingcircles .concept-grid--3', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.page-speakingcircles .mvv-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.x-posts-list', slideSelector: ':scope > .x-post', slidesPerView: 1.1 },
-    { selector: '.service-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
-    { selector: '.page-about .support-grid', slideSelector: ':scope > div', slidesPerView: 1.1 }
-  ];
+    const carouselTargets = [
+      { selector: '.partner-grid', slideSelector: ':scope > div', slidesPerView: 2.2 },
+      { selector: '.member-grid', slideSelector: ':scope > video', slidesPerView: 1.25 },
+      { selector: '.page-spot .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.page-member .member-cards', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.page-sukeda .tile-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.page-membership .support-grid--3', slideSelector: ':scope > div', slidesPerView: 1.1 },
+      { selector: '.page-speakingcircles .concept-grid--3', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.page-speakingcircles .mvv-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.x-posts-list', slideSelector: ':scope > .x-post', slidesPerView: 1.1 },
+      { selector: '.service-grid', slideSelector: ':scope > article', slidesPerView: 1.1 },
+      { selector: '.page-about .support-grid', slideSelector: ':scope > div', slidesPerView: 1.1 }
+    ];
 
-  const ensureCss = () => {
-    if (document.getElementById('mobile-swiper-style')) return;
-    const style = document.createElement('style');
-    style.id = 'mobile-swiper-style';
-    style.textContent = `
-      .mobile-rich-swiper.swiper { overflow: hidden; }
-      .mobile-swiper-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
-      .mobile-swiper-btn { width: 34px; height: 34px; border-radius: 999px; border: 1px solid #222; background: #fff; color: #111; font-size: 20px; line-height: 1; cursor: pointer; }
-      .mobile-swiper-pagination { position: static; width: auto; }
-      .mobile-swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; margin: 0 4px !important; background: #bdbdbd; opacity: 1; }
-      .mobile-swiper-pagination .swiper-pagination-bullet-active { background: #111; }
-    `;
-    document.head.appendChild(style);
-  };
+    const ensureCss = () => {
+      if (document.getElementById('mobile-swiper-style')) return;
+      const style = document.createElement('style');
+      style.id = 'mobile-swiper-style';
+      style.textContent = `
+        .mobile-rich-swiper.swiper { overflow: hidden; }
+        .mobile-swiper-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+        .mobile-swiper-btn { width: 34px; height: 34px; border-radius: 999px; border: 1px solid #222; background: #fff; color: #111; font-size: 20px; line-height: 1; cursor: pointer; }
+        .mobile-swiper-pagination { position: static; width: auto; }
+        .mobile-swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; margin: 0 4px !important; background: #bdbdbd; opacity: 1; }
+        .mobile-swiper-pagination .swiper-pagination-bullet-active { background: #111; }
+      `;
+      document.head.appendChild(style);
+    };
 
-  const loadSwiper = () => new Promise((resolve, reject) => {
-    if (window.Swiper) {
-      resolve();
-      return;
-    }
-
-    if (!document.querySelector('link[data-swiper-mobile="1"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
-      link.setAttribute('data-swiper-mobile', '1');
-      document.head.appendChild(link);
-    }
-
-    const existing = document.querySelector('script[data-swiper-mobile="1"]');
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true });
-      existing.addEventListener('error', () => reject(new Error('Failed to load Swiper')), { once: true });
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-    script.async = true;
-    script.setAttribute('data-swiper-mobile', '1');
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Failed to load Swiper'));
-    document.body.appendChild(script);
-  });
-
-  const toSwiper = (track, conf, idx) => {
-    if (!track || track.closest('.mobile-rich-swiper')) return;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'mobile-rich-swiper swiper';
-    track.parentNode.insertBefore(wrapper, track);
-    wrapper.appendChild(track);
-
-    track.classList.add('swiper-wrapper');
-    track.style.overflowX = 'visible';
-    track.style.scrollSnapType = 'none';
-    track.style.paddingBottom = '0';
-    track.style.gap = '0';
-
-    const slides = Array.from(track.querySelectorAll(conf.slideSelector));
-    for (const slide of slides) {
-      slide.classList.add('swiper-slide');
-      slide.style.flex = '0 0 auto';
-      slide.style.scrollSnapAlign = 'unset';
-    }
-
-    const controls = document.createElement('div');
-    controls.className = 'mobile-swiper-controls';
-    controls.innerHTML = `
-      <button class="mobile-swiper-btn mobile-swiper-prev-${idx}" type="button" aria-label="前へ">‹</button>
-      <div class="mobile-swiper-pagination mobile-swiper-pagination-${idx}" aria-hidden="true"></div>
-      <button class="mobile-swiper-btn mobile-swiper-next-${idx}" type="button" aria-label="次へ">›</button>
-    `;
-    wrapper.insertAdjacentElement('afterend', controls);
-
-    new Swiper(wrapper, {
-      slidesPerView: conf.slidesPerView || 1.1,
-      spaceBetween: 12,
-      grabCursor: true,
-      watchOverflow: true,
-      pagination: { el: `.mobile-swiper-pagination-${idx}`, clickable: true },
-      navigation: { nextEl: `.mobile-swiper-next-${idx}`, prevEl: `.mobile-swiper-prev-${idx}` }
-    });
-  };
-
-  loadSwiper()
-    .then(() => {
-      if (!window.Swiper) return;
-      ensureCss();
-      let serial = 0;
-      for (const conf of carouselTargets) {
-        const tracks = document.querySelectorAll(conf.selector);
-        for (const track of tracks) {
-          serial += 1;
-          toSwiper(track, conf, serial);
-        }
+    const loadSwiper = () => new Promise((resolve, reject) => {
+      if (window.Swiper) {
+        resolve();
+        return;
       }
-    })
-    .catch(() => {});
+
+      if (!document.querySelector('link[data-swiper-mobile="1"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+        link.setAttribute('data-swiper-mobile', '1');
+        document.head.appendChild(link);
+      }
+
+      const existing = document.querySelector('script[data-swiper-mobile="1"]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error('Failed to load Swiper')), { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      script.async = true;
+      script.setAttribute('data-swiper-mobile', '1');
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load Swiper'));
+      document.body.appendChild(script);
+    });
+
+    const toSwiper = (track, conf, idx) => {
+      if (!track || track.closest('.mobile-rich-swiper')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'mobile-rich-swiper swiper';
+      track.parentNode.insertBefore(wrapper, track);
+      wrapper.appendChild(track);
+
+      track.classList.add('swiper-wrapper');
+      track.style.overflowX = 'visible';
+      track.style.scrollSnapType = 'none';
+      track.style.paddingBottom = '0';
+      track.style.gap = '0';
+
+      const slides = Array.from(track.querySelectorAll(conf.slideSelector));
+      for (const slide of slides) {
+        slide.classList.add('swiper-slide');
+        slide.style.flex = '0 0 auto';
+        slide.style.scrollSnapAlign = 'unset';
+      }
+
+      const controls = document.createElement('div');
+      controls.className = 'mobile-swiper-controls';
+      controls.innerHTML = `
+        <button class="mobile-swiper-btn mobile-swiper-prev-${idx}" type="button" aria-label="前へ">‹</button>
+        <div class="mobile-swiper-pagination mobile-swiper-pagination-${idx}" aria-hidden="true"></div>
+        <button class="mobile-swiper-btn mobile-swiper-next-${idx}" type="button" aria-label="次へ">›</button>
+      `;
+      wrapper.insertAdjacentElement('afterend', controls);
+
+      new Swiper(wrapper, {
+        slidesPerView: conf.slidesPerView || 1.1,
+        spaceBetween: 12,
+        grabCursor: true,
+        watchOverflow: true,
+        pagination: { el: `.mobile-swiper-pagination-${idx}`, clickable: true },
+        navigation: { nextEl: `.mobile-swiper-next-${idx}`, prevEl: `.mobile-swiper-prev-${idx}` }
+      });
+    };
+
+    loadSwiper()
+      .then(() => {
+        if (!window.Swiper) return;
+        ensureCss();
+        let serial = 0;
+        for (const conf of carouselTargets) {
+          const tracks = document.querySelectorAll(conf.selector);
+          for (const track of tracks) {
+            serial += 1;
+            toSwiper(track, conf, serial);
+          }
+        }
+      })
+      .catch(() => {});
+  };
+
+  window.initMobileRichSwipers = initMobileRichSwipers;
+  initMobileRichSwipers();
 })();
 
 const targets = document.querySelectorAll("[data-aos]");
