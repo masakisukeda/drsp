@@ -2821,7 +2821,10 @@ nav a,
 .x-posts-list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--clr-border);
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .x-post {
