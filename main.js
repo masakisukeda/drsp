@@ -272,7 +272,7 @@
     const chip = document.createElement('span');
     const source = (post.source || 'x').toLowerCase();
     chip.className = `social-chip social-chip--${source}`;
-    chip.textContent = source === 'note' ? 'note' : 'X';
+    chip.textContent = source === 'note' ? 'no+e' : 'X';
 
     const avatar = document.createElement('img');
     avatar.className = 'x-post-avatar';
