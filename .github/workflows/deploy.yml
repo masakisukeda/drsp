@@ -47,6 +47,7 @@ jobs:
             membership:
               - 'membership/**'
             any:
+              - '.github/workflows/deploy.yml'
               - 'index.html'
               - 'styles.css'
               - 'main.js'
