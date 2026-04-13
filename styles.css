@@ -120,6 +120,9 @@ nav a.nav-cta:hover {
 }
 
 .disa-news-band {
+  position: sticky;
+  top: 66px;
+  z-index: 19;
   background: #111;
   color: #f5f5f5;
   border-bottom: 1px solid #232323;
@@ -165,10 +168,11 @@ nav a.nav-cta:hover {
 
 .disa-news-item {
   text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
+  font: 500 12px/1.2 "Noto Sans JP", sans-serif;
   color: #ededed;
   transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 .disa-news-item:hover {
@@ -1151,6 +1155,10 @@ h2 {
     gap: 10px;
     padding-top: 7px;
     padding-bottom: 7px;
+  }
+
+  .disa-news-band {
+    top: 62px;
   }
 
   .disa-news-label {
