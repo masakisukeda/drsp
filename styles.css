@@ -2683,6 +2683,77 @@ nav a,
   }
 }
 
+/* TOPページ Xポスト */
+.x-posts {
+  margin-top: 36px;
+  border-top: 1px solid var(--clr-border);
+  padding-top: 20px;
+}
+
+.x-posts-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--clr-text-sub);
+  margin-bottom: 16px;
+}
+
+.x-post {
+  display: block;
+  padding: 12px 0 12px 16px;
+  border-left: 2px solid var(--clr-border);
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.x-post:hover {
+  border-left-color: var(--clr-accent);
+}
+
+.x-post:last-child {
+  margin-bottom: 0;
+}
+
+.x-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.x-post-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.x-post-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.x-post-handle {
+  font-size: 0.72rem;
+  color: var(--clr-text-sub);
+}
+
+.x-post-date {
+  font-size: 0.72rem;
+  color: var(--clr-text-sub);
+  margin-left: auto;
+}
+
+.x-post-text {
+  font-size: 0.85rem;
+  color: var(--clr-text);
+  line-height: 1.65;
+  margin: 0;
+}
+
 .footer-legal {
   margin: 0;
   padding: 16px 0 12px;
