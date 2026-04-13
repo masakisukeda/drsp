@@ -2599,6 +2599,81 @@ nav a,
   object-fit: contain;
 }
 
+/* /hieiri/ai-bu */
+/* AI部 Slackサンプルカード */
+.slack-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.slack-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slack-card-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clr-accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.slack-msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slack-msg {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.slack-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 6px;
+  background: var(--clr-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-text-sub);
+}
+
+.slack-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.slack-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.slack-body p {
+  font-size: 0.82rem;
+  color: var(--clr-text-sub);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .slack-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 .footer-legal {
   margin: 0;
   padding: 16px 0 12px;
