@@ -860,6 +860,9 @@ h2 {
 /* ── SOLUTIONカード ── */
 .page-sukeda .solution-card {
   text-align: center;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
 .page-sukeda .solution-icon {
@@ -869,6 +872,15 @@ h2 {
 
 .page-sukeda .solution-card p {
   text-align: left;
+}
+
+.page-sukeda .solution-card .en-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #888;
+  margin: 0 0 4px;
 }
 
 
@@ -2405,8 +2417,8 @@ nav a,
   font-size: 46px;
 }
 
-/* sukeda: FOR WHO cards reuse about support-face icon style */
-.page-sukeda .forwho-grid .solution-icon.support-icon {
+/* sukeda: card icons aligned with about support-face style */
+.page-sukeda .solution-icon.support-icon {
   width: 112px;
   height: 112px;
   margin: 0 auto 12px;
@@ -2417,7 +2429,7 @@ nav a,
   font-size: initial;
 }
 
-.page-sukeda .forwho-grid .solution-icon.support-icon img {
+.page-sukeda .solution-icon.support-icon img {
   width: 112px;
   height: 112px;
   border-radius: 999px;
