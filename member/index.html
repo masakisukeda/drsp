@@ -13,7 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="../styles.css?v=20260412">
   <!-- SEO/OGP: managed -->
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
@@ -79,10 +78,9 @@
     <section class="panel" data-aos="fade-up" data-aos-duration="700">
       <p class="eyebrow">MEMBER LIST</p>
       <h2>メンバー</h2>
-      <div class="member-carousel swiper">
-        <div class="member-cards swiper-wrapper">
+      <div class="member-cards">
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/KQP6hgBO_400x400.webp" alt="中島 勝悟">
           <h3>中島 勝悟（なしょ）</h3>
@@ -94,7 +92,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/uno-kenji_photo.webp" alt="宇野 健児">
           <h3>宇野 健児（UNO）</h3>
@@ -105,7 +103,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/sukeda.webp" alt="助田 正樹">
           <h3>助田 正樹（すけさん）</h3>
@@ -117,7 +115,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/img_ms_1-1.webp" alt="しょうみゆ">
           <h3>しょうみゆ</h3>
@@ -129,7 +127,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/P32512742-1.webp" alt="こいずみ まこと">
           <h3>こいずみ まこと</h3>
@@ -141,7 +139,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/RBnUir1d_400x400.webp" alt="木村 よねこ">
           <h3>木村 よねこ</h3>
@@ -152,7 +150,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="0"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/AVlMrN2k_400x400.webp" alt="まるみ">
           <h3>まるみ（倉又 美樹）</h3>
@@ -164,7 +162,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="100"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/IMG_3780.webp" alt="よしとみ">
           <h3>よしとみ</h3>
@@ -176,7 +174,7 @@
           </div>
         </article>
 
-        <article class="member-card swiper-slide" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
+        <article class="member-card" data-aos="flip-left" data-aos-duration="400" data-aos-delay="200"
           data-aos-easing="ease" data-aos-once="true">
           <img src="../assets/wp/ushi_00_500.webp" alt="うし3号">
           <h3>うし3号</h3>
@@ -187,12 +185,6 @@
           </div>
         </article>
 
-        </div>
-      </div>
-      <div class="member-swiper-controls" aria-label="メンバーカルーセル操作">
-        <button class="member-swiper-prev" type="button" aria-label="前のメンバー">‹</button>
-        <div class="member-swiper-pagination" aria-hidden="true"></div>
-        <button class="member-swiper-next" type="button" aria-label="次のメンバー">›</button>
       </div>
     </section>
   </main>
@@ -225,37 +217,6 @@
     <p class="footer-legal"><a href="/membership/kiyaku">法人会員利用規約</a> / <a href="/privacy">プライバシーポリシー</a></p>
     <p class="copyright">COPYRIGHT - 一般社団法人ディレクションサポート協会（DiSA）</p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    (function () {
-      const carousel = document.querySelector(".member-carousel.swiper");
-      if (!carousel || typeof Swiper === "undefined") return;
-      new Swiper(carousel, {
-        slidesPerView: 1.08,
-        spaceBetween: 14,
-        grabCursor: true,
-        watchOverflow: true,
-        pagination: {
-          el: ".member-swiper-pagination",
-          clickable: true
-        },
-        navigation: {
-          nextEl: ".member-swiper-next",
-          prevEl: ".member-swiper-prev"
-        },
-        breakpoints: {
-          641: {
-            slidesPerView: 1.45,
-            spaceBetween: 16
-          },
-          961: {
-            slidesPerView: 3,
-            spaceBetween: 18
-          }
-        }
-      });
-    })();
-  </script>
   <script src="../main.js"></script>
 </body>
 
