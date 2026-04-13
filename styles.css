@@ -2387,6 +2387,25 @@ nav a,
     overflow-wrap: anywhere;
   }
 }
+
+/* member page: mobile cards as horizontal flick slider */
+@media (max-width: 960px) {
+  .page-member .member-cards {
+    display: flex !important;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .page-member .member-card {
+    flex: 0 0 82vw;
+    max-width: 82vw;
+    scroll-snap-align: start;
+  }
+}
 /* about: support avatar style aligned with eiri/hieiri */
 .page-about .support-icon {
   width: 112px;
