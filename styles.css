@@ -1020,6 +1020,7 @@ h2 {
   max-width: 80%;
   width: auto;
   object-fit: contain;
+  border-radius: 8px;
 }
 
 .works-tile-banner h3 {
