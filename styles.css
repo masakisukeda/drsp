@@ -314,6 +314,7 @@ h2 {
   text-align: center;
   font-size: clamp(25px, 2.6vw, 44px);
   line-height: 1.25;
+  font-weight: 400;
 }
 
 .h2-accent {
