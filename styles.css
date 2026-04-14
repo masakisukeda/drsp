@@ -3028,3 +3028,16 @@ nav a,
 .footer-legal a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 960px) {
+  .site-footer .sns-grid {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .site-footer .sns-grid a {
+    flex: 1 1 0;
+    min-height: 80px;
+  }
+}
