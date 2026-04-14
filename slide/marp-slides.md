@@ -1,0 +1,324 @@
+---
+marp: true
+title: 一般社団法人ディレクションサポート協会
+theme: default
+paginate: true
+header: '<div class="header-content"><img src="https://drsp.cc/assets/wp/logo-1.svg" class="header-logo"> </div>'
+footer: 'COPYRIGHT - 一般社団法人ディレクションサポート協会（DiSA）'
+style: |
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+  .header-content { display: flex; align-items: center; width: 800px; white-space: nowrap; }
+  .header-logo { height: 14px; filter: brightness(0) invert(1); opacity: 0.8; margin-right: 10px; }
+  section {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 18px; color: #ffffff;
+    padding: 60px 60px 80px;
+    background: radial-gradient(circle at 50% 100%, rgba(30,30,30,1) 0%, rgba(18,18,18,1) 70%);
+    display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+  }
+  section.lead { justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #2e2e2e 0%, #1a1a1a 40%, #0a0a0a 100%); }
+  section::after { font-size: 9px; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
+  header { left: 60px; top: 30px; font-size: 14px; color: #666; width: auto; }
+  footer { color: #555555; font-size: 10px; left: 60px; text-align: left; }
+  h1 { color: #ffffff; font-size: 2.2em; border-bottom: none; background: linear-gradient(to right, #ff2d2d 40px, transparent 40px) bottom left / 100% 3px no-repeat; margin-bottom: 0.6em; font-weight: 700; padding-bottom: 14px; text-align: left; text-shadow: 0 0 10px rgba(255,45,45,0.2); }
+  section.lead h1 { text-align: center; border-bottom: none; background: linear-gradient(to right, transparent calc(50% - 24px), #ff2d2d calc(50% - 24px), #ff2d2d calc(50% + 24px), transparent calc(50% + 24px)) bottom / 100% 3px no-repeat; margin-left: auto; margin-right: auto; padding-bottom: 20px; font-size: 3.5rem; color: #ffffff; text-shadow: none; }
+  h2 { color: #ffffff; font-size: 1.05em; font-weight: 500; margin-top: 0; text-align: left; }
+  section.lead h2 { text-align: center; color: #ffffff; font-size: 1.2rem; margin-bottom: 4px; font-weight: 300; }
+  h3 { color: #ffffff; font-weight: 700; font-size: 0.95em; }
+  section.lead h3 { color: #ffffff; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 10px; }
+  .card { background: linear-gradient(180deg, #252525 0%, #181818 100%); border-radius: 12px; padding: 20px; border: 1px solid #333333; margin-bottom: 0.7rem; box-shadow: 0 6px 12px 0 rgba(0,0,0,0.5); }
+  .columns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; align-items: stretch; }
+  .chip { display: inline-block; padding: 2px 10px; border: 1px solid #ff2d2d; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 10px; color: #ff2d2d; text-transform: uppercase; letter-spacing: 0.15em; background-color: rgba(255,45,45,0.05); }
+  blockquote { border-left: 3px solid #555555; background: #0f0f0f; color: #ffffff; padding: 14px 20px; margin-top: 16px; font-style: normal; font-size: 0.9rem; line-height: 1.8; border-radius: 4px; }
+  blockquote strong { color: #ff2d2d; }
+  .accent { color: #ff2d2d; font-weight: 700; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+  .member-card { background: #1a1a1a; border-radius: 10px; padding: 15px; border: 1px solid #2a2a2a; }
+---
+
+<!-- _class: lead -->
+
+# 一般社団法人<br>ディレクションサポート協会
+## DiSA (Direction Support Association)
+### 「ディレクションの困りごと」を解決する
+
+---
+
+# なぜ今、ディレクションなのか？
+## AI時代の今だから仕事をアップデート
+
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 20px;">
+<p style="font-size: 0.95rem; line-height: 1.8; margin: 0;">
+AIと共に働く時代、人間が担うべき「ディレクション」は<b>すべての人のベーススキルになる</b><br><br>
+<span style="color: #ff2d2d; font-weight: 700;">その鍵は、ディレクションにある</span>
+</p>
+</div>
+
+<div class="grid-3" style="margin-top: 20px;">
+  <div class="card" style="text-align: center; padding: 14px;">
+    <p style="font-size: 0.7rem; margin: 0;">#ゴールと段取りを決める</p>
+  </div>
+  <div class="card" style="text-align: center; padding: 14px;">
+    <p style="font-size: 0.7rem; margin: 0;">#周辺を巻き込んで合意形成する</p>
+  </div>
+  <div class="card" style="text-align: center; padding: 14px;">
+    <p style="font-size: 0.7rem; margin: 0;">#イニシアチブを握り続けて進捗する</p>
+  </div>
+</div>
+
+---
+
+# ミッション / ビジョン
+## ディレクションを「みんなのベーススキル」へ
+
+<div class="columns">
+<div class="card">
+<span class="chip">Mission</span>
+<h3 style="border-left: 2px solid #ff2d2d; padding-left: 10px; margin-bottom: 12px;">世にある「ディレクションの困りごと」をなくす</h3>
+</div>
+<div class="card">
+<span class="chip">Vision</span>
+<h3 style="border-left: 2px solid #ff2d2d; padding-left: 10px; margin-bottom: 12px;">ディレクションを「みんなのベーススキル」として教え合う</h3>
+</div>
+</div>
+
+> **Values**　ディレクションの知識を、わかりやすく実践的な形に整理する
+
+---
+
+# 支援対象者
+## 職種を超えたプロジェクトの「架け橋」に
+
+<div class="columns">
+<div class="card">
+<span class="chip">Director</span>
+<p style="font-size: 0.8rem;">「誰が・何を・いつまでに」の曖昧さを解消し、プロジェクト全体を牽引したい</p>
+</div>
+<div class="card">
+<span class="chip">Designer</span>
+<p style="font-size: 0.8rem;">論理的な根拠に基づき、意図が伝わるデザインを提案・実現したい</p>
+</div>
+<div class="card">
+<span class="chip">Engineer</span>
+<p style="font-size: 0.8rem;">実装だけでなく、上流工程の意思決定に主体的に関わりたい</p>
+</div>
+<div class="card">
+<span class="chip">Manager</span>
+<p style="font-size: 0.8rem;">現場と経営の目線を揃え、確信を持って判断できる組織をつくりたい</p>
+</div>
+</div>
+
+---
+
+# 主要活動 01
+## 体系化：ディレクション辞書 β
+
+<div class="columns">
+<div>
+  <p style="font-size: 0.85rem; line-height: 1.9;">
+  「ディレクションって、結局なに？」<br>
+  この問いに正面から向き合った。<br><br>
+  捉えづらかったディレクションを<b>『ディレクション辞書β』</b>として体系化し、企業と共同で講座開発も進行中。
+  </p>
+</div>
+<div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  <img src="https://drsp.cc/assets/wp/logo-1.svg" style="width: 100px; opacity: 0.3; margin-bottom: 20px;">
+  <h3 style="margin: 0;">ディレクション辞書 β</h3>
+  <p style="font-size: 0.6rem; color: #666; margin-top: 8px;">Notionにて公開中</p>
+</div>
+</div>
+
+---
+
+# 主要活動 02
+## 情報発信 & コミュニティ
+
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 20px;">
+<p style="font-size: 0.85rem; line-height: 1.9; margin: 0;">
+「自分だけがうまくできていないのか」と思ったことはないか。<br>
+ウェビナー・交流会・noteで、<b>現場の生の声を集め、一緒に前に進む場をつくっています。</b>
+</p>
+</div>
+
+<div class="columns">
+<div class="card">
+<span class="chip">Note / Webinar</span>
+<h3 style="margin: 0;">ウェビナー・交流会・note</h3>
+<p style="font-size: 0.7rem; margin-top: 10px;">実務の失敗談・成功体験・AI活用の試行錯誤をリアルタイムで発信</p>
+</div>
+<div class="card">
+<span class="chip">Community</span>
+<h3 style="margin: 0;">ゆるくつながり、学び合う</h3>
+<ul style="font-size: 0.7rem; padding-left: 15px; margin-top: 10px;">
+  <li><b>うしごろトーク</b>：アバターによる気軽な座談会</li>
+  <li><b>AI部</b>：AI個人開発者の知見シェア会</li>
+</ul>
+</div>
+</div>
+
+---
+
+# 実績・パートナー企業
+## ともに「ディレクション文化」を育てる仲間たち
+
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 20px;">
+<span class="chip">Book</span>
+<h3 style="margin: 0 0 8px;">『FigmaだけでWeb制作』</h3>
+<p style="font-size: 0.8rem; line-height: 1.8; margin: 0;">
+「本の通りにいかない」と感じたことがあるなら、それは当然だ。<br>
+DiSAメンバー共著の本書を軸に、<b>実務の現実に寄り添った知見を届けています。</b>
+</p>
+</div>
+
+<div class="card">
+<span class="chip">Partners</span>
+<p style="font-size: 0.75rem; line-height: 2; margin: 4px 0 0;">
+ARATAMEDO　／　Aida　／　FireColor　／　ShareDan　／　PATHOS　／　SIRARA　／　JUNNI　ほか <b>15社以上</b>が参画
+</p>
+</div>
+
+---
+
+# メンバー
+## 多様な専門家が企画・運営に参画
+
+<div class="grid-3" style="font-size: 0.55rem;">
+<div class="member-card"><span class="chip">会長</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">中島 勝悟（なしょ）</h3>
+<p style="color: #aaa; line-height: 1.6;">まるみデザインファーム<br>合同会社ゆらり代表</p></div>
+<div class="member-card"><span class="chip">副会長</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">宇野 健児（UNO）</h3>
+<p style="color: #aaa; line-height: 1.6;">Webディレクター兼UXデザイナー<br>Web・情報設計とUXが主戦場</p></div>
+<div class="member-card" style="border: 1px solid #ff2d2d;"><span class="chip">事務局長</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">助田 正樹（すけさん）</h3>
+<p style="color: #aaa; line-height: 1.6;">Web・IT企業の採用・組織支援<br>3,000名の対話実績</p></div>
+<div class="member-card"><span class="chip">CTO</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">しょうみゆ</h3>
+<p style="color: #aaa; line-height: 1.6;">チャレンジ精神旺盛な<br>デザインエンジニア</p></div>
+<div class="member-card"><span class="chip">COO</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">こいずみ まこと</h3>
+<p style="color: #aaa; line-height: 1.6;">Web・動画・システムを操る<br>ゼネラリスト</p></div>
+<div class="member-card"><span class="chip">CDO</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">木村 よねこ</h3>
+<p style="color: #aaa; line-height: 1.6;">SaaSプロダクトのUI/UXデザイナー<br>PdM/PMサポートまで対応</p></div>
+<div class="member-card"><span class="chip">師匠</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">まるみ（倉又 美樹）</h3>
+<p style="color: #aaa; line-height: 1.6;">UI/UXから印刷物まで<br>女子美術大学 非常勤講師</p></div>
+<div class="member-card"><span class="chip">神の声</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">よしとみ</h3>
+<p style="color: #aaa; line-height: 1.6;">合同会社ゆらり代表<br>クラフトジン開発も手掛ける</p></div>
+<div class="member-card"><span class="chip">PR</span>
+<h3 style="margin: 0.4rem 0; font-size: 0.85rem;">うし3号</h3>
+<p style="color: #aaa; line-height: 1.6;">DiSA広報<br>note・X・YouTube担当</p></div>
+</div>
+
+---
+
+# 法人会員（DiSA サポーター）とは
+## ディレクション文化を、一緒に育てるパートナー
+
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 16px;">
+<p style="font-size: 0.85rem; line-height: 1.8; margin: 0;"><b>200,000円（税別）／ 6ヶ月契約</b>　月額換算 約33,000円<br>対象：事業会社・制作会社・1人会社・フリーランス　／　Slack参加人数：制限なし</p>
+</div>
+
+<div class="grid-3">
+<div class="card" style="text-align: center;">
+<span class="chip">AI UPDATE</span>
+<p style="font-size: 0.65rem; color: #aaa; margin-top: 6px;">AIの最新情報・個人開発アプリのシェアリング会（毎月1回目処）</p>
+</div>
+<div class="card" style="text-align: center;">
+<span class="chip">FIGMA UPDATE</span>
+<p style="font-size: 0.65rem; color: #aaa; margin-top: 6px;">Figma最新情報のキャッチアップと現場知見の共有（毎月1回目処）</p>
+</div>
+<div class="card" style="text-align: center;">
+<span class="chip">DIRECTION ASSET</span>
+<p style="font-size: 0.65rem; color: #aaa; margin-top: 6px;">ディレクション辞書βの編集に参画し、実務知見を資産化（都度）</p>
+</div>
+</div>
+
+---
+
+# ご一緒できること
+## 貴社と DiSA が創れる価値
+
+<div class="columns">
+<div>
+<div class="card" style="margin-bottom: 16px;">
+<span class="chip">CONSULTING</span>
+<h3 style="margin: 0 0 6px;">壁打ち・相談</h3>
+<p style="font-size: 0.75rem;">チームビルディング・採用・デザインシステム等（毎月1回 / 60分）</p>
+</div>
+<div class="card">
+<span class="chip">PR SUPPORT</span>
+<h3 style="margin: 0 0 6px;">noteインタビュー掲載</h3>
+<p style="font-size: 0.75rem;">DiSA運営のnoteにてインタビュー記事を掲載し、活動発信を支援（初回1回）</p>
+</div>
+</div>
+<div>
+<div class="card" style="margin-bottom: 16px;">
+<span class="chip">NETWORKING</span>
+<h3 style="margin: 0 0 6px;">専門家ネットワークへの接続</h3>
+<p style="font-size: 0.75rem;">100名を超える厳選された専門家パートナーとの接続機会を提供</p>
+</div>
+<div class="card">
+<span class="chip">COMMUNITY</span>
+<h3 style="margin: 0 0 6px;">共同講座・イベント共催</h3>
+<p style="font-size: 0.75rem;">自社ナレッジの体系化支援・DiSAコミュニティへのリーチ提供</p>
+</div>
+</div>
+</div>
+
+---
+
+# よくある質問
+## ご検討の際に多いお声
+
+<div class="card" style="margin-bottom: 14px;">
+<p style="font-size: 0.75rem; margin: 0;"><span style="color: #ff2d2d; font-weight: 700;">Q.</span>　どんな規模・業種の企業でも参加できますか？</p>
+<p style="font-size: 0.8rem; margin: 8px 0 0; padding-left: 20px;">はい。事業会社・制作会社・1人会社・フリーランスまで対象です。規模は問いません。</p>
+</div>
+<div class="card" style="margin-bottom: 14px;">
+<p style="font-size: 0.75rem; margin: 0;"><span style="color: #ff2d2d; font-weight: 700;">Q.</span>　Slackへの参加人数に制限はありますか？</p>
+<p style="font-size: 0.8rem; margin: 8px 0 0; padding-left: 20px;">制限なし。1社あたり何名でも参加いただけます。</p>
+</div>
+<div class="card">
+<p style="font-size: 0.75rem; margin: 0;"><span style="color: #ff2d2d; font-weight: 700;">Q.</span>　まず何から始めればいいですか？</p>
+<p style="font-size: 0.8rem; margin: 8px 0 0; padding-left: 20px;">お問い合わせフォーム（<a href="https://drsp.cc/inquiry/" style="color: #ff2d2d;">drsp.cc/inquiry</a>）またはSNSでご連絡ください。</p>
+</div>
+
+---
+
+# 法人概要
+## 一般社団法人ディレクションサポート協会
+
+<div class="columns">
+<div class="card">
+
+| | |
+|---|---|
+| **法人名** | 一般社団法人<br>ディレクションサポート協会 |
+| **代表理事** | 助田 正樹 |
+| **設立** | 2022年10月3日 |
+| **適格請求書番号** | T4010805002979 |
+
+</div>
+<div class="card">
+
+| | |
+|---|---|
+| **所在地** | 〒143-0023<br>東京都大田区山王2-5-6<br>SANNO BRIDGE |
+| **事業内容** | 法人プロジェクト支援<br>イベント企画・運営 |
+| **Web** | https://drsp.cc/ |
+
+</div>
+</div>
+
+---
+
+<!-- _class: lead -->
+
+# ありがとうございました。
+## 「ディレクションの困りごと」を共に解決しませんか？
+
+**一般社団法人ディレクションサポート協会（DiSA）**
+https://drsp.cc/
+contact@drsp.cc
