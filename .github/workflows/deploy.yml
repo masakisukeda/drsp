@@ -47,6 +47,8 @@ jobs:
               - 'member/**'
             membership:
               - 'membership/**'
+            slide:
+              - 'slide/**'
             any:
               - '.github/workflows/deploy.yml'
               - '.htaccess'
@@ -67,6 +69,7 @@ jobs:
               - 'privacy/**'
               - 'member/**'
               - 'membership/**'
+              - 'slide/**'
 
       - name: Update sitemap lastmod from git history
         if: steps.changes.outputs.any == 'true'
@@ -185,6 +188,7 @@ jobs:
           CH_PRIVACY: ${{ steps.changes.outputs.privacy }}
           CH_MEMBER: ${{ steps.changes.outputs.member }}
           CH_MEMBERSHIP: ${{ steps.changes.outputs.membership }}
+          CH_SLIDE: ${{ steps.changes.outputs.slide }}
         run: |
           {
             echo "set ssl:verify-certificate no"
@@ -231,6 +235,9 @@ jobs:
             fi
             if [ "$CH_MEMBERSHIP" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms membership membership"
+            fi
+            if [ "$CH_SLIDE" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms slide slide"
             fi
             echo "bye"
           } > /tmp/upload.lftp
