@@ -193,38 +193,38 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 
 <div class="grid-3" style="font-size: 0.9rem; gap: 10px;">
 <div class="member-card" style="padding: 12px;"><span class="chip">会長</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/KQP6hgBO_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="中島 勝悟"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">中島 勝悟（なしょ）</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">中島 勝悟（なしょ）</h3><img src="https://drsp.cc/assets/wp/KQP6hgBO_400x400.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="中島 勝悟"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">熊本県出身 群馬県在住｜まるみデザインファーム｜合同会社ゆらり←フリーランスデザイナー←デジLIG’22/8卒←自動車部品工場生産技術職</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">副会長</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/uno-kenji_photo.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="宇野 健児"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">宇野 健児（UNO）</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">宇野 健児（UNO）</h3><img src="https://drsp.cc/assets/wp/uno-kenji_photo.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="宇野 健児"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。「知識は足し算、アイディアは掛け算」を信条に、最良のクリエイティブを。</p></div>
 <div class="member-card" style="border: 1px solid #ff2d2d; padding: 12px;"><span class="chip">事務局長</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/sukeda.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #ff2d2d;" alt="助田 正樹"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">助田 正樹（すけさん）</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">助田 正樹（すけさん）</h3><img src="https://drsp.cc/assets/wp/sukeda.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #ff2d2d; flex-shrink: 0;" alt="助田 正樹"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">Web・IT企業の採用・組織支援。3,000名の対話実績に基づく「目利き」と「仕組み化」で、人材ミスマッチを防ぎ、事業成長を裏から支えます。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">CTO</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/img_ms_1-1.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="しょうみゆ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">しょうみゆ</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">しょうみゆ</h3><img src="https://drsp.cc/assets/wp/img_ms_1-1.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="しょうみゆ"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">チャレンジ精神旺盛なデザインエンジニア。「自分のしあわせの先に人のしあわせ」をモットーに、Web制作や技術メンターとして全力で課題解決！</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">COO</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/P32512742-1.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="こいずみ まこと"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">こいずみ まこと</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">こいずみ まこと</h3><img src="https://drsp.cc/assets/wp/P32512742-1.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="こいずみ まこと"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">Studio FireColor／IMAKE役員。Web・動画・システム・料理まで操るゼネラリスト。制作から教育、組織デザインまで全方位でモノ作りを追求。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">CDO</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/RBnUir1d_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="木村 よねこ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">木村 よねこ</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">木村 よねこ</h3><img src="https://drsp.cc/assets/wp/RBnUir1d_400x400.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="木村 よねこ"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">SaaSプロダクトのUI/UXデザイナー。開発・運用・内製化、PdM/PMサポートまで幅広く担当。フレキシブルな対応を信条に、キャリア講義も実施。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">師匠</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/AVlMrN2k_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="まるみ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">まるみ（倉又 美樹）</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">まるみ（倉又 美樹）</h3><img src="https://drsp.cc/assets/wp/AVlMrN2k_400x400.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="まるみ"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">UI/UXから印刷物まで幅広く手掛けるデザイナー。金融系開発や教育にも携わり、現在は女子美術大学で非常勤講師を兼任。製作者と教育者の両面からデザインに従事。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">神の声</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/IMG_3780.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="よしとみ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">よしとみ</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">よしとみ</h3><img src="https://drsp.cc/assets/wp/IMG_3780.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="よしとみ"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">デザイナーを経て、合同会社ゆらり代表として独立。Web、アプリなどのクリエイティブ制作を中心に活動中。クラフトジンの開発も行っている。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">PR</span>
-<div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/ushi_00_500.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="うし3号"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">うし3号</h3></div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">うし3号</h3><img src="https://drsp.cc/assets/wp/ushi_00_500.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="うし3号"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">一般社団法人ディレクションサポート協会（DiSA）広報やってますうし3号です。note、X、YouTubeなどメディア周りに登場したりします。</p></div>
 </div>
 
 ---
 
-# 法人会員（DiSA サポーター）とは
-## ディレクション文化を、一緒に育てるパートナー
+# DiSA法人会員とは
+## ディレクション文化を、一緒に育てる法人パートナー
 
 <div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 16px;">
 <p style="font-size: 0.9rem; line-height: 1.8; margin: 0;"><b>200,000円（税別 / 6ヶ月契約）</b><br>※月額換算：約33,000円</p>
