@@ -2603,20 +2603,6 @@ nav a,
     scroll-snap-align: start;
   }
 
-  .page-speakingcircles .concept-grid--3 {
-    display: flex !important;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 12px;
-    padding-bottom: 12px;
-  }
-
-  .page-speakingcircles .concept-grid--3 > article {
-    flex: 0 0 80vw;
-    scroll-snap-align: start;
-  }
-
   .page-speakingcircles .mvv-grid {
     display: flex !important;
     overflow-x: auto;
@@ -2655,6 +2641,20 @@ nav a,
   }
 
   .page-about .support-grid > div {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+  }
+
+  .page-ai-bu .concept-grid--swipe {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .page-ai-bu .concept-grid--swipe > article {
     flex: 0 0 80vw;
     scroll-snap-align: start;
   }
