@@ -118,15 +118,13 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 <div class="columns">
 <div>
   <p style="font-size: 0.9rem; line-height: 1.9;">
-  「ディレクションって、結局なに？」<br>
-  この問いに正面から向き合った。<br><br>
-  捉えづらかったディレクションを<b>『ディレクション辞書β』</b>として体系化し、企業と共同で講座開発も進行中。
+  「ディレクションって、結局なに？」この問いに正面から向き合った。捉えづらかったディレクションを『ディレクション辞書β』として体系化し、企業と共同で講座開発も進行中。
   </p>
 </div>
 <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
   <img src="https://drsp.cc/assets/wp/sauvageauch0-dictionary-613910_640-2.webp" style="width: 100%; max-width: 260px; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; border: 1px solid #333;">
-  <h3 style="margin: 0;">ディレクション辞書 β</h3>
-  <p style="font-size: 0.6rem; color: #666; margin-top: 8px;">Notionにて公開中</p>
+  <h3 style="margin: 0;">体系化</h3>
+  <p style="font-size: 0.6rem; color: #666; margin-top: 8px;">ナレッジ化・共同講座の開発</p>
 </div>
 </div>
 
@@ -196,31 +194,31 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 <div class="grid-3" style="font-size: 0.6rem; gap: 10px;">
 <div class="member-card" style="padding: 12px;"><span class="chip">会長</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/KQP6hgBO_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="中島 勝悟"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">中島 勝悟（なしょ）</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">熊本県出身 群馬県在住｜まるみデザインファーム｜合同会社ゆらり←フリーランスデザイナー←デジLIG’22/8卒←自動車部品工場生産技術職</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">熊本県出身 群馬県在住｜まるみデザインファーム｜合同会社ゆらり←フリーランスデザイナー←デジLIG’22/8卒←自動車部品工場生産技術職</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">副会長</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/uno-kenji_photo.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="宇野 健児"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">宇野 健児（UNO）</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。「知識は足し算、アイディアは掛け算」を信条に、最良のクリエイティブを。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。「知識は足し算、アイディアは掛け算」を信条に、最良のクリエイティブを。</p></div>
 <div class="member-card" style="border: 1px solid #ff2d2d; padding: 12px;"><span class="chip">事務局長</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/sukeda.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #ff2d2d;" alt="助田 正樹"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">助田 正樹（すけさん）</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">Web・IT企業の採用・組織支援。3,000名の対話実績に基づく「目利き」と「仕組み化」で、人材ミスマッチを防ぎ、事業成長を裏から支えます。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">Web・IT企業の採用・組織支援。3,000名の対話実績に基づく「目利き」と「仕組み化」で、人材ミスマッチを防ぎ、事業成長を裏から支えます。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">CTO</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/img_ms_1-1.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="しょうみゆ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">しょうみゆ</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">チャレンジ精神旺盛なデザインエンジニア。「自分のしあわせの先に人のしあわせ」をモットーに、Web制作や技術メンターとして全力で課題解決！</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">チャレンジ精神旺盛なデザインエンジニア。「自分のしあわせの先に人のしあわせ」をモットーに、Web制作や技術メンターとして全力で課題解決！</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">COO</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/P32512742-1.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="こいずみ まこと"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">こいずみ まこと</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">Studio FireColor／IMAKE役員。Web・動画・システム・料理まで操るゼネラリスト。制作から教育、組織デザインまで全方位でモノ作りを追求。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">Studio FireColor／IMAKE役員。Web・動画・システム・料理まで操るゼネラリスト。制作から教育、組織デザインまで全方位でモノ作りを追求。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">CDO</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/RBnUir1d_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="木村 よねこ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">木村 よねこ</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">SaaSプロダクトのUI/UXデザイナー。開発・運用・内製化、PdM/PMサポートまで幅広く担当。フレキシブルな対応を信条に、キャリア講義も実施。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">SaaSプロダクトのUI/UXデザイナー。開発・運用・内製化、PdM/PMサポートまで幅広く担当。フレキシブルな対応を信条に、キャリア講義も実施。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">師匠</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/AVlMrN2k_400x400.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="まるみ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">まるみ（倉又 美樹）</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">UI/UXから印刷物まで幅広く手掛けるデザイナー。金融系開発や教育にも携わり、現在は女子美術大学で非常勤講師を兼任。製作者と教育者の両面からデザインに従事。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">UI/UXから印刷物まで幅広く手掛けるデザイナー。金融系開発や教育にも携わり、現在は女子美術大学で非常勤講師を兼任。製作者と教育者の両面からデザインに従事。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">神の声</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/IMG_3780.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="よしとみ"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">よしとみ</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">デザイナーを経て、合同会社ゆらり代表として独立。Web、アプリなどのクリエイティブ制作を中心に活動中。クラフトジンの開発も行っている。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">デザイナーを経て、合同会社ゆらり代表として独立。Web、アプリなどのクリエイティブ制作を中心に活動中。クラフトジンの開発も行っている。</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">PR</span>
 <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0 8px;"><img src="https://drsp.cc/assets/wp/ushi_00_500.webp" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 1px solid #444;" alt="うし3号"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25;">うし3号</h3></div>
-<p style="color: #aaa; line-height: 1.5; margin: 0;">一般社団法人ディレクションサポート協会（DiSA）広報やってますうし3号です。note、X、YouTubeなどメディア周りに登場したりします。</p></div>
+<p style="color: #aaa; font-size: 0.7rem; line-height: 1.45; margin: 0;">一般社団法人ディレクションサポート協会（DiSA）広報やってますうし3号です。note、X、YouTubeなどメディア周りに登場したりします。</p></div>
 </div>
 
 ---
@@ -235,15 +233,15 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 <div class="grid-3">
 <div class="card" style="text-align: center;">
 <span class="chip">AI UPDATE</span>
-<p style="font-size: 0.6rem; color: #aaa; margin-top: 6px;">AIの最新情報・個人開発アプリのシェアリング会（毎月1回目処）</p>
+<p style="font-size: 0.7rem; color: #aaa; margin-top: 6px;">AIの最新情報・個人開発アプリのシェアリング会（毎月1回目処）</p>
 </div>
 <div class="card" style="text-align: center;">
 <span class="chip">FIGMA UPDATE</span>
-<p style="font-size: 0.6rem; color: #aaa; margin-top: 6px;">Figma最新情報のキャッチアップと現場知見の共有（毎月1回目処）</p>
+<p style="font-size: 0.7rem; color: #aaa; margin-top: 6px;">Figma最新情報のキャッチアップと現場知見の共有（毎月1回目処）</p>
 </div>
 <div class="card" style="text-align: center;">
 <span class="chip">DIRECTION ASSET</span>
-<p style="font-size: 0.6rem; color: #aaa; margin-top: 6px;">ディレクション辞書βの編集に参画し、実務知見を資産化（都度）</p>
+<p style="font-size: 0.7rem; color: #aaa; margin-top: 6px;">ディレクション辞書βの編集に参画し、実務知見を資産化（都度）</p>
 </div>
 </div>
 
