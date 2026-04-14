@@ -216,7 +216,7 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 <div class="member-card" style="padding: 12px;"><span class="chip">神の声</span>
 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">よしとみ</h3><img src="https://drsp.cc/assets/wp/IMG_3780.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="よしとみ"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">デザイナーを経て、合同会社ゆらり代表として独立。Web、アプリなどのクリエイティブ制作を中心に活動中。クラフトジンの開発も行っている。</p></div>
-<div class="member-card" style="padding: 12px;"><span class="chip">PR</span>
+<div class="member-card" style="padding: 12px;"><span class="chip">DiSA 広報</span>
 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 2px 0 8px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">うし3号</h3><img src="https://drsp.cc/assets/wp/ushi_00_500.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="うし3号"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">一般社団法人ディレクションサポート協会（DiSA）広報やってますうし3号です。note、X、YouTubeなどメディア周りに登場したりします。</p></div>
 </div>
