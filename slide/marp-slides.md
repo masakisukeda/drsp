@@ -14,7 +14,10 @@ style: |
     padding: 60px 60px 80px;
     background: radial-gradient(circle at 50% 100%, rgba(30,30,30,1) 0%, rgba(18,18,18,1) 70%);
     display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+    overflow: hidden;
   }
+  section * { box-sizing: border-box; }
+  p, li { overflow-wrap: anywhere; }
   section.lead { justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #2e2e2e 0%, #1a1a1a 40%, #0a0a0a 100%); }
   section.vcenter { justify-content: center; }
   section::after { font-size: 0.9rem; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
@@ -34,6 +37,13 @@ style: |
   .accent { color: #ff2d2d; font-weight: 700; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
   .member-card { background: #1a1a1a; border-radius: 10px; padding: 15px; border: 1px solid #2a2a2a; }
+  section.dense h1 { font-size: 1.42rem; margin-bottom: 0.42em; padding-bottom: 10px; }
+  section.dense h2 { font-size: 1.04rem; margin-bottom: 0.3em; }
+  section.dense .card { padding: 14px; margin-bottom: 0.48rem; }
+  section.dense p { font-size: 0.78rem !important; line-height: 1.5 !important; }
+  section.dense .chip { font-size: 0.68rem !important; letter-spacing: 0.08em; margin-bottom: 6px; }
+  section.dense .grid-3 { gap: 8px; }
+  section.dense .columns { gap: 16px; }
 ---
 
 <!-- _class: lead -->
@@ -178,6 +188,8 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 
 ---
 
+<!-- _class: dense -->
+
 # メンバー
 ## 多様な専門家が企画・運営に参画
 
@@ -239,6 +251,8 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 </div>
 
 ---
+
+<!-- _class: dense -->
 
 # 実績・パートナー企業
 ## ともに「ディレクション文化」を育てる仲間たち
@@ -322,6 +336,8 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE / �
 
 ---
 
+<!-- _class: dense -->
+
 # DiSA法人会員とは
 ## ディレクション文化を、一緒に育てる法人パートナー
 
@@ -385,6 +401,8 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE / �
 
 ---
 
+<!-- _class: dense -->
+
 # 法人概要
 ## 一般社団法人ディレクションサポート協会
 
@@ -428,6 +446,8 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE / �
 </div>
 
 ---
+
+<!-- _class: dense -->
 
 # よくある質問
 ## 検討の際によくある質問
