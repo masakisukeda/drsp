@@ -23,10 +23,49 @@ style: |
   section::after { font-size: 0.9rem; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
   header { left: 60px; top: 30px; font-size: 0.9rem; color: #666; width: auto; }
   footer { color: #555555; font-size: 0.9rem; left: 60px; text-align: left; }
-  h1 { color: #ffffff; font-size: 1.6rem; border-bottom: none; background: linear-gradient(to right, #ff2d2d 40px, transparent 40px) bottom left / 100% 3px no-repeat; margin-bottom: 0.6em; font-weight: 700; padding-bottom: 14px; text-align: left; text-shadow: 0 0 10px rgba(255,45,45,0.2); }
-  section.lead h1 { text-align: center; border-bottom: none; background: linear-gradient(to right, transparent calc(50% - 24px), #ff2d2d calc(50% - 24px), #ff2d2d calc(50% + 24px), transparent calc(50% + 24px)) bottom / 100% 3px no-repeat; margin-left: auto; margin-right: auto; padding-bottom: 20px; font-size: 3.2rem; color: #ffffff; text-shadow: none; }
-  h2 { color: #ffffff; font-size: 1.2rem; font-weight: 500; margin-top: 0; text-align: left; }
-  section.lead h2 { text-align: center; color: #ffffff; font-size: 1.2rem; margin-bottom: 4px; font-weight: 300; }
+  h1 {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.48em;
+    padding-bottom: 14px;
+    text-align: left;
+    border-bottom: none;
+    background: linear-gradient(to right, #ff2d2d 40px, transparent 40px) bottom left / 100% 3px no-repeat;
+    text-shadow: 0 0 10px rgba(255,45,45,0.2);
+  }
+  h2 {
+    color: #e8e8e8;
+    font-size: 1.12rem;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.78em;
+    padding-left: 10px;
+    border-left: 3px solid rgba(255,45,45,0.55);
+    text-align: left;
+  }
+  section.lead h1 {
+    text-align: center;
+    border-bottom: none;
+    background: linear-gradient(to right, transparent calc(50% - 24px), #ff2d2d calc(50% - 24px), #ff2d2d calc(50% + 24px), transparent calc(50% + 24px)) bottom / 100% 3px no-repeat;
+    margin: 0 auto 0.4em;
+    padding-bottom: 20px;
+    font-size: 3.2rem;
+    color: #ffffff;
+    text-shadow: none;
+  }
+  section.lead h2 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.16rem;
+    font-weight: 300;
+    margin: 0 0 0.2em;
+    padding-left: 0;
+    border-left: 0;
+  }
   h3 { color: #ffffff; font-weight: 700; font-size: 1.2rem; }
   section.lead h3 { color: #ffffff; font-size: 1.2rem; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 10px; }
   .card { background: linear-gradient(180deg, #252525 0%, #181818 100%); border-radius: 12px; padding: 20px; border: 1px solid #333333; margin-bottom: 0.7rem; box-shadow: 0 6px 12px 0 rgba(0,0,0,0.5); }
@@ -37,8 +76,8 @@ style: |
   .accent { color: #ff2d2d; font-weight: 700; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
   .member-card { background: #1a1a1a; border-radius: 10px; padding: 15px; border: 1px solid #2a2a2a; }
-  section.dense h1 { font-size: 1.42rem; margin-bottom: 0.42em; padding-bottom: 10px; }
-  section.dense h2 { font-size: 1.04rem; margin-bottom: 0.3em; }
+  section.dense h1 { font-size: 1.42rem; margin-bottom: 0.34em; padding-bottom: 10px; }
+  section.dense h2 { font-size: 1rem; margin-bottom: 0.52em; }
   section.dense .card { padding: 14px; margin-bottom: 0.48rem; }
   section.dense p { font-size: 0.78rem !important; line-height: 1.5 !important; }
   section.dense .chip { font-size: 0.68rem !important; letter-spacing: 0.08em; margin-bottom: 6px; }
