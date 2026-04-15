@@ -32,10 +32,46 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "一般社団法人ディレクションサポート協会（DiSA）",
-    "description": "一般社団法人ディレクションサポート協会（DiSA）の公式サイト。ディレクションを軸に、営利・非営利の活動、サービス、メンバー情報を掲載しています。",
-    "url": "https://drsp.cc/"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://drsp.cc/#organization",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "url": "https://drsp.cc/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://drsp.cc/assets/wp/logo-1.svg"
+        },
+        "sameAs": [
+          "https://x.com/pr_disa",
+          "https://note.com/disa_pr"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://drsp.cc/#website",
+        "url": "https://drsp.cc/",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "inLanguage": "ja",
+        "publisher": {
+          "@id": "https://drsp.cc/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://drsp.cc/#webpage",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "description": "一般社団法人ディレクションサポート協会（DiSA）の公式サイト。ディレクションを軸に、営利・非営利の活動、サービス、メンバー情報を掲載しています。",
+        "url": "https://drsp.cc/",
+        "isPartOf": {
+          "@id": "https://drsp.cc/#website"
+        },
+        "about": {
+          "@id": "https://drsp.cc/#organization"
+        },
+        "inLanguage": "ja"
+      }
+    ]
   }
   </script>
   <!-- /SEO/OGP: managed -->
@@ -96,7 +132,7 @@
       </div>
     </section>
 
-    <section class="panel site-links-panel" aria-labelledby="site-links-title" data-aos="fade-up" data-aos-duration="700">
+    <section class="panel site-links-panel" aria-labelledby="site-links-title" data-aos="fade-up" data-aos-duration="700" hidden>
       <p class="eyebrow">SITE MAP</p>
       <h2 id="site-links-title">サイト内主要導線</h2>
       <nav aria-label="主要ページ">

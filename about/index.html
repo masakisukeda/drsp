@@ -17,13 +17,13 @@
   <!-- SEO/OGP: managed -->
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <link rel="canonical" href="https://drsp.cc/about">
+  <link rel="canonical" href="https://drsp.cc/about/">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="一般社団法人ディレクションサポート協会（DiSA）">
   <meta property="og:title" content="法人案内 | DiSA">
   <meta property="og:description" content="一般社団法人ディレクションサポート協会（DiSA）の法人案内ページ。ミッション・ビジョン・支援対象・法人概要を掲載しています。">
-  <meta property="og:url" content="https://drsp.cc/about">
+  <meta property="og:url" content="https://drsp.cc/about/">
   <meta property="og:image" content="https://drsp.cc/assets/wp/ogp-seminar-webinar-qa.webp">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="法人案内 | DiSA">
@@ -32,10 +32,63 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "法人案内 | DiSA",
-    "description": "一般社団法人ディレクションサポート協会（DiSA）の法人案内ページ。ミッション・ビジョン・支援対象・法人概要を掲載しています。",
-    "url": "https://drsp.cc/about"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://drsp.cc/#organization",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "url": "https://drsp.cc/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://drsp.cc/assets/wp/logo-1.svg"
+        },
+        "sameAs": [
+          "https://x.com/pr_disa",
+          "https://note.com/disa_pr"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://drsp.cc/#website",
+        "url": "https://drsp.cc/",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "inLanguage": "ja",
+        "publisher": {
+          "@id": "https://drsp.cc/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://drsp.cc/about/#webpage",
+        "name": "法人案内 | DiSA",
+        "description": "一般社団法人ディレクションサポート協会（DiSA）の法人案内ページ。ミッション・ビジョン・支援対象・法人概要を掲載しています。",
+        "url": "https://drsp.cc/about/",
+        "isPartOf": {
+          "@id": "https://drsp.cc/#website"
+        },
+        "about": {
+          "@id": "https://drsp.cc/#organization"
+        },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "TOP",
+            "item": "https://drsp.cc/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "法人案内",
+            "item": "https://drsp.cc/about/"
+          }
+        ]
+      }
+    ]
   }
   </script>
   <!-- /SEO/OGP: managed -->

@@ -15,13 +15,13 @@
   <!-- SEO/OGP: managed -->
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <link rel="canonical" href="https://drsp.cc/inquiry">
+  <link rel="canonical" href="https://drsp.cc/inquiry/">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="一般社団法人ディレクションサポート協会（DiSA）">
   <meta property="og:title" content="お問い合わせ | DiSA">
   <meta property="og:description" content="一般社団法人ディレクションサポート協会（DiSA）へのお問い合わせページ。サービス相談・見積依頼・活動に関するご連絡を受け付けています。">
-  <meta property="og:url" content="https://drsp.cc/inquiry">
+  <meta property="og:url" content="https://drsp.cc/inquiry/">
   <meta property="og:image" content="https://drsp.cc/assets/wp/ogp-seminar-webinar-qa.webp">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="お問い合わせ | DiSA">
@@ -30,10 +30,63 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "お問い合わせ | DiSA",
-    "description": "一般社団法人ディレクションサポート協会（DiSA）へのお問い合わせページ。サービス相談・見積依頼・活動に関するご連絡を受け付けています。",
-    "url": "https://drsp.cc/inquiry"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://drsp.cc/#organization",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "url": "https://drsp.cc/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://drsp.cc/assets/wp/logo-1.svg"
+        },
+        "sameAs": [
+          "https://x.com/pr_disa",
+          "https://note.com/disa_pr"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://drsp.cc/#website",
+        "url": "https://drsp.cc/",
+        "name": "一般社団法人ディレクションサポート協会（DiSA）",
+        "inLanguage": "ja",
+        "publisher": {
+          "@id": "https://drsp.cc/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://drsp.cc/inquiry/#webpage",
+        "name": "お問い合わせ | DiSA",
+        "description": "一般社団法人ディレクションサポート協会（DiSA）へのお問い合わせページ。サービス相談・見積依頼・活動に関するご連絡を受け付けています。",
+        "url": "https://drsp.cc/inquiry/",
+        "isPartOf": {
+          "@id": "https://drsp.cc/#website"
+        },
+        "about": {
+          "@id": "https://drsp.cc/#organization"
+        },
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "TOP",
+            "item": "https://drsp.cc/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "お問い合わせ",
+            "item": "https://drsp.cc/inquiry/"
+          }
+        ]
+      }
+    ]
   }
   </script>
   <!-- /SEO/OGP: managed -->
@@ -71,7 +124,7 @@
     </nav>
     <section class="panel" data-aos="fade-up" data-aos-duration="700">
       <p class="eyebrow">INQUIRY</p>
-      <h1 class="page-title">お問い合わせはこちら</h1>
+      <h1 class="page-title">お問い合わせ</h1>
       <div class="content-stack">
         <p>送信後、なるべく早くご返信します。</p>
       </div>
