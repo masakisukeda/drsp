@@ -557,6 +557,7 @@ h2 {
 }
 
 .page-breadcrumb {
+  display: block;
   margin: 0;
   font-size: 12px;
   font-weight: 700;
@@ -575,6 +576,7 @@ h2 {
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 6px;
 }
