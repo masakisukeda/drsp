@@ -16,6 +16,7 @@ style: |
     display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
   }
   section.lead { justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #2e2e2e 0%, #1a1a1a 40%, #0a0a0a 100%); }
+  section.vcenter { justify-content: center; }
   section::after { font-size: 0.9rem; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
   header { left: 60px; top: 30px; font-size: 0.9rem; color: #666; width: auto; }
   footer { color: #555555; font-size: 0.9rem; left: 60px; text-align: left; }
@@ -68,6 +69,8 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 
 ---
 
+<!-- _class: vcenter -->
+
 # ミッション / ビジョン
 ## ディレクションを「みんなのベーススキル」へ
 
@@ -115,16 +118,27 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 # 主要活動 01
 ## 体系化：ディレクション辞書 β
 
-<div class="columns">
-<div>
-  <p style="font-size: 0.9rem; line-height: 1.9;">
-  「ディレクションって、結局なに？」この問いに正面から向き合った。捉えづらかったディレクションを『ディレクション辞書β』として体系化し、企業と共同で講座開発も進行中。
-  </p>
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 18px;">
+<p style="font-size: 0.9rem; line-height: 1.8; margin: 0;">
+「ディレクションって、結局なに？」この問いに正面から向き合った。捉えづらかったディレクションを<b>『ディレクション辞書β』として体系化</b>し、企業と共同で講座開発も進行中。
+</p>
 </div>
-<div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-  <img src="https://drsp.cc/assets/wp/sauvageauch0-dictionary-613910_640-2.webp" style="width: 100%; max-width: 260px; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; border: 1px solid #333;">
-  <h3 style="margin: 0;">体系化</h3>
-  <p style="font-size: 0.9rem; color: #666; margin-top: 8px;">ナレッジ化・共同講座の開発</p>
+
+<div class="grid-3" style="gap: 14px;">
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">Define</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">概念の言語化</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">ディレクションに関わる用語・概念を実務起点で定義。現場の暗黙知を、だれもが使える言葉に落とし込む</p>
+</div>
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">Apply</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">知識の体系化</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">理論だけでなく実例を交えた実践的なナレッジとして整理。読んでそのまま使えるレベルを目指す</p>
+</div>
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">Co-Create</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">企業との共同講座</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">辞書を軸に企業と共同で講座を開発。組織へのディレクション文化の浸透を継続的に支援する</p>
 </div>
 </div>
 
@@ -157,44 +171,13 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 
 ---
 
-# 実績・パートナー企業
-## ともに「ディレクション文化」を育てる仲間たち
-
-<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 20px;">
-<span class="chip">Book</span>
-<h3 style="margin: 0 0 8px;">『FigmaだけでWeb制作』</h3>
-<p style="font-size: 0.9rem; line-height: 1.8; margin: 0;">
-「本の通りにいかない」と感じたことがあるなら、それは当然だ。<br>
-DiSAメンバー共著の『FigmaだけでWeb制作』を軸に、<b>実務の現実に寄り添った知見を届けています。</b>
-</p>
-</div>
-
-<div class="card" style="padding: 16px;">
-<span class="chip" style="margin-bottom: 8px;">Partners</span>
-<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 4px 0 8px; align-items: center;">
-  <img src="https://drsp.cc/assets/wp/arata-1.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="ARATAMEDO">
-  <img src="https://drsp.cc/assets/wp/aida.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="Aida">
-  <img src="https://drsp.cc/assets/wp/fire.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="FireColor">
-  <img src="https://drsp.cc/assets/wp/pathos.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="PATHOS">
-  <img src="https://drsp.cc/assets/wp/share.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="ShareDan">
-  <img src="https://drsp.cc/assets/wp/sirara.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="SIRARA">
-  <img src="https://drsp.cc/assets/wp/junni.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="JUNNI">
-  <img src="https://drsp.cc/assets/wp/shiftype.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="SHIFTYPE">
-</div>
-<p style="font-size: 0.9rem; line-height: 1.6; margin: 2px 0 0;">
-ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほか <b>15社以上</b>が参画
-</p>
-</div>
-
----
-
 # メンバー
 ## 多様な専門家が企画・運営に参画
 
 <div class="grid-3" style="font-size: 0.9rem; gap: 10px;">
 <div class="member-card" style="padding: 12px;"><span class="chip">会長</span>
 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 1px 0 1px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">中島 勝悟（なしょ）</h3><img src="https://drsp.cc/assets/wp/KQP6hgBO_400x400.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="中島 勝悟"></div>
-<p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">熊本県出身 群馬県在住｜まるみデザインファーム｜合同会社ゆらり←フリーランスデザイナー←デジLIG’22/8卒←自動車部品工場生産技術職</p></div>
+<p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">熊本県出身 群馬県在住｜まるみデザインファーム｜合同会社ゆらり←フリーランスデザイナー←デジLIG'22/8卒←自動車部品工場生産技術職</p></div>
 <div class="member-card" style="padding: 12px;"><span class="chip">副会長</span>
 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 1px 0 1px;"><h3 style="margin: 0; font-size: 0.9rem; line-height: 1.25; flex: 1;">宇野 健児（UNO）</h3><img src="https://drsp.cc/assets/wp/uno-kenji_photo.webp" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="宇野 健児"></div>
 <p style="color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0;">Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。「知識は足し算、アイディアは掛け算」を信条に、最良のクリエイティブを。</p></div>
@@ -223,30 +206,33 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 
 ---
 
-# DiSA法人会員とは
-## ディレクション文化を、一緒に育てる法人パートナー
+# 実績・パートナー企業
+## ともに「ディレクション文化」を育てる仲間たち
 
-<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 16px;">
-<p style="font-size: 0.9rem; line-height: 1.8; margin: 0;"><b>200,000円（税別 / 6ヶ月契約）</b><br>※月額換算：約33,000円</p>
-</div>
-
-<div class="grid-3">
-<div class="card" style="text-align: center;">
-<span class="chip">AI UPDATE</span>
-<p style="font-size: 0.9rem; color: #aaa; margin-top: 6px;">AIの最新情報・個人開発アプリのシェアリング会（毎月1回目処）</p>
-</div>
-<div class="card" style="text-align: center;">
-<span class="chip">FIGMA UPDATE</span>
-<p style="font-size: 0.9rem; color: #aaa; margin-top: 6px;">Figma最新情報のキャッチアップと現場知見の共有（毎月1回目処）</p>
-</div>
-<div class="card" style="text-align: center;">
-<span class="chip">DIRECTION ASSET</span>
-<p style="font-size: 0.9rem; color: #aaa; margin-top: 6px;">ディレクション辞書βの編集に参画し、実務知見を資産化（都度）</p>
-</div>
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 20px;">
+<span class="chip">Book</span>
+<h3 style="margin: 0 0 8px;">『FigmaだけでWeb制作』</h3>
+<p style="font-size: 0.9rem; line-height: 1.8; margin: 0;">
+「本の通りにいかない」と感じたことがあるなら、それは当然だ。<br>
+DiSAメンバー共著の『FigmaだけでWeb制作』を軸に、<b>実務の現実に寄り添った知見を届けています。</b>
+</p>
 </div>
 
-<div class="card" style="margin-top: 12px;">
-<p style="font-size: 0.9rem; margin: 0;">対象：事業会社、制作会社、1人会社、フリーランス　/　参加人数：制限なし（Slackへの参加は1社あたり何名でも）</p>
+<div class="card" style="padding: 16px;">
+<span class="chip" style="margin-bottom: 8px;">Partners</span>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 4px 0 8px; align-items: center;">
+  <img src="https://drsp.cc/assets/wp/arata-1.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="ARATAMEDO">
+  <img src="https://drsp.cc/assets/wp/aida.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="Aida">
+  <img src="https://drsp.cc/assets/wp/fire.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="FireColor">
+  <img src="https://drsp.cc/assets/wp/pathos.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="PATHOS">
+  <img src="https://drsp.cc/assets/wp/share.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="ShareDan">
+  <img src="https://drsp.cc/assets/wp/sirara.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="SIRARA">
+  <img src="https://drsp.cc/assets/wp/junni.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="JUNNI">
+  <img src="https://drsp.cc/assets/wp/shiftype.webp" style="width: 100%; height: 34px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px;" alt="SHIFTYPE">
+</div>
+<p style="font-size: 0.9rem; line-height: 1.6; margin: 2px 0 0;">
+ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほか <b>15社以上</b>が参画
+</p>
 </div>
 
 ---
@@ -283,6 +269,78 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 
 ---
 
+# DiSA法人会員とは
+## ディレクション文化を、一緒に育てる法人パートナー
+
+<div class="card" style="border-left: 4px solid #ff2d2d; margin-bottom: 16px;">
+<p style="font-size: 0.9rem; line-height: 1.9; margin: 0;">
+<b>200,000円（税別）／ 6ヶ月契約　　月額換算：約33,000円</b><br>
+対象：事業会社・制作会社・1人会社・フリーランス　／　Slack参加人数：制限なし
+</p>
+</div>
+
+<div class="grid-3" style="gap: 14px;">
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">AI UPDATE</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">AI最新情報の共有</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">AIの最新情報・個人開発アプリのシェアリング会を毎月1回目処で実施</p>
+</div>
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">FIGMA UPDATE</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">Figma現場知見の共有</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">Figma最新情報のキャッチアップと現場知見の共有を毎月1回目処で実施</p>
+</div>
+<div class="card" style="padding: 18px 16px;">
+<span class="chip">DIRECTION ASSET</span>
+<h3 style="margin: 8px 0 6px; font-size: 1rem;">ナレッジの資産化</h3>
+<p style="font-size: 0.85rem; color: #aaa; margin: 0; line-height: 1.7;">ディレクション辞書βの編集に参画し、実務知見を資産化（都度）</p>
+</div>
+</div>
+
+---
+
+<!-- _class: vcenter -->
+
+# 法人概要
+## 一般社団法人ディレクションサポート協会
+
+<div class="columns">
+<div class="card" style="padding: 0; overflow: hidden;">
+  <div style="display: flex; align-items: stretch; border-bottom: 1px solid #2e2e2e;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 38%; background: #171717;">法人名</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1; line-height: 1.6;">一般社団法人<br>ディレクションサポート協会</div>
+  </div>
+  <div style="display: flex; align-items: center; border-bottom: 1px solid #2e2e2e;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 38%; background: #171717;">代表理事</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1;">助田 正樹</div>
+  </div>
+  <div style="display: flex; align-items: center; border-bottom: 1px solid #2e2e2e;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 38%; background: #171717;">設立</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1;">2022年10月3日</div>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 38%; background: #171717;">適格請求書番号</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1;">T4010805002979</div>
+  </div>
+</div>
+<div class="card" style="padding: 0; overflow: hidden;">
+  <div style="display: flex; align-items: stretch; border-bottom: 1px solid #2e2e2e;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 30%; background: #171717;">所在地</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1; line-height: 1.6;">〒143-0023<br>東京都大田区山王2-5-6<br>SANNO BRIDGE</div>
+  </div>
+  <div style="display: flex; align-items: stretch; border-bottom: 1px solid #2e2e2e;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 30%; background: #171717;">事業内容</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1; line-height: 1.6;">・法人プロジェクト支援<br>・イベント企画・運営</div>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <div style="color: #ff2d2d; font-weight: 700; font-size: 0.85rem; padding: 10px 12px; min-width: 30%; background: #171717;">Web</div>
+    <div style="font-size: 0.85rem; padding: 10px 12px; background: #1d1d1d; flex: 1;"><a href="https://drsp.cc/" style="color: #aaaaaa;" target="_blank" rel="noopener noreferrer">https://drsp.cc/</a></div>
+  </div>
+</div>
+</div>
+
+---
+
 # よくある質問
 ## 検討の際によくある質問
 
@@ -297,29 +355,6 @@ ARATAMEDO / Aida / FireColor / ShareDan / PATHOS / SIRARA / JUNNI / SHIFTYPE ほ
 <div class="card">
 <p style="font-size: 0.9rem; margin: 0;"><span style="color: #ff2d2d; font-weight: 700;">Q.</span>　1人会社でも参加できますか？</p>
 <p style="font-size: 0.9rem; margin: 8px 0 0; padding-left: 20px;">A：1人会社、フリーランスの方ももちろん参加いただけます。自社だけではなかなか大変なディレクション強化や人脈づくりなどに活用してください。</p>
-</div>
-
----
-
-# 法人概要
-## 一般社団法人ディレクションサポート協会
-
-<div class="columns">
-<div class="card" style="padding: 0; background: #171717; border: 1px solid #2c2c2c; overflow: hidden;">
-<table style="display: table; width: 100%; margin: 0; border-collapse: collapse; table-layout: fixed; font-size: 0.9rem; line-height: 1.7; color: #f4f4f4; background: #171717;">
-  <tr><td style="color: #ff2d2d; width: 30%; font-weight: 700; padding: 8px 10px; vertical-align: top; border-bottom: 1px solid #2e2e2e; background: #171717;">法人名</td><td style="padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #1d1d1d;">一般社団法人<br>ディレクションサポート協会</td></tr>
-  <tr><td style="color: #ff2d2d; font-weight: 700; padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #171717;">代表理事</td><td style="padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #1d1d1d;">助田 正樹</td></tr>
-  <tr><td style="color: #ff2d2d; font-weight: 700; padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #171717;">設立</td><td style="padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #1d1d1d;">2022年10月3日</td></tr>
-  <tr><td style="color: #ff2d2d; font-weight: 700; padding: 8px 10px; background: #171717;">適格請求書番号</td><td style="padding: 8px 10px; background: #1d1d1d;">T4010805002979</td></tr>
-</table>
-</div>
-<div class="card" style="padding: 0; background: #171717; border: 1px solid #2c2c2c; overflow: hidden;">
-<table style="display: table; width: 100%; margin: 0; border-collapse: collapse; table-layout: fixed; font-size: 0.9rem; line-height: 1.7; color: #f4f4f4; background: #171717;">
-  <tr><td style="color: #ff2d2d; width: 30%; font-weight: 700; padding: 8px 10px; vertical-align: top; border-bottom: 1px solid #2e2e2e; background: #171717;">所在地</td><td style="padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #1d1d1d;">〒143-0023<br>東京都大田区山王2-5-6<br>SANNO BRIDGE</td></tr>
-  <tr><td style="color: #ff2d2d; font-weight: 700; padding: 8px 10px; vertical-align: top; border-bottom: 1px solid #2e2e2e; background: #171717;">事業内容</td><td style="padding: 8px 10px; border-bottom: 1px solid #2e2e2e; background: #1d1d1d;">・法人プロジェクト支援<br>・イベント企画・運営</td></tr>
-  <tr><td style="color: #ff2d2d; font-weight: 700; padding: 8px 10px; background: #171717;">Web</td><td style="padding: 8px 10px; background: #1d1d1d;"><a href="https://drsp.cc/" style="color: #b8b8b8;" target="_blank" rel="noopener noreferrer">https://drsp.cc/</a></td></tr>
-</table>
-</div>
 </div>
 
 ---
