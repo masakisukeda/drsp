@@ -20,9 +20,9 @@ style: |
   p, li { overflow-wrap: anywhere; }
   section.lead { justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, #2e2e2e 0%, #1a1a1a 40%, #0a0a0a 100%); }
   section.vcenter { justify-content: center; }
-  section::after { font-size: 0.9rem; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
+  section::after { font-size: 0.76rem; font-weight: 700; color: #555555; letter-spacing: 0.05em; }
   header { left: 60px; top: 30px; font-size: 0.9rem; color: #666; width: auto; }
-  footer { color: #555555; font-size: 0.9rem; left: 60px; text-align: left; }
+  footer { color: #555555; font-size: 0.76rem; left: 60px; text-align: left; }
   h1 {
     color: #ffffff;
     font-size: 1.6rem;
