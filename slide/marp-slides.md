@@ -83,6 +83,31 @@ style: |
   section.dense .chip { font-size: 0.68rem !important; letter-spacing: 0.08em; margin-bottom: 6px; }
   section.dense .grid-3 { gap: 8px; }
   section.dense .columns { gap: 16px; }
+  section.member-page .grid-3 { gap: 8px; }
+  section.member-page .member-card {
+    min-height: 124px;
+    padding: 10px 12px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  section.member-page .member-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  section.member-page .member-row > div {
+    order: 1;
+    flex: 1;
+    min-width: 0;
+  }
+  section.member-page .member-row img {
+    order: 2;
+    width: 38px !important;
+    height: 38px !important;
+    margin-left: auto;
+  }
 ---
 
 <!-- _class: lead -->
@@ -227,62 +252,62 @@ AIと共に働く時代、人間が担うべき「ディレクション」は<b>
 
 ---
 
-<!-- _class: dense -->
+<!-- _class: dense member-page -->
 
 # メンバー
 ## 多様な専門家が企画・運営に参画
 
 <div class="grid-3" style="gap: 6px;">
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/KQP6hgBO_400x400.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="中島 勝悟">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">会長</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">中島 勝悟（なしょ）</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">まるみデザインファーム / 合同会社ゆらり。Webデザイナー。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/uno-kenji_photo.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="宇野 健児">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">副会長</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">宇野 健児（UNO）</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/sukeda.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="助田 正樹">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">事務局長</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">助田 正樹（すけさん）</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">Web・IT企業の採用・組織支援。3,000名の対話実績。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/img_ms_1-1.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="しょうみゆ">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">CTO</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">しょうみゆ</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">デザインエンジニア。Web制作・技術メンターとして全力で課題解決。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/P32512742-1.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="こいずみ まこと">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">COO</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">こいずみ まこと</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">Studio FireColor / IMAKE役員。Web・動画・システムのゼネラリスト。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/RBnUir1d_400x400.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="木村 よねこ">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">CDO</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">木村 よねこ</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">SaaSのUI/UXデザイナー。PdM/PMサポートまで幅広く担当。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/AVlMrN2k_400x400.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="まるみ">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">師匠</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">まるみ（倉又 美樹）</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">UI/UXから印刷物まで。女子美術大学非常勤講師も兼任。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/IMG_3780.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="よしとみ">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">神の声</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">よしとみ</h3></div>
 </div>
 <p style="color: #aaa; font-size: 0.72rem; line-height: 1.4; margin: 0;">合同会社ゆらり代表。Web・アプリのクリエイティブ制作を中心に活動。</p></div>
 <div class="member-card" style="padding: 7px 10px;">
-<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+<div class="member-row">
 <img src="https://drsp.cc/assets/wp/ushi_00_500.webp" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #444; flex-shrink: 0;" alt="うし3号">
 <div><span class="chip" style="font-size: 0.7rem; padding: 1px 7px; margin-bottom: 2px;">広報</span><h3 style="margin: 0; font-size: 0.85rem; line-height: 1.2;">うし3号</h3></div>
 </div>
