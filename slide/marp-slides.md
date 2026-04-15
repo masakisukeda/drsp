@@ -84,7 +84,7 @@ style: |
   section.member-page .grid-3 { gap: 8px; }
   section.member-page .member-card {
     min-height: 124px;
-    padding: 10px 12px !important;
+    padding: 12px 13px !important;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -93,7 +93,7 @@ style: |
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   section.member-page .member-row > div {
     order: 1;
@@ -105,6 +105,10 @@ style: |
     width: 38px !important;
     height: 38px !important;
     margin-left: auto;
+  }
+  section.member-page .member-card p {
+    margin-top: 2px !important;
+    line-height: 1.5 !important;
   }
 ---
 
