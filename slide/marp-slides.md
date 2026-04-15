@@ -43,8 +43,8 @@ style: |
     line-height: 1.45;
     letter-spacing: 0.01em;
     margin: 0 0 0.78em;
-    padding-left: 10px;
-    border-left: 3px solid rgba(255,45,45,0.55);
+    padding-left: 0;
+    border-left: 0;
     text-align: left;
   }
   section.lead h1 {
