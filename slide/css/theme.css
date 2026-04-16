@@ -50,13 +50,13 @@
 
 div#\:\$p>svg>foreignObject>section footer {
   color: #555555;
-  font-size: 0.35em !important;
+  font-size: 0.55em !important;
   left: 60px;
   text-align: left;
 }
 
 div#\:\$p>svg>foreignObject>section::after {
-  font-size: 0.35em !important;
+  font-size: 0.55em !important;
   font-weight: 700;
   color: #555555;
   letter-spacing: 0.05em;
