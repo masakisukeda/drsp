@@ -472,6 +472,30 @@ div#\:\$p>svg>foreignObject>section::after {
   gap: 10px !important;
 }
 
+/* #11 FAQ：カード間隔を調整しフッターに被らないように */
+#\:\$p>svg>foreignObject>section#11 {
+  padding-bottom: 48px !important;
+}
+#\:\$p>svg>foreignObject>section#11 .card {
+  margin-bottom: 10px !important;
+}
+
+/* #12 DiSAメンバー：9枚3列を収める */
+#\:\$p>svg>foreignObject>section#12 .grid-3 {
+  gap: 4px !important;
+  margin-top: 4px !important;
+}
+#\:\$p>svg>foreignObject>section#12 .card {
+  padding: 6px 8px !important;
+  margin-bottom: 0 !important;
+}
+#\:\$p>svg>foreignObject>section#12 h1 {
+  margin-bottom: 0.1em !important;
+}
+#\:\$p>svg>foreignObject>section#12 h2 {
+  margin-bottom: 0 !important;
+}
+
 /* --- Final accent override (beats base.css red remnants) --- */
 div#\:\$p>svg>foreignObject>section {
   --accent-color: #d4ff00 !important;
