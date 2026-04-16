@@ -48,15 +48,15 @@
   width: auto;
 }
 
-#\:\$p>svg>foreignObject>section footer {
+div#\:\$p>svg>foreignObject>section footer {
   color: #555555;
-  font-size: 0.35em;
+  font-size: 0.35em !important;
   left: 60px;
   text-align: left;
 }
 
-#\:\$p>svg>foreignObject>section::after {
-  font-size: 0.35em;
+div#\:\$p>svg>foreignObject>section::after {
+  font-size: 0.35em !important;
   font-weight: 700;
   color: #555555;
   letter-spacing: 0.05em;
