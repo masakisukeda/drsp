@@ -1120,6 +1120,15 @@ h2 {
 /* ── レスポンシブ ── */
 
 @media (max-width: 960px) {
+  .page-breadcrumb a {
+    border-bottom: none;
+  }
+
+  .page-breadcrumb a::after {
+    display: none;
+  }
+
+
   .header-wrap {
     position: relative;
     flex-direction: row;
