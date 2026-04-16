@@ -1232,7 +1232,7 @@ h2 {
     font-size: 11px;
   }
 
-  nav a {
+  .header-wrap nav a {
     display: block;
     width: 100%;
     font-size: 12px;
@@ -1243,17 +1243,17 @@ h2 {
     padding: 12px;
   }
 
-  nav a:not(.nav-cta)::after {
+  .header-wrap nav a:not(.nav-cta)::after {
     display: none;
   }
 
-  nav a:not(.nav-cta):hover {
+  .header-wrap nav a:not(.nav-cta):hover {
     transform: none;
     color: #111;
     background: #f2f2f2;
   }
 
-  nav a.nav-cta {
+  .header-wrap nav a.nav-cta {
     border: 1px solid #222;
     border-radius: 10px;
     text-align: center;
