@@ -258,6 +258,10 @@
   font-size: 0.8rem !important;
 }
 
+#\:\$p>svg>foreignObject>section .text-white {
+  color: #ffffff !important;
+}
+
 #\:\$p>svg>foreignObject>section .text-red {
   color: var(--accent-color) !important;
 }
@@ -338,6 +342,20 @@
 
 #\:\$p>svg>foreignObject>section .pl-md {
   padding-left: 18px !important;
+}
+
+#\:\$p>svg>foreignObject>section .flex-center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#\:\$p>svg>foreignObject>section .gap-lg {
+  gap: 60px !important;
+}
+
+#\:\$p>svg>foreignObject>section .gap-md {
+  gap: 30px !important;
 }
 
 /* --- Special Background Handlers (Marpit) --- */
@@ -448,31 +466,29 @@
 }
 
 /* --- Final accent override (beats base.css red remnants) --- */
-div#\:\$p > svg > foreignObject > section {
+div#\:\$p>svg>foreignObject>section {
   --accent-color: #d4ff00 !important;
 }
 
-div#\:\$p > svg > foreignObject > section :is(h1, marp-h1) {
+div#\:\$p>svg>foreignObject>section :is(h1, marp-h1) {
   background: linear-gradient(to right, #d4ff00 40px, transparent 40px) bottom left / 100% 3px no-repeat !important;
   text-shadow: 0 0 10px rgba(212, 255, 0, 0.2) !important;
 }
 
-div#\:\$p > svg > foreignObject > section.lead :is(h1, marp-h1) {
-  background: linear-gradient(
-    to right,
-    transparent calc(50% - 24px),
-    #d4ff00 calc(50% - 24px),
-    #d4ff00 calc(50% + 24px),
-    transparent calc(50% + 24px)
-  ) bottom / 100% 3px no-repeat !important;
+div#\:\$p>svg>foreignObject>section.lead :is(h1, marp-h1) {
+  background: linear-gradient(to right,
+      transparent calc(50% - 24px),
+      #d4ff00 calc(50% - 24px),
+      #d4ff00 calc(50% + 24px),
+      transparent calc(50% + 24px)) bottom / 100% 3px no-repeat !important;
 }
 
-div#\:\$p > svg > foreignObject > section :is(.chip, .chip-xs) {
+div#\:\$p>svg>foreignObject>section :is(.chip, .chip-xs) {
   border-color: #d4ff00 !important;
   color: #d4ff00 !important;
   background-color: transparent !important;
 }
 
-div#\:\$p > svg > foreignObject > section :is(.text-red, .accent, blockquote strong, .entry-label) {
+div#\:\$p>svg>foreignObject>section :is(.text-red, .accent, blockquote strong, .entry-label) {
   color: #d4ff00 !important;
 }
