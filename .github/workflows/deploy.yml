@@ -29,7 +29,6 @@ jobs:
               - 'sitemap.xml'
               - 'robots.txt'
               - 'favicon.webp'
-              - 'favicon.png'
               - 'favicon.ico'
             about:
               - 'about/**'
@@ -59,7 +58,6 @@ jobs:
               - 'sitemap.xml'
               - 'robots.txt'
               - 'favicon.webp'
-              - 'favicon.png'
               - 'favicon.ico'
               - 'about/**'
               - 'assets/**'
@@ -208,7 +206,6 @@ jobs:
             fi
             # favicon files are tiny and should stay in sync even when only workflow changes
             echo "put -O . favicon.webp"
-            echo "put -O . favicon.png"
             echo "put -O . favicon.ico"
             # sitemap is regenerated in workflow; always upload when deploy runs
             echo "put -O . sitemap.xml"
