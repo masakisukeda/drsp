@@ -1185,7 +1185,7 @@ h2 {
     transform: rotate(-45deg);
   }
 
-  nav {
+  .header-wrap nav {
     display: none;
     position: absolute;
     top: calc(100% + 6px);
