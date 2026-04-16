@@ -1,0 +1,478 @@
+/* --- 3. CUSTOM THEME & UTILITIES (Original slide.css custom parts) --- */
+
+/* --- Layout & Base Decoration --- */
+#\:\$p>svg>foreignObject>section {
+  --accent-color: #d4ff00;
+  --accent-glow: rgba(212, 255, 0, 0.4);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: calc(1.12rem * 1.1);
+  --marpit-root-font-size: calc(1.02rem * 1.1);
+  color: #ffffff;
+  padding: 60px 60px 80px;
+  background: radial-gradient(circle at 50% 100%, rgba(30, 30, 30, 1) 0%, rgba(18, 18, 18, 1) 70%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+#\:\$p>svg>foreignObject>section * {
+  box-sizing: border-box;
+}
+
+#\:\$p>svg>foreignObject>section :is(p, li) {
+  overflow-wrap: anywhere;
+}
+
+/* --- Headers & Footers --- */
+#\:\$p>svg>foreignObject>section .header-content {
+  display: flex;
+  align-items: center;
+  width: 800px;
+  white-space: nowrap;
+}
+
+#\:\$p>svg>foreignObject>section .header-logo {
+  height: 14px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  margin-right: 10px;
+}
+
+#\:\$p>svg>foreignObject>section header {
+  left: 60px;
+  top: 30px;
+  font-size: 0.9em;
+  color: #666;
+  width: auto;
+}
+
+#\:\$p>svg>foreignObject>section footer {
+  color: #555555;
+  font-size: 0.62em;
+  left: 60px;
+  text-align: left;
+}
+
+#\:\$p>svg>foreignObject>section::after {
+  font-size: 0.62em;
+  font-weight: 700;
+  color: #555555;
+  letter-spacing: 0.05em;
+}
+
+/* --- Headings (Brand Identity) --- */
+#\:\$p>svg>foreignObject>section :is(h1, marp-h1) {
+  color: #ffffff;
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.48em;
+  padding-bottom: 14px;
+  border-bottom: none;
+  background: linear-gradient(to right, var(--accent-color) 40px, transparent 40px) bottom left / 100% 3px no-repeat;
+  text-shadow: 0 0 10px rgba(212, 255, 0, 0.2);
+}
+
+#\:\$p>svg>foreignObject>section :is(h2, marp-h2) {
+  color: #e8e8e8;
+  font-size: 1.12em;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0 0 0.78em;
+}
+
+#\:\$p>svg>foreignObject>section :is(h3, marp-h3) {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* --- Slide Variations (Lead / VCenter / Dense) --- */
+#\:\$p>svg>foreignObject>section.lead {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(180deg, #2e2e2e 0%, #1a1a1a 40%, #0a0a0a 100%);
+}
+
+#\:\$p>svg>foreignObject>section.lead :is(h1, marp-h1) {
+  font-size: 3.2em;
+  padding-bottom: 20px;
+  background: linear-gradient(to right, transparent calc(50% - 24px), var(--accent-color) calc(50% - 24px), var(--accent-color) calc(50% + 24px), transparent calc(50% + 24px)) bottom / 100% 3px no-repeat;
+  text-shadow: none;
+}
+
+#\:\$p>svg>foreignObject>section.lead :is(h2, marp-h2) {
+  font-size: 1.16em;
+  font-weight: 300;
+}
+
+#\:\$p>svg>foreignObject>section.lead :is(h3, marp-h3) {
+  font-size: 1.2em;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+#\:\$p>svg>foreignObject>section.vcenter {
+  justify-content: center;
+}
+
+#\:\$p>svg>foreignObject>section.dense .card {
+  padding: 14px;
+  margin-bottom: 0.48em;
+}
+
+#\:\$p>svg>foreignObject>section.dense :is(p, li) {
+  font-size: 0.78em !important;
+  line-height: 1.5 !important;
+}
+
+#\:\$p>svg>foreignObject>section.dense .grid-3 {
+  gap: 8px;
+}
+
+#\:\$p>svg>foreignObject>section.dense .columns {
+  gap: 16px;
+}
+
+/* --- Custom Components --- */
+#\:\$p>svg>foreignObject>section .card {
+  background: linear-gradient(180deg, #252525 0%, #181818 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #333333;
+  margin-bottom: 0.7em;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.5);
+}
+
+#\:\$p>svg>foreignObject>section .columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+#\:\$p>svg>foreignObject>section .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+#\:\$p>svg>foreignObject>section .chip,
+#\:\$p>svg>foreignObject>section .chip-xs {
+  display: inline-block;
+  padding: 1px 7px;
+  border: 1px solid var(--accent-color);
+  border-radius: 18px;
+  font-size: 0.68rem !important;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: transparent !important;
+}
+
+#\:\$p>svg>foreignObject>section blockquote {
+  border-left: 3px solid #555555;
+  background: #0f0f0f;
+  color: #ffffff;
+  padding: 14px 20px;
+  margin-top: 16px;
+  font-size: 0.9em;
+  line-height: 1.8;
+  border-radius: 4px;
+}
+
+#\:\$p>svg>foreignObject>section blockquote strong {
+  color: var(--accent-color);
+}
+
+#\:\$p>svg>foreignObject>section .entry-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#\:\$p>svg>foreignObject>section .entry-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+#\:\$p>svg>foreignObject>section .entry-row:last-child {
+  border-bottom: none;
+}
+
+#\:\$p>svg>foreignObject>section .entry-label {
+  color: var(--accent-color);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  min-width: 38%;
+  background: #171717;
+}
+
+#\:\$p>svg>foreignObject>section .entry-value {
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  background: #1d1d1d;
+  flex: 1;
+  line-height: 1.6;
+}
+
+/* --- Utility Classes (Text & Spacing) --- */
+#\:\$p>svg>foreignObject>section .text-huge {
+  font-size: 4rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-huge-2 {
+  font-size: 2.2rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-xl {
+  font-size: 1.2rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-lg {
+  font-size: 1.1rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-md {
+  font-size: 1rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-sm {
+  font-size: 0.9rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-xs {
+  font-size: 0.85rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-xxs {
+  font-size: 0.8rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-red {
+  color: var(--accent-color) !important;
+}
+
+/* 旧赤色クラスの Neon Lime 置換 */
+#\:\$p>svg>foreignObject>section .text-muted {
+  color: #aaaaaa !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-dim {
+  color: #cccccc !important;
+}
+
+#\:\$p>svg>foreignObject>section .accent {
+  color: var(--accent-color) !important;
+  font-weight: 700 !important;
+}
+
+#\:\$p>svg>foreignObject>section .glow-text {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+#\:\$p>svg>foreignObject>section .lh-loose {
+  line-height: 1.8 !important;
+}
+
+#\:\$p>svg>foreignObject>section .lh-tight {
+  line-height: 1.5 !important;
+}
+
+#\:\$p>svg>foreignObject>section .font-bold {
+  font-weight: 700 !important;
+}
+
+#\:\$p>svg>foreignObject>section .text-center {
+  text-align: center !important;
+}
+
+#\:\$p>svg>foreignObject>section .m-0 {
+  margin: 0 !important;
+}
+
+#\:\$p>svg>foreignObject>section .mb-0 {
+  margin-bottom: 0 !important;
+}
+
+#\:\$p>svg>foreignObject>section .mt-sm {
+  margin-top: 10px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mt-md {
+  margin-top: 20px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mt-lg {
+  margin-top: 30px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mb-xs {
+  margin-bottom: 5px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mb-sm {
+  margin-bottom: 9px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mb-md {
+  margin-bottom: 18px !important;
+}
+
+#\:\$p>svg>foreignObject>section .mb-lg {
+  margin-bottom: 25px !important;
+}
+
+#\:\$p>svg>foreignObject>section .p-0 {
+  padding: 0 !important;
+}
+
+#\:\$p>svg>foreignObject>section .pl-md {
+  padding-left: 18px !important;
+}
+
+/* --- Special Background Handlers (Marpit) --- */
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"] {
+  columns: initial !important;
+  display: block !important;
+  padding: 0 !important;
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"]::before,
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"]::after,
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="content"]::before,
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="content"]::after {
+  display: none !important;
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"]>div[data-marpit-advanced-background-container] {
+  all: initial;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"]>div[data-marpit-advanced-background-container][data-marpit-advanced-background-direction="vertical"] {
+  flex-direction: column;
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split]>div[data-marpit-advanced-background-container] {
+  width: var(--marpit-advanced-background-split, 50%);
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="background"]>div[data-marpit-advanced-background-container]>figure {
+  all: initial;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: auto;
+  margin: 0;
+}
+
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="content"],
+#\:\$p>svg>foreignObject>section[data-marpit-advanced-background="pseudo"] {
+  background: transparent !important;
+}
+
+/* --- Strict Policy Cross-Browser --- */
+#\:\$p>svg>foreignObject>section :is(h1, h2, h3, h4, h5, h6, p, li, span, strong, em, b, i, a, small, sub, sup, mark, code) {
+  background-color: transparent !important;
+}
+
+/* Card Typography Fine-Tuning */
+#\:\$p>svg>foreignObject>section .card :is(p, li) {
+  font-size: calc(var(--marpit-root-font-size, 1rem) * 0.96) !important;
+  line-height: 1.55 !important;
+}
+
+#\:\$p>svg>foreignObject>section .card .text-xxs {
+  font-size: 0.9rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .card .text-xs {
+  font-size: 0.95rem !important;
+}
+
+#\:\$p>svg>foreignObject>section .card .text-sm {
+  font-size: 1rem !important;
+}
+
+/* --- Template Controls (editable) --- */
+#\:\$p>svg>foreignObject>section[data-template="a"] :is(h1, marp-h1) {
+  font-size: 3em !important;
+  letter-spacing: 0.01em !important;
+}
+
+#\:\$p>svg>foreignObject>section[data-template="a"] :is(h2, marp-h2) {
+  font-size: 1.16em !important;
+  letter-spacing: 0.01em !important;
+  margin-top: 0 !important;
+}
+
+#\:\$p>svg>foreignObject>section[data-template="b"] :is(h1, marp-h1) {
+  font-size: 2.08em !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+  max-width: 92% !important;
+}
+
+#\:\$p>svg>foreignObject>section[data-template="b"] :is(h2, marp-h2) {
+  font-size: 1.34em !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.35 !important;
+  margin-top: -0.14em !important;
+  margin-bottom: 0.68em !important;
+  max-width: 88% !important;
+}
+
+/* template-b + dense のカード余白を共通化 */
+#\:\$p>svg>foreignObject>section[data-template="b"].dense .card {
+  padding: 8px 10px !important;
+  margin-bottom: 0.22em !important;
+}
+
+/* #10 はコピーライト干渉を避けるため縦の圧縮を強める */
+#\:\$p>svg>foreignObject>section#10 .grid-3 {
+  gap: 10px !important;
+}
+
+/* --- Final accent override (beats base.css red remnants) --- */
+div#\:\$p > svg > foreignObject > section {
+  --accent-color: #d4ff00 !important;
+}
+
+div#\:\$p > svg > foreignObject > section :is(h1, marp-h1) {
+  background: linear-gradient(to right, #d4ff00 40px, transparent 40px) bottom left / 100% 3px no-repeat !important;
+  text-shadow: 0 0 10px rgba(212, 255, 0, 0.2) !important;
+}
+
+div#\:\$p > svg > foreignObject > section.lead :is(h1, marp-h1) {
+  background: linear-gradient(
+    to right,
+    transparent calc(50% - 24px),
+    #d4ff00 calc(50% - 24px),
+    #d4ff00 calc(50% + 24px),
+    transparent calc(50% + 24px)
+  ) bottom / 100% 3px no-repeat !important;
+}
+
+div#\:\$p > svg > foreignObject > section :is(.chip, .chip-xs) {
+  border-color: #d4ff00 !important;
+  color: #d4ff00 !important;
+  background-color: transparent !important;
+}
+
+div#\:\$p > svg > foreignObject > section :is(.text-red, .accent, blockquote strong, .entry-label) {
+  color: #d4ff00 !important;
+}
