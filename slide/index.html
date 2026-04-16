@@ -529,22 +529,7 @@
     </svg>
   </div>
   <script src="marp-runtime.js"></script>
-  <script>
-    document.getElementById(':$p').addEventListener('click', function (e) {
-      // OSCボタン・リンクのクリックは除外
-      if (e.target.closest('button, a, [data-bespoke-marp-osc]')) return;
-      const deck = window._bespoke || this.querySelector('svg');
-      const half = window.innerWidth / 2;
-      // Bespoke インスタンスを取得してprev/next呼び出し
-      const osc = document.querySelector('[data-bespoke-marp-osc="prev"]');
-      if (!osc) return;
-      if (e.clientX < half) {
-        osc.click();
-      } else {
-        document.querySelector('[data-bespoke-marp-osc="next"]')?.click();
-      }
-    });
-  </script>
+  <script src="nav.js"></script>
 </body>
 
 </html>
