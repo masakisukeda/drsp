@@ -1,6 +1,16 @@
 {
   "posts": [
     {
+      "source": "note",
+      "url": "https://note.com/disa_pr/n/na990919bb8f1",
+      "date": "2026.04.16",
+      "name": "DiSA",
+      "handle": "note.com/disa_pr",
+      "avatar": "./assets/wp/note.webp",
+      "avatarAlt": "note",
+      "text": "【更新はWebサイトか、スライドか】——その二択を終わらせる"
+    },
+    {
       "source": "x",
       "url": "https://x.com/pr_disa/status/2043547500527964487",
       "date": "2026.04.13",
@@ -29,16 +39,6 @@
       "avatar": "./assets/wp/note.webp",
       "avatarAlt": "note",
       "text": "「ChatGPTで十分」と思っていた私が、Claudeをメインツールにした理由"
-    },
-    {
-      "source": "note",
-      "url": "https://note.com/disa_pr/n/n0f32447e15cf",
-      "date": "2026.04.06",
-      "name": "DiSA",
-      "handle": "note.com/disa_pr",
-      "avatar": "./assets/wp/note.webp",
-      "avatarAlt": "note",
-      "text": "Slack・Drive・議事録をGPT/Claudeで情報集約——実際に触って見えた「できること」「詰まること」"
     },
     {
       "source": "x",
