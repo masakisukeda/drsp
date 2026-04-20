@@ -8,7 +8,10 @@
 
 - スタイルは `css/theme.css` に集約されています。**インラインCSSは書かない**
 - `theme.css` に存在しないクラス名・CSS変数は使わない
-- 画像パスは相対パス（`../../assets/wp/`）を使う。絶対URLは書かない
+- 画像パスはルート相対パス（`/assets/wp/`）を使う。`../../` は使わない
+- フォントは **Noto Sans JP** のみを使用する。他のフォントを読み込んだり指定したりしない
+- フォントサイズはユーティリティクラス（`.text-huge` 等）で定義されたもののみ使用し、独自のサイズ指定（`font-size: 24px` 等）は行わない
+- `theme.css` に存在しないクラス名・CSS変数は使わない
 - 新しいパターンが必要なときは、個別ファイルに書かず `theme.css` に追加する
 
 ---
@@ -32,9 +35,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/slide/css/base.css">
+  <link rel="stylesheet" href="/slide/css/theme.css">
   <!-- ↑ <style> タグは書かない -->
 </head>
 <body>
@@ -46,13 +49,13 @@
       <foreignObject width="1280" height="720">
         <section id="1" class="[テンプレートクラス]" data-template="[a|b]"
           data-paginate="true"
-          data-header="&lt;div class=&quot;header-content&quot;&gt;&lt;img src=&quot;../../assets/wp/logo-1.svg&quot; class=&quot;header-logo&quot;&gt;&lt;/div&gt;"
+          data-header="&lt;div class=&quot;header-content&quot;&gt;&lt;img src=&quot;/assets/wp/logo-1.svg&quot; class=&quot;header-logo&quot;&gt;&lt;/div&gt;"
           data-footer="COPYRIGHT - 一般社団法人ディレクションサポート協会（DiSA）"
           data-marpit-pagination="1"
           data-marpit-pagination-total="10">
           <header>
             <div class="header-content">
-              <img src="../../assets/wp/logo-1.svg" class="header-logo" alt="一般社団法人ディレクションサポート協会（DiSA）ロゴ">
+              <img src="/assets/wp/logo-1.svg" class="header-logo" alt="一般社団法人ディレクションサポート協会（DiSA）ロゴ">
             </div>
           </header>
 
@@ -125,7 +128,7 @@
 | 2カラム比較・左右対比 | `.columns` | 各アイテムを独立 `.card` に |
 | FAQ | `.columns` | 各質問を独立 `.card` に（`.faq-q` `.faq-a` を使う） |
 | ステップフロー | `.step-container` | |
-| メンバーカード | `.member-flex.member-flex-5` | カラム数は5固定 |
+| メンバーカード | `.member-flex.member-flex-5` | カラム数は5固定。9名の場合は1枠プレースホルダーで埋める |
 
 ### カード内コンテンツの構造固定ルール（コピーに依存しないレイアウト）
 
@@ -227,7 +230,8 @@
       <div class="desc">説明文。</div>
     </div>
   </div>
-  <!-- 3枚単位が基本。5枚の場合は grid が自動で折り返す -->
+  </div>
+  <!-- 5カラム固定が基本。5の倍数（5, 10, 15...）になるよう placeholder で調整する -->
 </div>
 ```
 
@@ -295,6 +299,16 @@
 
 ```html
 <span class="category-label">Marketing & Direction</span>
+```
+
+### 4-11. CTAボタン `.service-banner-btn`
+
+Thank U! スライド等で使用する問い合わせ誘導ボタン。
+
+```html
+<div class="mt-md flex-center">
+  <a href="https://drsp.cc/inquiry" class="service-banner-btn" target="_blank" rel="noopener noreferrer">詳細はこちら（お問い合わせ） →</a>
+</div>
 ```
 
 ---
@@ -403,7 +417,7 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
 <img src="https://drsp.cc/assets/wp/photo.webp">
 
 <!-- OK -->
-<img src="../../assets/wp/photo.webp" alt="氏名">
+<img src="/assets/wp/photo.webp" alt="氏名">
 ```
 
 ### NG-5: `.member-info` ラッパーを省略する
@@ -419,13 +433,35 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
 
 <!-- OK -->
 <div class="card">
-  <img src="../../assets/wp/photo.webp" alt="氏名">
+  <img src="/assets/wp/photo.webp" alt="氏名">
   <div class="member-info">
     <h3>氏名</h3>
     <div class="tags">...</div>
     <div class="desc">...</div>
   </div>
 </div>
+```
+
+### NG-6: フォントを勝手に追加・変更する
+
+`Noto Sans JP` 以外のフォントを `font-family` に指定したり、Google Fonts のリンクを増やしたりしない。
+
+```css
+/* NG */
+font-family: "MS Gothic", sans-serif;
+font-family: "Roboto", sans-serif;
+```
+
+### NG-7: 独自のフォントサイズを指定する
+
+インラインCSSや追加の `<style>` タグで、システム外の `font-size` を指定しない。必ずユーティリティクラスを使用する。
+
+```html
+<!-- NG -->
+<p style="font-size: 25px;">テキスト</p>
+
+<!-- OK -->
+<p class="text-md">テキスト</p>
 ```
 
 ---
@@ -509,6 +545,9 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
       <h1>【サービス名】</h1>
       <h2>【キャッチコピー】</h2>
       <span class="chip">FOR BUSINESS</span>
+      <div class="mt-md flex-center">
+        <a href="https://drsp.cc/inquiry" class="service-banner-btn" target="_blank" rel="noopener noreferrer">詳細はこちら（お問い合わせ） →</a>
+      </div>
       <footer>COPYRIGHT - 一般社団法人ディレクションサポート協会（DiSA）</footer>
     </section>
   </foreignObject>
@@ -704,6 +743,9 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
       </header>
       <h1>Thank U!</h1>
       <h2>【サービス名】のご相談を受付中です</h2>
+      <div class="mt-md flex-center">
+        <a href="https://drsp.cc/inquiry" class="service-banner-btn" target="_blank" rel="noopener noreferrer">詳細はこちら（お問い合わせ） →</a>
+      </div>
       <p class="mt-md">
         <span class="chip">CONTACT</span><br>
         <strong>一般社団法人ディレクションサポート協会（DiSA）</strong><br>
@@ -726,7 +768,7 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
 - [ ] 同じスライド内のカードは同じ内部構造になっている（コピーに依存しない）
 - [ ] チップはカード先頭のみ・15文字以内・名詞または英大文字
 - [ ] `--accent-color` 変数を正しく使っている（`--slide-accent` などを使っていない）
-- [ ] 画像パスが `../../assets/wp/` の相対パスになっている
+- [ ] 画像パスが `/assets/wp/` のルート相対パスになっている
 - [ ] 画像に `alt` 属性がある
 - [ ] `.member-flex` 内のカードに `.member-info` ラッパーがある
 - [ ] `data-marpit-pagination-total` がスライド枚数と一致している
