@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 Not Found | 一般社団法人ディレクションサポート協会（DiSA）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20260420">
+  <style>
+    .notfound-main {
+      padding: 120px 20px;
+      text-align: center;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .notfound-main h1 {
+      font-size: 6rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      line-height: 1;
+      background: linear-gradient(135deg, #333, #888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .notfound-main h2 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    .notfound-main p {
+      max-width: 600px;
+      margin-bottom: 50px;
+      line-height: 1.8;
+      color: #666;
+    }
+    .notfound-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .notfound-links a {
+      padding: 14px 28px;
+      border: 1px solid #eee;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #fff;
+    }
+    .notfound-links a:hover {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+      .notfound-main h1 { font-size: 4rem; }
+      .notfound-links { flex-direction: column; width: 100%; max-width: 300px; }
+    }
+  </style>
+</head>
+<body class="page-404">
+  <header class="site-header">
+    <div class="header-wrap">
+      <a class="logo" href="/"><img src="/assets/wp/logo-1.svg" alt="DiSA"></a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="notfound-main">
+      <h1>404</h1>
+      <h2>PAGE NOT FOUND</h2>
+      <p>お探しのページは移動したか、URLが変更された可能性があります。<br>ディレクションに関する最新の知見や活動は、以下のリンクよりご覧いただけます。</p>
+      
+      <nav class="notfound-links">
+        <a href="/">TOPページ</a>
+        <a href="/hieiri">活動一覧</a>
+        <a href="/member">メンバー紹介</a>
+        <a href="/membership">法人会員</a>
+        <a href="/inquiry">お問い合わせ</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-wrap">
+      <p class="copyright">COPYRIGHT - 一般社団法人ディレクションサポート協会（DiSA）</p>
+    </div>
+  </footer>
+</body>
+</html>

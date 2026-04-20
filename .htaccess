@@ -1,6 +1,9 @@
 # drsp.cc redirect rules (static site)
 RewriteEngine On
 
+# 404 Custom Page
+ErrorDocument 404 /404.html
+
 # Legacy service paths
 RedirectMatch 301 ^/eiri/membership/?$ /membership/
 RedirectMatch 301 ^/eiri/membership/kiyaku/?$ /membership/kiyaku/
@@ -14,8 +17,14 @@ RedirectMatch 301 ^/wp-json/?$ /
 RedirectMatch 301 ^/feed/?$ /
 RedirectMatch 301 ^/comments/feed/?$ /
 
-# Legacy article URLs
-RedirectMatch 301 ^/archives/[0-9]+/?$ /hieiri/
+# Legacy WordPress Author / Category / Tag / Date
+RedirectMatch 301 ^/archives/author/.*$ /member/
+RedirectMatch 301 ^/archives/category/.*$ /hieiri/
+RedirectMatch 301 ^/archives/tag/.*$ /hieiri/
+RedirectMatch 301 ^/archives/date/.*$ /hieiri/
+
+# Legacy article URLs (covers numeric IDs and any other /archives/ path)
+RedirectMatch 301 ^/archives/.*$ /hieiri/
 
 # Legacy FAQ page
 RedirectMatch 301 ^/faq/?$ /inquiry/
