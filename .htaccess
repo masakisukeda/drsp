@@ -10,10 +10,10 @@ RedirectMatch 301 ^/eiri/membership/kiyaku/?$ /membership/kiyaku/
 RedirectMatch 301 ^/eiri/1on1/?$ /eiri/
 RedirectMatch 301 ^/eiri/redesign/?$ /eiri/
 
-# Legacy WordPress endpoints
+# Legacy WordPress endpoints & system paths (Batch)
 RedirectMatch 301 ^/index\.php$ /
 RedirectMatch 301 ^/xmlrpc\.php$ /
-RedirectMatch 301 ^/wp-json/?$ /
+RedirectMatch 301 ^/wp-.*$ /
 RedirectMatch 301 ^/feed/?$ /
 RedirectMatch 301 ^/comments/feed/?$ /
 
