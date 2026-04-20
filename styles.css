@@ -1,3 +1,4 @@
+/* --- 1. Global & Variables --- */
 :root {
   --bg: #ededed;
   --panel: #dfdfdf;
@@ -29,6 +30,7 @@ body {
   color: var(--text);
 }
 
+/* --- 2. Site Header & Navigation --- */
 .site-header {
   position: sticky;
   top: 0;
@@ -118,6 +120,7 @@ nav a.nav-cta:hover {
   display: none;
 }
 
+/* --- 3. News Band (Marquee) --- */
 .disa-news-band {
   display: none;
   position: sticky;
@@ -211,6 +214,7 @@ nav a.nav-cta:hover {
   }
 }
 
+/* --- 4. Main Layout & Hero --- */
 .container {
   width: 100%;
   max-width: var(--site-max);
@@ -289,6 +293,7 @@ nav a.nav-cta:hover {
   animation: none;
 }
 
+/* --- 5. Common Components (Panels, Cards, Grids) --- */
 .panel {
   margin-top: 34px;
   background: var(--panel);
@@ -791,6 +796,7 @@ h2 {
   padding-top: 16px;
 }
 
+/* --- 6. Site Footer --- */
 .site-footer {
   margin-top: 34px;
   background: #060606;
@@ -875,6 +881,7 @@ h2 {
   padding: 0 0 18px;
 }
 
+/* --- 7. AOS (Animate On Scroll) Custom --- */
 [data-aos] {
   opacity: 0;
   will-change: transform, opacity;
@@ -906,8 +913,7 @@ h2 {
   opacity: 1;
 }
 
-/* ── プロフィールページ専用 ── */
-
+/* --- 8. Page Specific Styles (Profile, Solutions, Works) --- */
 .profile-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1871,6 +1877,12 @@ h2 {
   text-align: left;
 }
 
+a.concept-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 /* Reusable detail card template: centered title + left-aligned body */
 .detail-card {
   padding: 24px 18px;
@@ -2391,7 +2403,7 @@ h2 {
   }
 }
 
-/* ── イントロオーバーレイ ── */
+/* --- 9. Intro Overlay --- */
 #intro-overlay {
   position: fixed;
   inset: 0;
@@ -2484,7 +2496,7 @@ h2 {
   }
 }
 
-/* ---- Typography Scale (5 steps) ---- */
+/* --- 10. Typography Scale & Global Utilities --- */
 body {
   font-size: var(--fs-4);
 }
