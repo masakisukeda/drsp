@@ -88,21 +88,39 @@
     '/hieiri': 'hieiri/index.html',
     '/member': 'member/index.html',
     '/member/masakisukeda': 'member/masakisukeda/index.html',
+    '/membership': 'membership/index.html',
+    '/membership/kiyaku': 'membership/kiyaku/index.html',
     '/inquiry': 'inquiry/index.html',
+    '/privacy': 'privacy/index.html',
+    '/slide': 'slide/index.html',
+    '/slide/membership': 'slide/membership/index.html',
+    '/slide/spot': 'slide/spot/index.html',
     '/eiri/spot': 'eiri/spot/index.html',
     '/eiri/community': 'eiri/community/index.html',
     '/eiri/lport': 'eiri/lport/index.html',
     '/eiri/speakingcircles': 'eiri/speakingcircles/index.html',
+    '/hieiri/ai-bu': 'hieiri/ai-bu/index.html',
   };
 
-  for (const a of document.querySelectorAll('a[href^="/"]')) {
-    const href = a.getAttribute('href');
-    if (!href || href.startsWith('//')) continue;
+  const selectors = 'a[href^="/"], link[href^="/"], script[src^="/"], img[src^="/"], video[src^="/"]';
+  for (const el of document.querySelectorAll(selectors)) {
+    const attr = el.tagName === 'SCRIPT' || el.tagName === 'IMG' || el.tagName === 'VIDEO' ? 'src' : 'href';
+    const val = el.getAttribute(attr);
+    if (!val || val.startsWith('//')) continue;
 
-    const [pathOnly, tail = ''] = href.split(/(?=[?#])/);
-    const mapped = linkMap[pathOnly];
-    if (!mapped) continue;
-    a.setAttribute('href', `${up}${mapped}${tail}`);
+    const [pathOnly, tail = ''] = val.split(/(?=[?#])/);
+    // assets等はそのままパスを結合、ページパスはlinkMapを参照
+    if (pathOnly.startsWith('/assets/')) {
+      el.setAttribute(attr, `${up}${pathOnly.slice(1)}${tail}`);
+    } else {
+      const mapped = linkMap[pathOnly];
+      if (mapped) {
+        el.setAttribute(attr, `${up}${mapped}${tail}`);
+      } else if (pathOnly.endsWith('.css') || pathOnly.endsWith('.js')) {
+        // styles.cssやmain.jsなどルート直下のアセット
+        el.setAttribute(attr, `${up}${pathOnly.slice(1)}${tail}`);
+      }
+    }
   }
 })();
 
