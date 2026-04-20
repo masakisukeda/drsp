@@ -1,55 +1,46 @@
-# DiSA Slide Deck - Manual Editing Guide
+# DiSA Slides Library
 
-このディレクトリは、HTMLスライドの正本です。
-`index.html` と `css/theme.css` を直接編集して更新してください。
+このディレクトリは、一般社団法人ディレクションサポート協会（DiSA）が提供する各種スライド資料を管理しています。
 
 ## ディレクトリ構成
 
+```text
+/slide
+  ├── index.html          # スライドハブ（目的別のスライド一覧ページ）
+  ├── introduction/       # 【基本資料】サービス紹介スライド
+  │   └── index.html
+  ├── members/            # 【単体スライド】DiSAメンバー紹介
+  │   └── index.html
+  ├── membership/         # 【営業資料】法人会員（メンバーシップ）のご提案
+  │   └── index.html
+  ├── css/                # スライド共通CSS
+  │   ├── base.css        # スライド基本構造
+  │   └── theme.css       # DiSAデザインテーマ
+  ├── js/                 # スライド共通JavaScript (marp-runtime.js, nav.js)
+  └── md/                 # スライド構成・原稿（Markdown）
+      └── membership/     # 法人会員向けスライドの構成案
+          └── index.md
 ```
-slide/
-├── index.html        # スライド本体（コンテンツはここを編集）
-├── css/
-│   ├── slide.css     # CSSアグリゲーター（base.css + theme.css をimport）
-│   ├── base.css      # MarpベースCSS（編集不要）
-│   └── theme.css     # カスタムテーマ（デザイン調整はここを編集）
-└── js/
-    ├── marp-runtime.js  # Marpスライド制御ランタイム（編集不要）
-    └── nav.js           # クリック/タップナビゲーション（左半分=前、右半分=次）
-```
 
-## クイックガイド
+## デザインシステム
 
-1. **スライドの編集**: `index.html` 内のテキストや構成を直接変更
-2. **デザインの調整**: `css/theme.css` を編集
-3. **プレビュー**: `index.html` をブラウザで開いて確認
+**実装前に必ず読んでください → [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
 
----
+コンポーネント一覧・ユーティリティクラス・NG例・チェックリストを掲載しています。
 
-## [TEMPLATE] スライド追加用テンプレート
+## 実装・運用ルール
 
-新しいスライドを追加する際は、以下のHTMLブロックをコピーして `index.html` 末尾の `<!-- [END OF SLIDES] -->` 直前に挿入してください。
+1. **コンテンツの一貫性**: 
+   - スライド内のテキスト、画像は、原則として [drsp.cc](https://drsp.cc/) 本サイトのものを使用します。
+2. **デザインの統一**: 
+   - 全てのスライドで `css/theme.css` を共通利用します。個別のスライドごとに独自のバリエーションは作成せず、一貫したブランドイメージを維持します。
+3. **コードの純粋性**:
+   - HTML内へのインラインCSS・JavaScriptの記述は最小限（レイアウトの微調整など不可避なもの）に留め、ロジックや共通スタイルは外部ファイル（`css/`, `js/`）に集約します。
+4. **Markdown先行**:
+   - 新しいスライドを作成する際は、まず `md/` 配下に構成案を作成し、内容を確定させてからHTML実装に移行します。
 
-```html
-<div id=":$p" data-bespoke-marp-osc="false">
-  <svg data-marpit-svg="" viewBox="0 0 1280 720">
-    <foreignObject width="1280" height="720">
-      <section class="dense"> <!-- 必要に応じて class="lead" や "dense" を使用 -->
-        <header>
-          <div class="header-content">
-            <img src="https://disa.run/assets/img/common/logo.svg" class="header-logo" alt="DiSA Logo">
-            <span>株式会社DiSA - スライドタイトル</span>
-          </div>
-        </header>
-
-        <h1>ここにタイトルを入力</h1>
-        
-        <div class="card">
-          <p>ここにコンテンツを入力</p>
-        </div>
-
-        <footer>DiSA Inc. All Rights Reserved.</footer>
-      </section>
-    </foreignObject>
-  </svg>
-</div>
-```
+## 開発用リンク
+- [スライドハブ（トップ）](./index.html)
+- [DiSAメンバー](./members/index.html)
+- [DiSA サービス紹介](./introduction/index.html)
+- [法人会員のご提案](./membership/index.html)
