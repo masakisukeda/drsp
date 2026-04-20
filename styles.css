@@ -1257,7 +1257,9 @@ h2 {
   }
 
   .header-wrap nav a.nav-cta {
-    border: 1px solid #222;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
     border-radius: 10px;
     text-align: center;
   }
