@@ -2200,6 +2200,49 @@ a.concept-card {
   margin-top: 18px;
 }
 
+.speakingcircles-feature {
+  width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.9fr);
+  gap: 18px;
+  align-items: stretch;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 243, 236, 0.98) 100%);
+  border: 1px solid var(--surface-border);
+  border-radius: 20px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.speakingcircles-feature__body {
+  min-width: 0;
+  padding: 6px 0 6px 2px;
+}
+
+.speakingcircles-feature__media {
+  margin: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 18px;
+  overflow: hidden;
+  min-height: 340px;
+  background: linear-gradient(180deg, rgba(255, 248, 239, 0.18), rgba(255, 255, 255, 0.02));
+}
+
+.speakingcircles-feature__media img {
+  width: 66%;
+  aspect-ratio: 4 / 5;
+  height: auto;
+  border-radius: 18px;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+  flex: 0 0 auto;
+  filter: saturate(0.98) contrast(0.99);
+}
+
 .terms-content h3 {
   margin: 22px 0 10px;
   font-size: 20px;
@@ -2279,6 +2322,20 @@ a.concept-card {
 
   .spot-summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .speakingcircles-feature {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .speakingcircles-feature__media {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .speakingcircles-feature__media img {
+    width: 72%;
   }
 }
 
@@ -2441,6 +2498,7 @@ nav a,
   .concept-grid,
   .concept-grid--2,
   .concept-grid--3,
+  .speakingcircles-feature,
   .faq-grid,
   .support-grid--3,
   .spot-summary-grid {
