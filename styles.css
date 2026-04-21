@@ -894,6 +894,16 @@ h2 {
   margin-top: 24px;
 }
 
+.page-speakingcircles .profile-row,
+.page-sukeda .profile-row,
+.page-community .profile-row {
+  background: #fff;
+  border: 1px solid var(--surface-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--surface-shadow);
+}
+
 .profile-photo img {
   width: 100%;
   border-radius: 12px;
@@ -910,6 +920,12 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.page-speakingcircles .profile-text,
+.page-sukeda .profile-text,
+.page-community .profile-text {
+  padding: 4px 2px 4px 0;
 }
 
 .profile-text h1 {
