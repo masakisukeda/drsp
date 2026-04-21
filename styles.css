@@ -904,16 +904,43 @@ h2 {
   box-shadow: var(--surface-shadow);
 }
 
+.page-speakingcircles .profile-row,
+.page-sukeda .profile-row,
+.page-community .profile-row {
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 24vw, 340px);
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
 .profile-photo img {
   width: 100%;
   border-radius: 12px;
   display: block;
 }
 
-.page-speakingcircles .profile-photo img {
-  aspect-ratio: 1 / 1;
+.page-speakingcircles .profile-photo,
+.page-sukeda .profile-photo,
+.page-community .profile-photo {
+  order: 2;
+}
+
+.page-speakingcircles .profile-text,
+.page-sukeda .profile-text,
+.page-community .profile-text {
+  order: 1;
+  padding: 24px;
+}
+
+.page-speakingcircles .profile-photo img,
+.page-sukeda .profile-photo img,
+.page-community .profile-photo img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 0;
   object-fit: cover;
-  object-position: center 10%;
+  object-position: center 12%;
 }
 
 .profile-text {
@@ -1271,6 +1298,33 @@ h2 {
 
   .profile-row {
     grid-template-columns: 1fr;
+  }
+
+  .page-speakingcircles .profile-row,
+  .page-sukeda .profile-row,
+  .page-community .profile-row {
+    padding: 16px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+
+  .page-speakingcircles .profile-photo,
+  .page-sukeda .profile-photo,
+  .page-community .profile-photo {
+    order: 1;
+  }
+
+  .page-speakingcircles .profile-text,
+  .page-sukeda .profile-text,
+  .page-community .profile-text {
+    order: 2;
+    padding: 0;
+  }
+
+  .page-speakingcircles .profile-photo img,
+  .page-sukeda .profile-photo img,
+  .page-community .profile-photo img {
+    border-radius: 14px;
   }
 
   .hero {
