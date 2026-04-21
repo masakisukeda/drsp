@@ -314,7 +314,7 @@
     return anchor;
   };
 
-  fetch('./assets/data/x-posts.json', { cache: 'no-store' })
+  fetch('/assets/data/x-posts.json', { cache: 'no-store' })
     .then((res) => {
       if (!res.ok) throw new Error('x-posts.json fetch failed');
       return res.json();
@@ -510,7 +510,7 @@ for (const el of targets) {
 }
 }
 
-// ── フッター: note RSS 最新3件 ──
+// ── フッター: note 最新3件 ──
 (function () {
   const footerSections = Array.from(document.querySelectorAll('.site-footer section'));
   const targetSection = footerSections.find((section) => {
@@ -534,8 +534,8 @@ for (const el of targets) {
   const list = targetSection.querySelector('ul');
   if (!list) return;
 
-  const RSS_URL = 'https://note.com/disa_pr/rss';
   const fallbackHTML = list.innerHTML;
+  const DATA_URL = '/assets/data/x-posts.json';
 
   list.classList.add('note-rss-list');
   list.setAttribute('aria-busy', 'true');
@@ -547,122 +547,55 @@ for (const el of targets) {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+  const parseDate = (value) => {
+    if (!value) return new Date(0);
+    const normalized = String(value).replaceAll('.', '-');
+    const d = new Date(normalized);
+    return Number.isNaN(d.getTime()) ? new Date(0) : d;
+  };
+
   const formatDateLabel = (value) => {
-    if (!value) return '';
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return '';
+    const d = parseDate(value);
+    if (d.getTime() === 0) return '';
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}.${m}.${day}`;
   };
 
-  const normalizeItems = (items) => items
-    .map((item) => ({
-      title: (item.title || '').trim(),
-      link: (item.link || '').trim(),
-      date: formatDateLabel(item.pubDate || item.isoDate || item.date || '')
-    }))
-    .filter((item) => item.title && item.link)
-    .slice(0, 3);
-
-  const parseRssXml = (xmlText) => {
-    const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
-    const parserError = xml.querySelector('parsererror');
-    if (parserError) throw new Error('RSS parse error');
-
-    const items = Array.from(xml.querySelectorAll('channel > item')).map((item) => ({
-      title: item.querySelector('title')?.textContent || '',
-      link: item.querySelector('link')?.textContent || '',
-      pubDate: item.querySelector('pubDate')?.textContent || ''
-    }));
-
-    return normalizeItems(items);
-  };
-
-  const fetchJson = async (url) => {
-    const response = await fetch(url, { headers: { Accept: 'application/json' } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
-  };
-
-  const fetchText = async (url) => {
-    const response = await fetch(url, { headers: { Accept: 'application/xml,text/xml,*/*' } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.text();
-  };
-
-  const loadFromRss2Json = async () => {
-    const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=3`;
-    const data = await fetchJson(url);
-    if (!data || data.status !== 'ok' || !Array.isArray(data.items)) {
-      throw new Error('rss2json invalid response');
-    }
-    return normalizeItems(data.items);
-  };
-
-  const loadFromAllOrigins = async () => {
-    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`;
-    const xmlText = await fetchText(url);
-    return parseRssXml(xmlText);
-  };
-
-  const loadFromDirectRss = async () => {
-    const xmlText = await fetchText(RSS_URL);
-    return parseRssXml(xmlText);
-  };
-
   const renderItems = (items) => {
     list.innerHTML = items
       .map((item) => {
         const datePrefix = item.date ? `${escapeHtml(item.date)}｜` : '';
-        return `<li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${datePrefix}${escapeHtml(item.title)}</a></li>`;
+        return `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${datePrefix}${escapeHtml(item.text)}</a></li>`;
       })
       .join('');
   };
 
-  const loadRss = async () => {
-    try {
-      const loaders = [loadFromRss2Json, loadFromAllOrigins, loadFromDirectRss];
-      let latestItems = [];
+  fetch(DATA_URL, { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((json) => {
+      const posts = Array.isArray(json?.posts) ? json.posts : [];
+      const latest = posts
+        .filter((post) => post && post.source === 'note' && post.url && post.text)
+        .sort((a, b) => parseDate(b.date) - parseDate(a.date))
+        .slice(0, 3)
+        .map((post) => ({
+          url: post.url,
+          text: post.text,
+          date: formatDateLabel(post.date)
+        }));
 
-      for (const load of loaders) {
-        try {
-          latestItems = await load();
-        } catch (_error) {
-          latestItems = [];
-        }
-        if (latestItems.length > 0) break;
-      }
-
-      if (latestItems.length === 0) throw new Error('all feed loaders failed');
-      renderItems(latestItems);
-    } catch (_error) {
+      if (latest.length === 0) throw new Error('no note posts');
+      renderItems(latest);
+    })
+    .catch(() => {
       list.innerHTML = fallbackHTML;
-    } finally {
+    })
+    .finally(() => {
       list.removeAttribute('aria-busy');
-    }
-  };
-
-  const start = () => {
-    if (start.started) return;
-    start.started = true;
-    loadRss();
-  };
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        start();
-        observer.disconnect();
-      }
-    }, {
-      threshold: 0.01,
-      rootMargin: '0px 0px 400px 0px'
     });
-    observer.observe(targetSection);
-  } else {
-    window.addEventListener('load', start, { once: true });
-  }
 })();
