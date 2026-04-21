@@ -542,14 +542,22 @@ h2 {
   padding: 0 var(--gutter);
 }
 
-/* ---- 共通パーツ（カード / ボタン） ---- */
-.cm-card {
+/* Shared surface styles */
+:where(.card, .concept-card, .member-card, .mvv-card, .support-card, .service-card, .works-tile, .faq-card, .flow-item, .spot-summary-item, .spot-cta-card, .voice-tile) {
   background: #fff;
   border: 1px solid var(--surface-border);
   border-radius: 14px;
+}
+
+:where(.cm-card, .concept-card, .member-card, .mvv-card, .support-card, .service-card, .faq-card, .flow-item, .spot-summary-item, .voice-tile) {
   box-shadow: var(--surface-shadow);
 }
 
+:where(.service-card, .voice-tile) {
+  box-shadow: var(--surface-shadow-strong);
+}
+
+/* ---- 共通パーツ（カード / ボタン） ---- */
 .cm-btn {
   display: inline-block;
   background: #222;
@@ -719,13 +727,9 @@ h2 {
 }
 
 .member-card {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--surface-shadow);
 }
 
 .member-card img {
@@ -1020,9 +1024,6 @@ h2 {
 /* ── WORKSロゴタイル（aspect-ratioなし） ── */
 
 .works-tile {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1311,12 +1312,8 @@ h2 {
 }
 
 .mvv-card {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   padding: 28px 20px;
   text-align: center;
-  box-shadow: var(--surface-shadow);
 }
 
 .mvv-icon {
@@ -1354,12 +1351,8 @@ h2 {
 }
 
 .support-card {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   padding: 20px 14px;
   text-align: center;
-  box-shadow: var(--surface-shadow);
 }
 
 .support-icon {
@@ -1490,10 +1483,7 @@ h2 {
 }
 
 .service-card {
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   overflow: hidden;
-  background: #fff;
   display: flex;
   flex-direction: column;
   box-shadow: var(--surface-shadow-strong);
@@ -1807,10 +1797,6 @@ h2 {
 .concept-card {
   text-align: center;
   padding: 24px 14px;
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
-  box-shadow: var(--surface-shadow);
 }
 
 .concept-card-image {
@@ -1902,14 +1888,10 @@ a.concept-card {
 }
 
 .flow-item {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   padding: 20px 24px;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: var(--surface-shadow);
 }
 
 .flow-num {
@@ -1944,11 +1926,7 @@ a.concept-card {
 }
 
 .faq-card {
-  background: #fff;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   padding: 20px;
-  box-shadow: var(--surface-shadow);
 }
 
 .faq-card dt {
@@ -2118,13 +2096,10 @@ a.concept-card {
 }
 
 .spot-summary-item {
-  background: #fff;
-  border: 1px solid var(--surface-border);
   border-radius: 12px;
   padding: 16px;
   font-size: clamp(13px, 0.95vw, 16px);
   line-height: 1.8;
-  box-shadow: var(--surface-shadow);
 }
 
 .spot-summary-item strong {
@@ -2152,8 +2127,6 @@ a.concept-card {
   align-items: center;
   gap: 12px;
   min-width: min(560px, 94%);
-  background: #fff;
-  border: 1px solid var(--surface-border);
   border-radius: 18px;
   padding: 20px 26px 24px;
   box-shadow: var(--surface-shadow-deep);
@@ -2181,10 +2154,7 @@ a.concept-card {
 }
 
 .voice-tile {
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
   overflow: hidden;
-  background: #fff;
   display: flex;
   flex-direction: column;
   box-shadow: var(--surface-shadow-strong);
@@ -2629,47 +2599,7 @@ nav a,
   }
 }
 /* about: support avatar style aligned with eiri/hieiri */
-.page-about .support-icon {
-  width: 112px;
-  height: 112px;
-  margin: 0 auto 12px;
-  border: 0;
-  background: transparent;
-  overflow: visible;
-}
-
-.page-about .support-icon img {
-  width: 112px;
-  height: 112px;
-  border-radius: 999px;
-  border: 4px solid var(--circle-border);
-  object-fit: cover;
-  object-position: center 22%;
-}
-
-/* about: align VISION icon circle style with support icons */
-.page-about .mvv-icon {
-  width: 112px;
-  height: 112px;
-  margin: 0 auto 12px;
-  border-radius: 999px;
-  background: #fff;
-  border: 4px solid var(--circle-border);
-  font-size: 46px;
-}
-
-/* ai-bu: align activity icons with about vision icon style */
-.page-ai-bu .mvv-icon {
-  width: 112px;
-  height: 112px;
-  margin: 0 auto 12px;
-  border-radius: 999px;
-  background: #fff;
-  border: 4px solid var(--circle-border);
-  font-size: 46px;
-}
-
-/* sukeda: card icons aligned with about support-face style */
+.page-about .support-icon,
 .page-sukeda .solution-icon.support-icon {
   width: 112px;
   height: 112px;
@@ -2681,6 +2611,7 @@ nav a,
   font-size: initial;
 }
 
+.page-about .support-icon img,
 .page-sukeda .solution-icon.support-icon img {
   width: 112px;
   height: 112px;
@@ -2688,6 +2619,17 @@ nav a,
   border: 4px solid var(--circle-border);
   object-fit: cover;
   object-position: center 22%;
+}
+
+.page-about .mvv-icon,
+.page-ai-bu .mvv-icon {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 4px solid var(--circle-border);
+  font-size: 46px;
 }
 
 .page-sukeda .solution-icon.image-icon {
