@@ -5,6 +5,10 @@
   --inner: #ececec;
   --text: #313338;
   --blue: #1f62b8;
+  --surface-border: #d0d0d0;
+  --surface-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  --surface-shadow-strong: 0 10px 22px rgba(0, 0, 0, 0.1);
+  --surface-shadow-deep: 0 12px 26px rgba(0, 0, 0, 0.12);
   --circle-border: #666666;
   --site-max: 1140px;
   --gutter: 15px;
@@ -431,7 +435,7 @@ h2 {
 
 .card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
@@ -541,9 +545,9 @@ h2 {
 /* ---- 共通パーツ（カード / ボタン） ---- */
 .cm-card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .cm-btn {
@@ -750,12 +754,12 @@ h2 {
 
 .member-card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .member-card img {
@@ -997,8 +1001,8 @@ h2 {
 .page-sukeda .solution-card {
   text-align: center;
   background: #fff;
-  border: 1px solid #d0d0d0;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-shadow);
 }
 
 .page-sukeda .solution-icon {
@@ -1054,7 +1058,7 @@ h2 {
 
 .works-tile {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
@@ -1345,11 +1349,11 @@ h2 {
 
 .mvv-card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   padding: 28px 20px;
   text-align: center;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .mvv-icon {
@@ -1388,11 +1392,11 @@ h2 {
 
 .support-card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   padding: 20px 14px;
   text-align: center;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .support-icon {
@@ -1523,13 +1527,13 @@ h2 {
 }
 
 .service-card {
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--surface-shadow-strong);
 }
 
 .service-banner {
@@ -1841,9 +1845,9 @@ h2 {
   text-align: center;
   padding: 24px 14px;
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .concept-card-image {
@@ -1982,13 +1986,13 @@ a.concept-card {
 
 .flow-item {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   padding: 20px 24px;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .flow-num {
@@ -2024,10 +2028,10 @@ a.concept-card {
 
 .faq-card {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .faq-card dt {
@@ -2217,12 +2221,12 @@ a.concept-card {
 
 .spot-summary-item {
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 12px;
   padding: 16px;
   font-size: clamp(13px, 0.95vw, 16px);
   line-height: 1.8;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--surface-shadow);
 }
 
 .spot-summary-item strong {
@@ -2251,10 +2255,10 @@ a.concept-card {
   gap: 12px;
   min-width: min(560px, 94%);
   background: #fff;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 18px;
   padding: 20px 26px 24px;
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--surface-shadow-deep);
 }
 
 .spot-cta-label {
@@ -2279,13 +2283,13 @@ a.concept-card {
 }
 
 .voice-tile {
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--surface-border);
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--surface-shadow-strong);
 }
 
 .voice-tile-banner {
