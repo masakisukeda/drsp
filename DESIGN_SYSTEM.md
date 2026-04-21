@@ -393,6 +393,34 @@ MISSION / VISION / VALUES 用。`.mvv-grid`（3カラム）内で使う。
 </table>
 ```
 
+### 6-11. プロフィール横並びカード `.profile-row`（2026-04-21統一仕様）
+
+対象ページ:
+
+- `page-speakingcircles`
+- `page-community`
+- `page-sukeda`
+
+PC（960pxより上）の仕様:
+
+- レイアウトは **2カラム固定**（左: テキスト / 右: 写真）
+- `grid-template-columns: minmax(0, 1fr) clamp(240px, 24vw, 340px)`
+- テキストと写真の **カラム間余白は 0**
+- 写真は `aspect-ratio: 4 / 5`、`object-fit: cover`
+- 写真コンテナは右カラムに配置（`order: 2`）、テキストは左カラム（`order: 1`）
+
+SP（960px以下）の仕様:
+
+- 1カラムに折り返し
+- 写真を先頭、テキストを後段に並べる
+- 写真角丸は `14px`
+
+実装時の注意:
+
+- `.profile-row` / `.profile-photo` / `.profile-text` の構造は崩さない
+- 余白調整を負マージンや `calc(100% + ...)` で行わない
+- ページ固有調整は必ず `page-...` スコープで行う
+
 ---
 
 ## 7. グリッドシステム
