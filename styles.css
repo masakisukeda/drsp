@@ -1902,6 +1902,10 @@ a.concept-card {
   margin-top: 8px;
 }
 
+.detail-card .service-banner-btn {
+  margin-top: 14px;
+}
+
 .page-community .related-projects .concept-card {
   padding: 0;
   overflow: hidden;
