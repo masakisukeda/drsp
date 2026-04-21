@@ -393,7 +393,7 @@ MISSION / VISION / VALUES 用。`.mvv-grid`（3カラム）内で使う。
 </table>
 ```
 
-### 6-11. プロフィール横並びカード `.profile-row`（2026-04-21統一仕様）
+### 6-11. プロフィール横並びカード `.profile-row`（2026-04-22時点）
 
 対象ページ:
 
@@ -403,23 +403,43 @@ MISSION / VISION / VALUES 用。`.mvv-grid`（3カラム）内で使う。
 
 PC（960pxより上）の仕様:
 
-- レイアウトは **2カラム固定**（左: テキスト / 右: 写真）
-- `grid-template-columns: minmax(0, 1fr) clamp(240px, 24vw, 340px)`
-- テキストと写真の **カラム間余白は 0**
-- 写真は `aspect-ratio: 4 / 5`、`object-fit: cover`
-- 写真コンテナは右カラムに配置（`order: 2`）、テキストは左カラム（`order: 1`）
+- レイアウトは **2カラム固定**（左: 写真 / 右: テキスト）
+- `.profile-row` は `grid-template-columns: 1fr 1fr`、`gap: 24px`
+- `.page-speakingcircles` / `.page-community` / `.page-sukeda` の `.profile-row` は白背景カード（`padding: 18px`, `border-radius: 18px`）
+- 対象3ページのプロフィール写真は `aspect-ratio: 1 / 1`, `object-fit: cover`, `object-position: center 10%`
 
 SP（960px以下）の仕様:
 
-- 1カラムに折り返し
-- 写真を先頭、テキストを後段に並べる
-- 写真角丸は `14px`
+- 1カラムに折り返し（`.profile-row { grid-template-columns: 1fr; }`）
+- 写真→テキストの順序はDOM順（並べ替えなし）
+- 角丸や余白はPC仕様を引き継ぐ（ページ固有の強い上書きは入れない）
 
 実装時の注意:
 
 - `.profile-row` / `.profile-photo` / `.profile-text` の構造は崩さない
 - 余白調整を負マージンや `calc(100% + ...)` で行わない
 - ページ固有調整は必ず `page-...` スコープで行う
+
+### 6-12. セクション見出し下の導入文（カード上テキスト）
+
+`eiri/speakingcircles` では、カード群の直前に「見出し下テキスト（導入文）」を置く。
+
+- 対象: `PURPOSE` / `Speaking Circles®` / `DETAIL` の3セクション
+- 位置: `h2` の直下、カードグリッドの直前
+- 目的: セクションで伝える要点を1文で先出しする
+- 表示ルール: 3セクションで同じ余白・行間を使う（`margin-top:16px; margin-bottom:8px; line-height:2; max-width:760px;`）
+
+HTML例:
+
+```html
+<h2>実施方法と提供内容</h2>
+<p style="margin-top:16px; margin-bottom:8px; line-height:2; max-width:760px;">
+  「安心感」と「つながり」を構築するトレーニング
+</p>
+<div class="concept-grid concept-grid--3 detail-cards-grid">
+  ...
+</div>
+```
 
 ---
 
