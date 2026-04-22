@@ -28,7 +28,6 @@ RedirectMatch 301 ^/archives/.*$ /hieiri/
 
 # Legacy FAQ page
 RedirectMatch 301 ^/faq/?$ /inquiry/
-RedirectMatch 301 ^/slide/?$ /slide/membership/
 
 # Browser cache policy for static assets
 <IfModule mod_expires.c>
