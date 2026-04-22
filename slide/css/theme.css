@@ -2,7 +2,7 @@
 
 /* --- Layout & Base Decoration --- */
 #\:\$p>svg>foreignObject>section {
-  --accent-color: #1f62b8;
+  --accent-color: #3f8092;
   font-family: 'Inter', 'Noto Sans JP', sans-serif;
   font-size: calc(1.12rem * 1.1);
   --marpit-root-font-size: calc(1.02rem * 1.1);
@@ -217,7 +217,7 @@ div#\:\$p>svg>foreignObject>section::after {
 }
 
 #\:\$p>svg>foreignObject>section blockquote {
-  border-left: 3px solid #1f62b8;
+  border-left: 3px solid var(--accent-color);
   background: #fff;
   color: #111;
   padding: 14px 20px;
@@ -682,7 +682,7 @@ div#\:\$p>svg>foreignObject>section::after {
 
 /* --- Final overrides (beat base.css specificity) --- */
 div#\:\$p>svg>foreignObject>section {
-  --accent-color: #1f62b8 !important;
+  --accent-color: #3f8092 !important;
   background: #ededed !important;
   color: #111 !important;
 }
@@ -695,7 +695,7 @@ div#\:\$p>svg>foreignObject>section.lead {
 div#\:\$p>svg>foreignObject>section :is(h1, marp-h1) {
   color: #111 !important;
   text-shadow: none !important;
-  background: linear-gradient(to right, #1f62b8 40px, transparent 40px) bottom left / 100% 3px no-repeat !important;
+  background: linear-gradient(to right, var(--accent-color) 40px, transparent 40px) bottom left / 100% 3px no-repeat !important;
 }
 
 div#\:\$p>svg>foreignObject>section :is(h2, marp-h2) {
@@ -710,8 +710,8 @@ div#\:\$p>svg>foreignObject>section.lead :is(h1, marp-h1) {
   color: #111 !important;
   background: linear-gradient(to right,
       transparent calc(50% - 24px),
-      #1f62b8 calc(50% - 24px),
-      #1f62b8 calc(50% + 24px),
+      var(--accent-color) calc(50% - 24px),
+      var(--accent-color) calc(50% + 24px),
       transparent calc(50% + 24px)) bottom / 100% 3px no-repeat !important;
 }
 
@@ -732,22 +732,22 @@ div#\:\$p>svg>foreignObject>section .card {
 
 div#\:\$p>svg>foreignObject>section blockquote {
   background: #fff !important;
-  border-left-color: #1f62b8 !important;
+  border-left-color: var(--accent-color) !important;
   color: #111 !important;
 }
 
 div#\:\$p>svg>foreignObject>section blockquote strong {
-  color: #1f62b8 !important;
+  color: var(--accent-color) !important;
 }
 
 div#\:\$p>svg>foreignObject>section .chip {
-  border-color: #1f62b8;
+  border-color: var(--accent-color);
   color: #fff !important;
-  background-color: #1f62b8 !important;
+  background-color: var(--accent-color) !important;
 }
 
 div#\:\$p>svg>foreignObject>section :is(.accent, .entry-label) {
-  color: #1f62b8 !important;
+  color: var(--accent-color) !important;
 }
 
 div#\:\$p>svg>foreignObject>section .header-logo {

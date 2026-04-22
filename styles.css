@@ -6,7 +6,9 @@
   --panel: #dfdfdf;
   --inner: #ececec;
   --text: #313338;
-  --blue: #1f62b8;
+  --blue: #3f8092;
+  --blue-deep: #2f6674;
+  --blue-soft: #b9d7de;
   --surface-border: #d0d0d0;
   --surface-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   --surface-shadow-strong: 0 10px 22px rgba(0, 0, 0, 0.1);
@@ -99,7 +101,7 @@ nav a:not(.nav-cta)::after {
 }
 
 nav a:not(.nav-cta):hover {
-  color: #0d4f9a;
+  color: var(--blue-deep);
   transform: translateY(-2px) rotate(-1.2deg);
 }
 
@@ -159,7 +161,7 @@ nav a.nav-cta:hover {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: #9fd1ff;
+  color: var(--blue-soft);
 }
 
 .disa-news-marquee {
@@ -186,12 +188,12 @@ nav a.nav-cta:hover {
 }
 
 .disa-news-item:hover {
-  color: #9fd1ff;
+  color: var(--blue-soft);
 }
 
 .disa-news-item::before {
   content: "• ";
-  color: #9fd1ff;
+  color: var(--blue-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -280,7 +282,7 @@ nav a.nav-cta:hover {
   margin-inline: auto;
   text-shadow:
     0 0 16px rgba(255, 255, 255, 0.42),
-    0 0 38px rgba(58, 128, 255, 0.34);
+    0 0 38px rgba(63, 128, 146, 0.34);
   animation: hero-update-pop 2.8s ease-in-out infinite;
 }
 
