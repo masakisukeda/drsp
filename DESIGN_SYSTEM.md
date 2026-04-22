@@ -11,7 +11,7 @@
 - 画像は **WebP を基本**に、ロゴ・アイコンは **SVG**、ファビコンは **ICO** を使う。パスはルート相対パス（`/assets/wp/`）を使う
 - フォントは **Noto Sans JP** を基本に、英数字用に **Inter** を1つ追加する（`font-family` を独自指定しない）。ウェイトは **400 / 700 / 900** の3種のみ使用（500は未ロード）
 - アニメーションは `data-aos` 属性と `main.js` の IntersectionObserver 実装で統一する
-- 円形アイコンの枠線色は `--circle-border` を使い、`#666666` に統一する
+- 円形アイコンの枠線色は `--circle-border`（=`--c-subtle`）を使い、色を固定する
 - 既存の `404.html` や一部ページにはレガシーな `style` 属性・`<style>` が残っているが、新規実装では増やさない
 
 ---
@@ -552,22 +552,60 @@ HTML例:
 
 ---
 
-## 11. CSS変数一覧
+## 11. CSS変数一覧（色・余白・文字）
 
 ```css
 :root {
-  --bg: #ededed;        /* ページ背景 */
-  --panel: #dfdfdf;     /* パネル背景 */
-  --inner: #ececec;     /* インナーパネル背景 */
-  --text: #313338;      /* 本文テキスト */
-  --blue: #3f8092;      /* アクセントカラー（リンク・フォーカス等） */
-  --site-max: 1140px;   /* コンテンツ最大幅 */
-  --gutter: 15px;       /* 左右余白 */
-  --fs-1〜--fs-5;       /* フォントサイズ（セクション5参照） */
+  /* ベース */
+  --bg: #ededed;
+  --panel: #dfdfdf;
+  --inner: #ececec;
+  --text: #313338;
+  --site-max: 1140px;
+  --gutter: 15px;
+
+  /* アクセント */
+  --blue: #3f8092;
+  --blue-deep: #2f6674;
+  --blue-soft: #b9d7de;
+
+  /* ニュートラル */
+  --c-white: #fff;
+  --c-black: #000;
+  --c-ink: #111;
+  --c-dark: #222;
+  --c-mid: #444;
+  --c-muted: #555;
+  --c-dim: #888;
+  --c-subtle: #666;
+  --c-subtle-strong: #4a4d53;
+  --c-body: #2f3136;
+  --c-surface: #f5f5f5;
+
+  /* ボーダー */
+  --surface-border: #d0d0d0;
+  --surface-border-strong: #bcbcbc;
+  --c-border-soft: #cfcfcf;
+  --circle-border: var(--c-subtle);
+  --clr-border: #d3d7de;
+
+  /* 補助（Xポスト等） */
+  --clr-text: #1f2329;
+  --clr-text-sub: var(--c-subtle-strong);
+  --clr-bg-soft: #eef2f7;
+  --clr-bg-hover: #eef4ff;
+
+  /* タイポ */
+  --fs-1〜--fs-5;
 }
 ```
 
-> NG: `--accent` `--primary` など存在しない変数名は使わない → `--blue` を使う
+**色運用ルール（2026-04-22 更新）**
+- 色は直書きせず、原則 `:root` 変数を使う
+- 迷ったらニュートラルは `--c-*`、境界線は `--surface-border` / `--c-border-soft` を優先する
+- 新しい色を追加する前に、既存トークンで代替できないか確認する
+
+> NG: `--accent` `--primary` など存在しない変数名は使わない（アクセントは `--blue` 系を使う）
 
 ---
 
