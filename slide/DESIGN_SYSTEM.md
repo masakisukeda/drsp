@@ -9,7 +9,7 @@
 - スタイルは `css/theme.css` に集約されています。**インラインCSSは書かない**
 - `theme.css` に存在しないクラス名・CSS変数は使わない
 - 画像パスはルート相対パス（`/assets/wp/`）を使う。`../../` は使わない
-- フォントは **Noto Sans JP** のみを使用する。他のフォントを読み込んだり指定したりしない
+- フォントは **Noto Sans JP** を基本に、英数字用に **Inter** を1つ追加する（`font-family` を独自指定しない）
 - フォントサイズはユーティリティクラス（`.text-huge` 等）で定義されたもののみ使用し、独自のサイズ指定（`font-size: 24px` 等）は行わない
 - `theme.css` に存在しないクラス名・CSS変数は使わない
 - 新しいパターンが必要なときは、個別ファイルに書かず `theme.css` に追加する
@@ -34,7 +34,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/slide/css/base.css">
   <link rel="stylesheet" href="/slide/css/theme.css">
@@ -444,7 +444,7 @@ color: var(--slide-accent);  /* 存在しない。var(--accent-color) を使う 
 
 ### NG-6: フォントを勝手に追加・変更する
 
-`Noto Sans JP` 以外のフォントを `font-family` に指定したり、Google Fonts のリンクを増やしたりしない。
+`Noto Sans JP` を基本に、英数字用に `Inter` を1つ追加する。`font-family` を独自指定したり、不要にフォントを増やしたりしない。
 
 ```css
 /* NG */

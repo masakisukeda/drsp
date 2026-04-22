@@ -3,7 +3,7 @@
 /* --- Layout & Base Decoration --- */
 #\:\$p>svg>foreignObject>section {
   --accent-color: #1f62b8;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
   font-size: calc(1.12rem * 1.1);
   --marpit-root-font-size: calc(1.02rem * 1.1);
   color: #111;

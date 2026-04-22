@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap");
+
 /* --- 1. Global & Variables --- */
 :root {
   --bg: #ededed;
@@ -30,7 +32,7 @@ body {
 }
 
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
   background: var(--bg);
   color: var(--text);
 }
@@ -176,7 +178,7 @@ nav a.nav-cta:hover {
 
 .disa-news-item {
   text-decoration: none;
-  font: 500 12px/1.2 "Noto Sans JP", sans-serif;
+  font: 500 12px/1.2 "Inter", "Noto Sans JP", sans-serif;
   color: #ededed;
   transition: color 0.2s ease;
   display: inline-flex;
@@ -1641,7 +1643,7 @@ h2 {
   padding: 12px 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
   font-size: 14px;
   background: #fafafa;
   box-sizing: border-box;
@@ -1670,7 +1672,7 @@ h2 {
   padding: 14px 60px;
   border: none;
   border-radius: 8px;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;

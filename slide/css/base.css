@@ -728,7 +728,7 @@
 }
 
 /* source: production style 2 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@300;500;700&display=swap');
 
 div#\:\$p>svg>foreignObject>section {
     width: 1280px;
@@ -2266,7 +2266,7 @@ div#\:\$p>svg>foreignObject>section .header-logo {
 }
 
 div#\:\$p>svg>foreignObject>section {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
     font-size: calc(var(--marpit-root-font-size, 1rem) * 0.9);
     color: #ffffff;
     padding: 60px 60px 80px;

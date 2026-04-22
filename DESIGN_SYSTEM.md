@@ -9,7 +9,7 @@
 - スタイルは `/styles.css` に集約しています。**新規ページでは `<style>` タグや `style=` 属性は書かない**
 - `styles.css` に存在しないクラス名・CSS変数は使わない
 - 画像は **WebP を基本**に、ロゴ・アイコンは **SVG**、ファビコンは **ICO** を使う。パスはルート相対パス（`/assets/wp/`）を使う
-- フォントは **Noto Sans JP** のみ（`font-family` を独自指定しない）
+- フォントは **Noto Sans JP** を基本に、英数字用に **Inter** を1つ追加する（`font-family` を独自指定しない）
 - アニメーションは `data-aos` 属性と `main.js` の IntersectionObserver 実装で統一する
 - 円形アイコンの枠線色は `--circle-border` を使い、`#666666` に統一する
 - 既存の `404.html` や一部ページにはレガシーな `style` 属性・`<style>` が残っているが、新規実装では増やさない
@@ -32,7 +32,7 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260413">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css?v=【バージョン日付】">
   <!-- SEO/OGP: managed -->
   【SEO/OGPブロック ← セクション10参照】
