@@ -150,6 +150,11 @@ page-main
 </section>
 ```
 
+**eyebrow → 見出しの間隔ルール：**
+- 通常の `<h2>` は `margin: 12px 0 0` が自動で入る
+- `<h2 class="page-title">` は大きいフォントを使うため、同じく `margin-top: 12px` を設定済み（`margin: 0` で上書きしない）
+- `about-intro-dark` 内の `.page-title` のみ `margin: 0` で例外扱い
+
 ### 4-3. イントロパネル（ページ最初のパネル）
 
 最初のパネルは `.about-intro-dark` クラスを併用する。背景・ボーダーが消え、透明になる。
