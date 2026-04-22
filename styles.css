@@ -2661,7 +2661,7 @@ body {
 }
 
 .page-about .page-main h2.about-support-title {
-  font-size: clamp(20px, 1.9vw, 30px) !important;
+  font-size: clamp(18px, 1.6vw, 26px) !important;
 }
 
 .mvv-card h3,
