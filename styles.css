@@ -2382,6 +2382,11 @@ a.concept-card {
   padding: 24px;
 }
 
+.speakingcircles-feature__body :is(p, li) {
+  font-size: 16px;
+  line-height: 2;
+}
+
 .speakingcircles-feature__media {
   margin: 0;
   width: 100%;
