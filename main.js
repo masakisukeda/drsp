@@ -373,7 +373,7 @@
         .mobile-swiper-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
         .mobile-swiper-btn { width: 34px; height: 34px; border-radius: 999px; border: 1px solid #222; background: #fff; color: #111; font-size: 20px; line-height: 1; cursor: pointer; }
         .mobile-swiper-pagination { position: static; width: auto; }
-        .mobile-swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; margin: 0 4px !important; background: #bdbdbd; opacity: 1; }
+        .mobile-swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; margin: 0 4px; background: #bdbdbd; opacity: 1; }
         .mobile-swiper-pagination .swiper-pagination-bullet-active { background: #111; }
       `;
       document.head.appendChild(style);
