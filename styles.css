@@ -583,6 +583,8 @@ h2 {
   flex-wrap: wrap;
   gap: 6px;
   margin: 0;
+  justify-content: flex-start;
+  text-align: left;
   font-size: 12px;
   font-weight: 700;
   color: #6a6a6a;
@@ -608,6 +610,7 @@ h2 {
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 6px;
+  text-align: left;
   line-height: 1.5;
   min-height: 20px;
 }
