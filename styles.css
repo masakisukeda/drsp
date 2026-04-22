@@ -1599,6 +1599,10 @@ h2 {
   text-align: left;
 }
 
+.page-about .about-support-title {
+  font-size: clamp(24px, 2.2vw, 38px);
+}
+
 /* ── ABOUTページ: 法人概要 + MAP ── */
 .law-grid {
   display: grid;
