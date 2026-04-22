@@ -1173,6 +1173,22 @@ h2 {
   line-height: 1.8;
 }
 
+.page-sukeda .tools-grid .solution-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.page-sukeda .tools-grid .solution-card p {
+  flex: 1;
+}
+
+.page-sukeda .tools-grid .works-tile-btn {
+  margin-top: 12px;
+}
+
 /* ── WORKSロゴタイル（aspect-ratioなし） ── */
 
 .works-tile {
