@@ -2664,6 +2664,11 @@ body {
   font-size: clamp(18px, 1.6vw, 26px) !important;
 }
 
+.page-about .support-card p {
+  font-size: var(--fs-5);
+  line-height: 1.7;
+}
+
 .mvv-card h3,
 .support-card h3,
 .service-banner-title,
