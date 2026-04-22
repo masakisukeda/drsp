@@ -2664,6 +2664,10 @@ body {
   font-size: var(--fs-2);
 }
 
+.page-about .page-main h2.about-support-title {
+  font-size: clamp(24px, 2.2vw, 38px);
+}
+
 .mvv-card h3,
 .support-card h3,
 .service-banner-title,
