@@ -354,9 +354,6 @@ h2 {
   font-weight: 700;
 }
 
-.spot-sub-left {
-  text-align: left;
-}
 
 .inner-panel {
   margin-top: 24px;
@@ -705,12 +702,6 @@ h2 {
 }
 
 
-.plain-list {
-  margin: 0;
-  padding-left: 18px;
-  display: grid;
-  gap: 8px;
-}
 
 .tile-grid {
   margin-top: 18px;
@@ -719,30 +710,6 @@ h2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.tile {
-  background: #efefef;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.tile img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  object-position: center 46%;
-  border-radius: 8px;
-}
-
-.tile h3 {
-  margin: 10px 0 0;
-  font-size: clamp(18px, 1.6vw, 24px);
-}
-
-.tile p {
-  margin: 10px 0 0;
-  font-size: var(--fs-4);
-  line-height: 1.7;
-}
 
 .member-cards {
   margin-top: 18px;
@@ -1280,11 +1247,6 @@ h2 {
   background: var(--c-mid);
 }
 
-.works-footnote {
-  margin-top: 16px;
-  font-size: var(--fs-5);
-  color: var(--c-dim);
-}
 
 /* ── レスポンシブ ── */
 
@@ -1725,18 +1687,6 @@ h2 {
   object-position: center 22%;
 }
 
-.service-banner-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  background: #e8e8e8;
-  border: 1px solid var(--circle-border);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-3);
-  line-height: 1;
-}
 
 .line-chip {
   display: inline-flex;
@@ -1920,70 +1870,6 @@ h2 {
   flex-shrink: 0;
 }
 
-/* ── MEMBERSHIPページ専用 ── */
-.membership-hero {
-  background: #fff;
-  border-radius: 14px;
-  padding: 30px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: center;
-  margin-top: 24px;
-}
-
-.membership-hero-img {
-  background: #fff;
-  border: 4px solid var(--c-ink);
-  border-radius: 8px;
-  padding: 40px 20px;
-  text-align: center;
-  position: relative;
-}
-
-.membership-hero-img h3 {
-  font-size: 24px;
-  font-weight: 900;
-  margin: 0 0 2px;
-}
-
-.membership-hero-img .tag {
-  background: var(--c-ink);
-  color: #fff;
-  padding: 4px 20px;
-  font-size: var(--fs-4);
-  font-weight: 900;
-  border-radius: 4px;
-}
-
-.membership-hero-img .cow-icon {
-  position: absolute;
-  right: 10px;
-  bottom: 8px;
-  width: 50px;
-}
-
-.membership-hero-content dl {
-  margin: 0;
-  font-size: var(--fs-5);
-  line-height: 1.6;
-}
-
-.membership-hero-content dt {
-  font-weight: 900;
-  margin-bottom: 2px;
-  color: var(--c-ink);
-}
-
-.membership-hero-content dd {
-  margin: 0 0 2px;
-  color: var(--c-mid);
-}
-
-.membership-hero-content dd:last-child {
-  margin-bottom: 0;
-}
-
 .concept-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1991,9 +1877,6 @@ h2 {
   margin-top: 24px;
 }
 
-.concept-grid--1 {
-  grid-template-columns: 1fr;
-}
 
 .concept-grid--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2016,17 +1899,6 @@ h2 {
   display: block;
 }
 
-.concept-icon {
-  width: 72px;
-  height: 72px;
-  background: #333;
-  color: #fff;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  margin: 0 auto 16px;
-  font-size: 32px;
-}
 
 .concept-card h3 {
   font-size: var(--fs-3);
@@ -2153,69 +2025,10 @@ a.concept-card {
 }
 
 
-.cow-chat {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-top: 20px;
-}
 
-.cow-chat-icon {
-  width: 44px;
-  flex-shrink: 0;
-}
 
-.cow-chat-box {
-  background: #fff;
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: var(--fs-5);
-  line-height: 1.6;
-  position: relative;
-  flex: 1;
-}
 
-.cow-chat-box::before {
-  content: "";
-  position: absolute;
-  left: -8px;
-  top: 18px;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 8px solid #fff;
-}
 
-.note-xs {
-  font-size: 11px;
-  color: var(--c-dim);
-  margin-top: 8px;
-  line-height: 1.6;
-}
-
-.note-xs:first-of-type {
-  margin-top: 24px;
-}
-
-/* membership 専用ユーティリティ */
-.note-logo {
-  height: 32px;
-  margin-bottom: 20px;
-}
-
-.hero-caption {
-  font-size: 11px;
-  color: #666;
-  margin-top: 10px;
-}
-
-.mvv-card--center {
-  grid-column: 2;
-}
-
-.cta-wrap {
-  margin-top: 32px;
-  text-align: center;
-}
 
 /* ── MEMBERSHIP 専用 ── */
 .page-membership .panel {
@@ -2266,19 +2079,12 @@ a.concept-card {
 
 
 @media (max-width: 960px) {
-  .membership-hero {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
 
   .concept-grid,
   .faq-grid {
     grid-template-columns: 1fr;
   }
 
-  .mvv-card--center {
-    grid-column: auto;
-  }
 
   .page-membership .panel:first-of-type .spot-summary-grid {
     grid-template-columns: 1fr;
@@ -2320,9 +2126,6 @@ a.concept-card {
   color: var(--c-ink);
 }
 
-.page-spot .spot-member-sub {
-  margin-bottom: 28px;
-}
 
 .spot-faq-cta-wrap {
   margin-top: 40px;
