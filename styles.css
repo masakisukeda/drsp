@@ -578,15 +578,22 @@ h2 {
 }
 
 .page-breadcrumb {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: 0;
   font-size: 12px;
   font-weight: 700;
   color: #6a6a6a;
+  line-height: 1.5;
+  min-height: 20px;
   border-radius: 0;
 }
 
 .page-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
   color: #444;
   text-decoration: none;
   border-bottom: 1px solid #b8b8b8;
@@ -597,15 +604,18 @@ h2 {
   margin: 0;
   padding: 0;
   display: flex;
+  align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 6px;
+  line-height: 1.5;
+  min-height: 20px;
 }
 
 .page-breadcrumb-list li+li::before {
   content: "/";
   color: #8a8a8a;
-  margin-right: 6px;
+  margin-right: 0;
 }
 
 
