@@ -26,7 +26,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=20260423">
+  <link rel="stylesheet" href="./styles.css?v=20260423a">
 </head>
 
 <body class="dplus-page">
@@ -34,12 +34,12 @@
     <a class="brand" href="./index.html" aria-label="D+ top">
       <img class="brand-mark" src="./logo.png" alt="D+" loading="lazy">
     </a>
-    <button class="nav-toggle" aria-label="Toggle menu">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="page-sections">
       <span></span>
       <span></span>
       <span></span>
     </button>
-    <nav class="masthead-nav" aria-label="Page sections">
+    <nav class="masthead-nav" id="page-sections" aria-label="Page sections">
       <div class="nav-container">
         <a href="#about">D+について</a>
         <a href="#roadmap">進行予定</a>
@@ -196,24 +196,36 @@
           <h3>助田 正樹</h3>
           <p class="kicker">事務局長</p>
           <p>Web・IT企業の採用・組織支援。3,000名の対話実績に基づく「目利き」と「仕組み化」で、人材ミスマッチを防ぎ、事業成長を裏から支えます。</p>
+          <div class="member-links">
+            <a class="x-icon-link" href="https://x.com/masakisukeda" target="_blank" rel="noopener noreferrer" aria-label="助田 正樹のXを開く">𝕏</a>
+          </div>
         </article>
         <article class="member-card" data-reveal data-delay="120">
           <img src="./take.jpg" alt="幸野 剛士" loading="lazy">
           <h3>幸野 剛士</h3>
           <p class="kicker">事務局メンバー</p>
           <p>1992年生まれ、栃木県出身。Webディレクター歴9年。ブランディング、サイト構想、ゲスト調整、クリエイティブ制作をリード。</p>
+          <div class="member-links">
+            <a class="x-icon-link" href="https://x.com/takelogtake" target="_blank" rel="noopener noreferrer" aria-label="幸野 剛士のXを開く">𝕏</a>
+          </div>
         </article>
         <article class="member-card" data-reveal data-delay="240">
           <img src="../assets/wp/uno-kenji_photo.webp" alt="宇野 健児" loading="lazy">
           <h3>宇野 健児</h3>
           <p class="kicker">事務局メンバー</p>
           <p>Webディレクター兼UXデザイナー。Web・情報設計とUXが主戦場。「知識は足し算、アイディアは掛け算」を信条に、最良のクリエイティブを。</p>
+          <div class="member-links">
+            <a class="x-icon-link" href="https://x.com/uno_design_info" target="_blank" rel="noopener noreferrer" aria-label="宇野 健児のXを開く">𝕏</a>
+          </div>
         </article>
         <article class="member-card" data-reveal data-delay="360">
           <img src="../assets/wp/KQP6hgBO_400x400.webp" alt="中島 勝悟" loading="lazy">
           <h3>中島 勝悟</h3>
           <p class="kicker">事務局メンバー</p>
           <p>合同会社ゆらり｜一般社団法人ディレクションサポート協会（DiSA）会長｜Adobe Community Expert｜まるみデザインファーム｜Webディレクターの森</p>
+          <div class="member-links">
+            <a class="x-icon-link" href="https://x.com/ath_design" target="_blank" rel="noopener noreferrer" aria-label="中島 勝悟のXを開く">𝕏</a>
+          </div>
         </article>
         <article class="member-card" data-reveal data-delay="480">
           <img src="../assets/wp/kamata.webp" alt="鎌田 麻三子" loading="lazy">
@@ -276,7 +288,8 @@
 
       if (navToggle) {
         navToggle.addEventListener('click', () => {
-          body.classList.toggle('nav-open');
+          const isOpen = body.classList.toggle('nav-open');
+          navToggle.setAttribute('aria-expanded', String(isOpen));
         });
       }
 
@@ -284,7 +297,15 @@
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           body.classList.remove('nav-open');
+          navToggle?.setAttribute('aria-expanded', 'false');
         });
+      });
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && body.classList.contains('nav-open')) {
+          body.classList.remove('nav-open');
+          navToggle?.setAttribute('aria-expanded', 'false');
+        }
       });
     })();
   </script>
