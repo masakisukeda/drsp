@@ -78,6 +78,8 @@ main,
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  object-fit: contain;
+  padding: 8px;
 }
 
 .brand-copy {
@@ -215,19 +217,11 @@ h1 {
   pointer-events: none;
 }
 
-.hero-badge {
-  width: min(100%, 220px);
-  aspect-ratio: 1;
-  border-radius: 28px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, rgba(121, 242, 208, 0.18), rgba(137, 167, 255, 0.1));
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
-  font-size: clamp(3rem, 9vw, 5.2rem);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+.hero-logo {
+  width: min(100%, 340px);
+  margin: 4px auto 0;
+  display: block;
+  filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.34));
 }
 
 .meta-list {
@@ -315,9 +309,43 @@ h1 {
 
 .section-split {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 0.95fr 1.05fr;
   gap: 22px;
   align-items: start;
+}
+
+.value-grid,
+.team-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.value-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.value-item,
+.team-card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.value-item span,
+.team-card span {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: var(--accent-3);
+}
+
+.value-item p,
+.team-card p {
+  color: var(--muted);
+  line-height: 1.85;
 }
 
 .usecase-list {
@@ -339,6 +367,11 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  margin-top: 24px;
+}
+
+.team-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 24px;
 }
 
@@ -378,7 +411,9 @@ h1 {
   }
 
   .feature-grid,
-  .timeline {
+  .timeline,
+  .value-grid,
+  .team-grid {
     grid-template-columns: 1fr;
   }
 
@@ -406,6 +441,12 @@ h1 {
   .section,
   .cta-section {
     border-radius: 24px;
+  }
+
+  .brand-mark {
+    width: 48px;
+    height: 48px;
+    padding: 7px;
   }
 
   .hero-actions {
