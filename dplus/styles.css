@@ -801,15 +801,21 @@ body.dplus-page .masthead-nav a {
 }
 
 body.dplus-page .masthead-nav a:hover {
-  color: #ff8a00;
-  border-color: rgba(255, 138, 0, 0.35);
-  background: rgba(255, 138, 0, 0.06);
+  color: #fff;
+  border-color: #ff8a00;
+  background: #ff8a00;
 }
 
 body.dplus-page .masthead-link {
   background: #333;
   color: #fff;
   border-color: #333;
+}
+
+body.dplus-page .masthead-link:hover {
+  color: #fff;
+  border-color: #ff8a00;
+  background: #ff8a00;
 }
 
 body.dplus-page .masthead-link::before,
@@ -857,7 +863,7 @@ body.dplus-page .hero-copy::before {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.88)),
-    url("./hero-0511.jpeg") center right / cover no-repeat;
+    url("./orange.jpg") center right / cover no-repeat;
   opacity: 0.7;
   filter: grayscale(1) contrast(0.95) brightness(1.15);
   pointer-events: none;
