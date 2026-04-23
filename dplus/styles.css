@@ -51,9 +51,12 @@ h1,
 h2,
 h3 {
   font-weight: 900;
-  text-transform: uppercase;
   line-height: 1.1;
   letter-spacing: -0.02em;
+}
+
+h2 {
+  line-height: 1.22;
 }
 
 .text-orange {
@@ -146,42 +149,39 @@ h3 {
   overflow: hidden;
 }
 
-/* Vertical Side Labels (Inspired by Sample) */
+/* Side Label */
 .hero::after {
   content: "PROGRESS THROUGH DIRECTION";
   position: absolute;
-  right: 15px;
-  /* Moved to right */
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  /* Rotate for right side */
+  right: 40px;
+  top: 18px;
+  transform: none;
   font-size: 1.1rem;
-  /* Larger */
   font-weight: 900;
   color: var(--primary-yellow);
-  letter-spacing: 0.4em;
+  letter-spacing: 0.22em;
   white-space: nowrap;
   z-index: 2;
   animation: heroFloat 8s ease-in-out infinite;
 }
 
 @keyframes heroFloat {
-
   0%,
   100% {
-    transform: translateY(-50%) rotate(90deg);
+    transform: translateY(0);
   }
 
   50% {
-    transform: translateY(-65%) rotate(90deg);
+    transform: translateY(-6px);
   }
 }
 
 .hero::before {
   content: "D+";
   position: absolute;
-  top: -10px;
+  top: 50%;
   right: -5px;
+  transform: translateY(-50%);
   font-size: 15vw;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.08);
@@ -203,7 +203,6 @@ h3 {
   display: inline-block;
   padding: 5px 15px;
   margin-bottom: 30px;
-  text-transform: uppercase;
   letter-spacing: 0.2em;
   transform: rotate(-2deg);
 }
@@ -245,7 +244,6 @@ h3 {
   border-radius: 0;
   text-align: center;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
@@ -281,8 +279,7 @@ h3 {
   overflow: hidden;
   white-space: nowrap;
   font-weight: 900;
-  font-size: 2rem;
-  text-transform: uppercase;
+  font-size: clamp(1rem, 2.6vw, 1.6rem);
   border-top: 4px solid var(--bg-black);
   border-bottom: 4px solid var(--bg-black);
 }
@@ -294,7 +291,7 @@ h3 {
 
 .ticker-track span {
   display: inline-block;
-  padding: 0 30px;
+  padding: 0 24px;
 }
 
 @keyframes ticker {
@@ -328,7 +325,6 @@ h3 {
   font-size: 1.1rem;
   font-weight: 800;
   color: var(--primary-yellow);
-  text-transform: uppercase;
   letter-spacing: 0.15em;
   margin-bottom: 15px;
   display: block;
@@ -433,7 +429,6 @@ h3 {
   top: 0;
   left: 0;
   display: inline-block;
-  text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
@@ -455,9 +450,23 @@ h3 {
 .timeline-step p {
   font-weight: 700;
   font-size: 1rem;
-  /* Slightly smaller to fit tighter */
-  line-height: 1.2;
-  /* Tighter line height */
+  line-height: 1.55;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+  position: relative;
+}
+
+.story-card p::before,
+.value-item p::before,
+.usecase-item p::before,
+.timeline-step p::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 56px;
+  height: 3px;
+  background: var(--bg-black);
 }
 
 /* Related Strip */
@@ -483,13 +492,15 @@ h3 {
 .related-visual::after {
   content: "CONNECTION";
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  font-size: 0.9rem;
+  top: 24px;
+  left: 24px;
+  transform: none;
+  font-size: 0.85rem;
   font-weight: 900;
   color: var(--primary-yellow);
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
+  z-index: 3;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 .related-logo-stack {
@@ -498,11 +509,27 @@ h3 {
   background: var(--primary-yellow);
   padding: 40px;
   transform: rotate(-3deg);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  will-change: transform;
+}
+
+.related-visual:hover .related-logo-stack {
+  transform: rotate(-1deg) translateY(-8px);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.22);
 }
 
 .related-logo-stack img {
   height: 100px;
   width: auto;
+  transition: transform 0.28s ease;
+}
+
+.related-visual:hover .related-logo-stack img:first-child {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+.related-visual:hover .related-logo-stack img:nth-child(2) {
+  transform: translateY(6px) rotate(2deg);
 }
 
 .related-logo-stack img:nth-child(2) {
@@ -521,7 +548,6 @@ h3 {
 .related-copy h2 {
   font-size: clamp(2rem, 5vw, 3.2rem);
   margin-bottom: 20px;
-  line-height: 1.1;
   font-weight: 900;
 }
 
@@ -554,7 +580,6 @@ h3 {
   font-size: 0.8rem;
   font-weight: 800;
   color: var(--primary-yellow);
-  text-transform: uppercase;
   margin-bottom: 5px;
 }
 
@@ -567,6 +592,35 @@ h3 {
   font-size: 0.9rem;
   opacity: 0.8;
   text-align: left;
+}
+
+.member-links {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.x-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--bg-black);
+  color: var(--text-white) !important;
+  font-size: 1rem;
+  font-weight: 900;
+  text-decoration: none !important;
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.x-icon-link:hover {
+  transform: translateY(-2px);
+  background: #000000;
+  opacity: 1;
 }
 
 /* CTA Section */
@@ -584,7 +638,6 @@ h3 {
 .cta-section h2 {
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 900;
-  line-height: 1.1;
   margin-bottom: 20px;
 }
 
@@ -599,13 +652,16 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-width: 280px;
+  min-width: 240px;
+  align-self: flex-end;
 }
 
 .cta-links .button-ghost {
   border: 3px solid #ffffff;
   color: #ffffff;
   font-weight: 900;
+  padding: 16px 30px;
+  font-size: 0.95rem;
 }
 
 .cta-links .button-ghost:hover {
@@ -647,6 +703,7 @@ h3 {
 
   .cta-links {
     width: 100%;
+    align-self: stretch;
   }
 }
 
@@ -739,20 +796,24 @@ h3 {
   }
 
   .hero {
-    padding: 40px 20px;
+    padding: 32px 20px;
     min-height: 300px;
     text-align: center;
   }
 
-  /* Hide decorative side-label on mobile */
+  /* Keep the side label compact on mobile */
   .hero::after {
-    display: none;
+    right: 20px;
+    top: 12px;
+    font-size: 0.95rem;
+    letter-spacing: 0.16em;
   }
 
   .hero::before {
     font-size: 40vw;
-    top: 0;
+    top: 50%;
     right: -10vw;
+    transform: translateY(-50%);
   }
 
   .section {
@@ -765,8 +826,21 @@ h3 {
   }
 
   .hero h1 {
-    font-size: 2.4rem;
+    font-size: clamp(2.1rem, 11vw, 2.8rem);
     line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 0.98rem;
+  }
+
+  .ticker {
+    padding: 14px 0;
+    font-size: 0.95rem;
+  }
+
+  .ticker-track span {
+    padding: 0 12px;
   }
 
   .story-grid,
@@ -796,6 +870,13 @@ h3 {
 
   .related-copy h2 {
     font-size: 2.2rem;
+  }
+
+  .related-visual::after {
+    top: 18px;
+    left: 18px;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
   }
 }
 
