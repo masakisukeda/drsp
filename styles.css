@@ -786,7 +786,7 @@ h2 {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 340px;
-  gap: 28px;
+  gap: 34px;
 }
 
 .site-footer h3 {
@@ -832,6 +832,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+  margin-bottom: 24px;
 }
 
 .sns-grid a {
@@ -3005,7 +3006,7 @@ a.concept-card {
 
 .footer-legal {
   margin: 0;
-  padding: 16px 0 12px;
+  padding: 22px 0 14px;
   border-top: 1px solid #252525;
   text-align: center;
   color: var(--surface-border-strong);
