@@ -573,14 +573,33 @@ h2 {
 
 .member-card {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.member-card .role {
+  display: inline-block;
+  align-self: center;
+  background: var(--primary-yellow);
+  color: var(--text-black);
+  padding: 6px 16px;
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  transform: rotate(-2deg);
+  white-space: nowrap;
 }
 
 .member-card img {
-  width: 100%;
+  width: min(100%, 280px);
   aspect-ratio: 1/1;
   object-fit: cover;
+  object-position: center center;
+  display: block;
   border: 4px solid var(--primary-yellow);
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
   filter: grayscale(1);
   transition: filter 0.3s;
 }
@@ -747,6 +766,10 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  .brand-mark {
+    height: 32px;
+  }
+
   .nav-toggle {
     display: block;
   }
