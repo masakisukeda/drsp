@@ -860,6 +860,11 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .timeline .story-card h3 {
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
   .related-logo-stack {
     transform: rotate(-5deg);
     padding: 30px 20px;
