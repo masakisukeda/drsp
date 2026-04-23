@@ -311,6 +311,14 @@ h3 {
   padding: 100px 40px;
 }
 
+/* Container for PC readability */
+.section > div:not(.full-width) {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
 .section-heading {
   margin-bottom: 60px;
 }
@@ -485,7 +493,7 @@ h3 {
 
 .related-logo-stack {
   display: flex;
-  gap: 30px;
+  gap: 50px;
   background: var(--primary-yellow);
   padding: 40px;
   transform: rotate(-3deg);
@@ -493,6 +501,12 @@ h3 {
 
 .related-logo-stack img {
   height: 100px;
+  width: auto;
+}
+
+.related-logo-stack img:nth-child(2) {
+  margin-top: 40px;
+  margin-left: 0;
 }
 
 .related-copy {
@@ -635,19 +649,92 @@ h3 {
   }
 }
 
+/* Hamburger Menu (Mobile Only) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1000;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-yellow);
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-toggle span:last-child {
+  margin-bottom: 0;
+}
+
 @media (max-width: 768px) {
-  .masthead {
-    padding: 10px 20px;
-    flex-direction: column;
-    gap: 10px;
-    min-height: auto;
+  .nav-toggle {
+    display: block;
   }
 
   .masthead-nav {
-    display: flex;
-    flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    display: flex !important; /* Override previous display settings */
+    flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 900;
+  }
+
+  .nav-open .masthead-nav {
+    right: 0;
+  }
+
+  .nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .masthead-nav a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  /* Hamburger Animation */
+  .nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  body.nav-open {
+    overflow: hidden; /* Prevent scrolling when menu is open */
+  }
+
+  .masthead {
+    padding: 10px 20px;
+    flex-direction: row; /* Keep logo and hamburger on same line */
+    justify-content: space-between;
+    min-height: 70px;
   }
 
   .hero {
@@ -676,10 +763,12 @@ h3 {
 
   .section-heading h2 {
     font-size: 2rem;
+    line-height: 1.3;
   }
 
   .hero h1 {
     font-size: 2.8rem;
+    line-height: 1.3;
   }
 
   .story-grid,
@@ -689,10 +778,11 @@ h3 {
   }
 
   .related-logo-stack {
-    transform: rotate(0);
-    padding: 20px;
+    transform: rotate(-5deg);
+    padding: 30px 20px;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
   }
 
   .related-logo-stack img {
@@ -711,8 +801,14 @@ h3 {
   }
 }
 
-/* PC Specific Refinements */
-@media (min-width: 1025px) {
+/* PC & Tablet Specific Refinements */
+@media (min-width: 769px) {
+  .nav-container {
+    display: flex;
+    gap: clamp(15px, 2vw, 30px);
+    align-items: center;
+  }
+
   .story-card {
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
   }
