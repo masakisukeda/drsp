@@ -22,7 +22,7 @@ html {
 body {
   font-family: var(--font-main);
   background-color: var(--bg-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./gray.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./assets/gray.webp');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -490,7 +490,7 @@ h2 {
 }
 
 .related-visual {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./gray.webp');
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./assets/gray.webp');
   background-size: cover;
   background-position: center;
   min-height: 500px;
@@ -533,6 +533,8 @@ h2 {
   height: 100px;
   width: auto;
   transition: transform 0.28s ease;
+  position: relative;
+  z-index: 3;
 }
 
 .related-visual:hover .related-logo-stack img:first-child {
