@@ -48,6 +48,8 @@ jobs:
               - 'membership/**'
             slide:
               - 'slide/**'
+            dplus:
+              - 'dplus/**'
             any:
               - '.github/workflows/deploy.yml'
               - '.htaccess'
@@ -68,6 +70,7 @@ jobs:
               - 'member/**'
               - 'membership/**'
               - 'slide/**'
+              - 'dplus/**'
 
       - name: Update sitemap lastmod from git history
         if: steps.changes.outputs.any == 'true'
@@ -187,6 +190,7 @@ jobs:
           CH_MEMBER: ${{ steps.changes.outputs.member }}
           CH_MEMBERSHIP: ${{ steps.changes.outputs.membership }}
           CH_SLIDE: ${{ steps.changes.outputs.slide }}
+          CH_DPLUS: ${{ steps.changes.outputs.dplus }}
         run: |
           {
             echo "set ssl:verify-certificate no"
@@ -235,6 +239,9 @@ jobs:
             fi
             if [ "$CH_SLIDE" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms slide slide"
+            fi
+            if [ "$CH_DPLUS" = "true" ]; then
+              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms dplus dplus"
             fi
             echo "bye"
           } > /tmp/upload.lftp
