@@ -216,6 +216,7 @@ h3 {
 
 .hero-line {
   display: block;
+  white-space: nowrap;
 }
 
 .hero-line--accent {
@@ -743,12 +744,9 @@ h3 {
     text-align: center;
   }
 
-  /* Ensure vertical label is visible on mobile but smaller */
+  /* Hide decorative side-label on mobile */
   .hero::after {
-    display: block;
-    right: 5px;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    display: none;
   }
 
   .hero::before {
