@@ -914,10 +914,13 @@ body.dplus-page .hero h1 {
 
 body.dplus-page .hero-line {
   display: block;
+  font-size: inherit;
+  line-height: inherit;
   white-space: nowrap;
 }
 
 body.dplus-page .hero-line--accent {
+  font-size: inherit;
   color: #ff8a00;
   font-weight: 900;
 }
@@ -1270,6 +1273,7 @@ body.dplus-page .footer {
 }
 
 body.dplus-page .text-orange {
+  font-size: inherit;
   color: #ff8a00;
   font-weight: 900;
 }
