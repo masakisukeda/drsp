@@ -812,12 +812,8 @@ h2 {
     text-align: center;
   }
 
-  /* Keep the side label compact on mobile */
   .hero::after {
-    right: 20px;
-    top: 12px;
-    font-size: 0.95rem;
-    letter-spacing: 0.16em;
+    display: none;
   }
 
   .hero::before {
