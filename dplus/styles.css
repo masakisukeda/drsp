@@ -750,9 +750,9 @@ body.dplus-page .masthead {
   padding: 18px clamp(20px, 3vw, 40px) 10px;
   margin-bottom: 6px;
   align-items: center;
-  background: rgba(245, 245, 245, 0.96);
+  background: rgba(232, 232, 232, 0.98);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(51, 51, 51, 0.08);
+  border-bottom: 1px solid rgba(51, 51, 51, 0.12);
 }
 
 body.dplus-page .brand {
@@ -775,7 +775,7 @@ body.dplus-page .brand-copy {
   display: block;
   font-size: 0.82rem;
   letter-spacing: 0.22em;
-  color: #333;
+  color: #2d2d2d;
   font-weight: 800;
 }
 
@@ -790,9 +790,9 @@ body.dplus-page .masthead-nav a {
   position: relative;
   padding: 11px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(51, 51, 51, 0.12);
-  background: rgba(255, 255, 255, 0.78);
-  color: #333;
+  border: 1px solid rgba(51, 51, 51, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: #2c2c2c;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 700;
@@ -901,7 +901,7 @@ body.dplus-page h3 {
 
 body.dplus-page .hero h1 {
   font-size: clamp(2.8rem, 6.4vw, 5rem);
-  line-height: 1.02;
+  line-height: 1.1;
   margin: 8px 0 0;
   max-width: 11ch;
 }
@@ -924,7 +924,7 @@ body.dplus-page .usecase-item p,
 body.dplus-page .timeline-step p,
 body.dplus-page .team-card p {
   color: #333;
-  line-height: 1.95;
+  line-height: 2.05;
 }
 
 body.dplus-page .lead {
@@ -1038,7 +1038,7 @@ body.dplus-page .related-copy {
 
 body.dplus-page .related-copy h2 {
   font-size: clamp(2rem, 4.1vw, 3.4rem);
-  line-height: 1.04;
+  line-height: 1.12;
 }
 
 body.dplus-page .related-copy p {
@@ -1061,8 +1061,14 @@ body.dplus-page .section-heading {
 
 body.dplus-page .section-heading h2 {
   font-size: clamp(2rem, 4.2vw, 3.2rem);
-  line-height: 1.02;
+  line-height: 1.12;
   max-width: 12ch;
+}
+
+body.dplus-page #team .section-heading h2 {
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
 }
 
 body.dplus-page .story-grid,
@@ -1114,6 +1120,7 @@ body.dplus-page .timeline-step h3,
 body.dplus-page .team-card h3 {
   font-size: clamp(1.1rem, 1.8vw, 1.38rem);
   margin: 0 0 10px;
+  line-height: 1.18;
 }
 
 body.dplus-page .section-grid {
@@ -1193,7 +1200,7 @@ body.dplus-page .member-card h3 {
   margin: 0 0 2px;
   font-size: clamp(1.1rem, 1.8vw, 1.38rem);
   font-weight: 900;
-  line-height: 1.3;
+  line-height: 1.18;
   padding-top: 12px;
 }
 
@@ -1254,6 +1261,11 @@ body.dplus-page .cta-copy {
 body.dplus-page .footer {
   padding: 0 0 44px;
   color: #333;
+}
+
+body.dplus-page .text-orange {
+  color: #ff8a00;
+  font-weight: 900;
 }
 
 body.dplus-page .footer a {
@@ -1361,6 +1373,10 @@ body.dplus-page [data-reveal].is-visible {
     font-size: clamp(1.8rem, 6.8vw, 2.8rem);
   }
 
+  body.dplus-page #team .section-heading h2 {
+    white-space: normal;
+  }
+
   body.dplus-page .member-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1404,6 +1420,10 @@ body.dplus-page [data-reveal].is-visible {
 
   body.dplus-page .related-strip {
     gap: 14px;
+  }
+
+  body.dplus-page #team .section-heading h2 {
+    white-space: normal;
   }
 
   body.dplus-page .related-visual,
