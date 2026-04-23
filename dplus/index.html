@@ -33,136 +33,160 @@
       <img class="brand-mark" src="./logo.png" alt="D+" loading="lazy">
       <span class="brand-copy">Direction Plus</span>
     </a>
-    <a class="masthead-link" href="/inquiry/">お問い合わせ</a>
+    <nav class="masthead-nav" aria-label="Page sections">
+      <a href="#about">About</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#team">Team</a>
+      <a class="masthead-link" href="/inquiry/">お問い合わせ</a>
+    </nav>
   </header>
 
-  <main>
+  <main class="dplus-main">
     <section class="hero" data-reveal>
       <div class="hero-copy" data-reveal>
-        <p class="eyebrow">INTRODUCTION</p>
-        <h1>ディレ森とDiSAが組む、<br>ディレクションの共同体。</h1>
+        <p class="kicker">DIRECTOR PLUS / D+</p>
+        <h1>ディレクションに、<br><span>推進力を足す。</span></h1>
         <p class="lead">
-          D+（ディープラス）は、「ディレクター」「ディレクション」の文脈を中心に、
-          実践的な知見や最新ノウハウを共有するために生まれた共同プロジェクトです。
+          D+（ディープラス）は、ディレ森とDiSAがタッグを組み、
+          失敗談・一次情報・AI活用を軸に実践知を共有する共同体です。
         </p>
+        <div class="hero-pills" aria-label="Key topics">
+          <span>WEB DIRECTOR</span>
+          <span>AI WORKFLOW</span>
+          <span>REAL STORIES</span>
+        </div>
         <div class="hero-actions">
-          <a class="button button-primary" href="#roadmap">進行中の予定</a>
+          <a class="button button-primary" href="#roadmap">開催予定を見る</a>
           <a class="button button-ghost" href="/inquiry/">お問い合わせ</a>
         </div>
       </div>
 
-      <div class="hero-panel" aria-label="D+の概要" data-reveal data-delay="140">
-        <img class="hero-logo" src="./logo.png" alt="D+ ロゴ" loading="lazy">
-        <dl class="meta-list">
-          <div>
-            <dt>共同体</dt>
-            <dd>ディレ森 × DiSA</dd>
-          </div>
-          <div>
-            <dt>主軸</dt>
-            <dd>オンラインセミナー / ウェビナー / 座談会</dd>
-          </div>
-          <div>
-            <dt>軸にするもの</dt>
-            <dd>失敗談、一次情報、AI活用</dd>
-          </div>
-        </dl>
+      <div class="hero-visual" data-reveal data-delay="140">
+        <img src="./hero-0511.jpeg" alt="D+ 第1回オンラインセミナーのポスター" loading="lazy">
+        <div class="hero-visual-card">
+          <span>05.01 / 12:00</span>
+          <strong>D+ 座談会 / 公開打ち合わせ</strong>
+          <p>発足の経緯を公開の場で共有しながら、5/11 セミナーの構成を詰めます。</p>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="about" data-reveal>
-      <p class="section-label">ABOUT</p>
-      <h2>D+ は、実務のリアルを集めて磨く場です。</h2>
-      <p class="section-lead">
-        現場の「悩み」とその「解決方法」を、机上の空論ではない生きたナレッジとして共有する。
-        それが D+ の中心にある考え方です。
-      </p>
-      <div class="feature-grid">
-        <article class="feature-card" data-reveal>
-          <span class="feature-index">01</span>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>D+</span><span>失敗談</span><span>一次情報</span><span>AI活用</span><span>ディレクション</span><span>ウェビナー</span><span>座談会</span>
+        <span>D+</span><span>失敗談</span><span>一次情報</span><span>AI活用</span><span>ディレクション</span><span>ウェビナー</span><span>座談会</span>
+      </div>
+    </div>
+
+    <section class="related-strip" data-reveal>
+      <div class="related-visual">
+        <img src="./mori.png" alt="Webディレクターの森" loading="lazy">
+      </div>
+      <div class="related-copy">
+        <p class="section-label">RELATED / LINK</p>
+        <h2>ディレ森とDiSAが重なって、<br>D+ が動く。</h2>
+        <p>
+          D+ は、Webディレクターの森のコミュニティ感と、DiSA の実務知見が交差して生まれたプロジェクトです。
+          まずは座談会とセミナーから、場をつくっていきます。
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-intro" id="about" data-reveal>
+      <div class="section-heading">
+        <p class="section-label">ABOUT / 何をする場か</p>
+        <h2>現場の「悩み」と「解決方法」を、<br>生きたナレッジとして共有する。</h2>
+      </div>
+      <div class="story-grid">
+        <article class="story-card" data-reveal>
+          <span class="story-num">01</span>
           <h3>失敗談から学ぶ</h3>
-          <p>教科書には載りにくい実体験を、次に活かせる知見として共有します。</p>
+          <p>教科書に載らない実体験を、そのまま終わらせず次の一手に変えます。</p>
         </article>
-        <article class="feature-card" data-reveal data-delay="120">
-          <span class="feature-index">02</span>
+        <article class="story-card" data-reveal data-delay="120">
+          <span class="story-num">02</span>
           <h3>AI を実務に落とす</h3>
           <p>最新の AI ツールを、ディレクションの現場でどう使うかまで具体化します。</p>
         </article>
-        <article class="feature-card" data-reveal data-delay="240">
-          <span class="feature-index">03</span>
+        <article class="story-card" data-reveal data-delay="240">
+          <span class="story-num">03</span>
           <h3>越境で広げる</h3>
           <p>異なるコミュニティや立場が交わることで、新しい視点と付加価値を生みます。</p>
         </article>
       </div>
     </section>
 
-    <section class="section section-split" data-reveal>
-      <div>
-        <p class="section-label">VALUE</p>
-        <h2>D+ の名前に込めた意味</h2>
+    <section class="section section-grid" data-reveal>
+      <div class="section-heading">
+        <p class="section-label">VALUE / 名前に込めた意味</p>
+        <h2>D+ の“D”は、<br>Direction / Cross / Plus を表します。</h2>
       </div>
       <div class="value-grid">
-        <div class="value-item" data-reveal>
+        <article class="value-item" data-reveal>
           <span>Direction</span>
           <p>導く力を共有し、迷いを減らす。</p>
-        </div>
-        <div class="value-item" data-reveal data-delay="120">
+        </article>
+        <article class="value-item" data-reveal data-delay="120">
           <span>Cross</span>
           <p>コミュニティや立場を越えて交わる。</p>
-        </div>
-        <div class="value-item" data-reveal data-delay="240">
+        </article>
+        <article class="value-item" data-reveal data-delay="240">
           <span>Plus</span>
           <p>これまでのディレクションに、AI や新しい視点を足す。</p>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="section section-split" data-reveal>
-      <div>
-        <p class="section-label">TARGET</p>
-        <h2>こんな人に向けています</h2>
+    <section class="section section-grid" data-reveal>
+      <div class="section-heading">
+        <p class="section-label">TARGET / 向いている人</p>
+        <h2>こんな人たちと、一緒に作りたい。</h2>
       </div>
       <div class="usecase-list">
-        <div class="usecase-item" data-reveal>
+        <article class="usecase-item" data-reveal>
           <span>NEW DIRECTOR</span>
           <p>これからディレクションを学びたい人</p>
-        </div>
-        <div class="usecase-item" data-reveal data-delay="120">
+        </article>
+        <article class="usecase-item" data-reveal data-delay="120">
           <span>UPSKILL</span>
           <p>現場での進め方をもう一段深くしたい人</p>
-        </div>
-        <div class="usecase-item" data-reveal data-delay="240">
+        </article>
+        <article class="usecase-item" data-reveal data-delay="240">
           <span>IN-HOUSE</span>
           <p>事業会社で外部との接点や視点を増やしたい人</p>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="section timeline-section" id="roadmap" data-reveal>
-      <p class="section-label">ROADMAP</p>
-      <h2>2026年4月〜6月の進行イメージ</h2>
+    <section class="section roadmap" id="roadmap" data-reveal>
+      <div class="section-heading">
+        <p class="section-label">ROADMAP / 進行予定</p>
+        <h2>2026年4月〜6月のロードマップ</h2>
+      </div>
       <div class="timeline">
         <article class="timeline-step" data-reveal>
-          <span>2026.05.01</span>
+          <span>2026.05.01 / 12:00</span>
           <h3>D+ 座談会 / 公開打ち合わせ</h3>
           <p>発足の経緯を共有しながら、5/11 セミナーの構成案を公開の場で詰めます。</p>
         </article>
         <article class="timeline-step" data-reveal data-delay="120">
-          <span>2026.05.11</span>
+          <span>2026.05.11 / 夜</span>
           <h3>第1回 オンラインセミナー</h3>
           <p>テーマは「リアルな失敗談」。一次情報をベースに、学びを共有します。</p>
         </article>
         <article class="timeline-step" data-reveal data-delay="240">
-          <span>2026.06</span>
-          <h3>本格始動へ</h3>
-          <p>公式 LINE やサイトの公開を進めつつ、事務局メンバーの拡充と第2回企画へつなげます。</p>
+          <span>2026.06 / 本格始動</span>
+          <h3>公式 LINE / サイト公開</h3>
+          <p>事務局メンバーの拡充と第2回企画へつなげながら、運営基盤を整えます。</p>
         </article>
       </div>
     </section>
 
-    <section class="section team-section" data-reveal>
-      <p class="section-label">TEAM</p>
-      <h2>事務局メンバー</h2>
+    <section class="section team-section" id="team" data-reveal>
+      <div class="section-heading">
+        <p class="section-label">TEAM / 事務局メンバー</p>
+        <h2>役割が見えると、<br>プロジェクトは前に進みやすい。</h2>
+      </div>
       <div class="team-grid">
         <article class="team-card" data-reveal>
           <div class="team-avatar team-avatar--photo">
@@ -173,12 +197,12 @@
           <p>Web・IT企業の採用・組織支援と、3,000名+の対話実績を持つ。進行全体、告知、プロジェクト運営をまとめる。</p>
         </article>
         <article class="team-card" data-reveal data-delay="120">
-          <div class="team-avatar team-avatar--icon">
-            <img src="/assets/wp/dir.webp" alt="タケさんのアイコン" loading="lazy">
+          <div class="team-avatar team-avatar--photo">
+            <img src="./take.jpg" alt="タケさんの写真" loading="lazy">
           </div>
           <span>BRANDING</span>
           <h3>タケさん（幸野）</h3>
-          <p>ブランディング、サイト構想、ゲスト調整、クリエイティブ制作をリード。D+の見え方を形にする。</p>
+          <p>1992年生まれ、栃木県出身。Webディレクター歴9年。ブランディング、サイト構想、ゲスト調整、クリエイティブ制作をリード。</p>
         </article>
         <article class="team-card" data-reveal data-delay="240">
           <div class="team-avatar team-avatar--photo">
@@ -207,13 +231,19 @@
       </div>
     </section>
 
-    <section class="cta-section" id="links" data-reveal>
+    <section class="section cta-section" id="links" data-reveal>
       <div>
-        <p class="section-label">CONTACT</p>
+        <p class="section-label">CONTACT / 次の一歩</p>
         <h2>情報はこれからも更新していきます。</h2>
-        <p class="cta-copy">オンラインセミナーや座談会の案内は、公開情報を順次追加していく前提で整えています。最新の動きはプロジェクト進行に合わせて更新します。</p>
+        <p class="cta-copy">
+          オンラインセミナーや座談会の案内は、公開情報を順次追加していく前提で整えています。
+          最新の動きはプロジェクト進行に合わせて更新します。
+        </p>
       </div>
-      <a class="button button-primary" href="/inquiry/">問い合わせへ進む</a>
+      <div class="cta-links">
+        <a class="button button-primary" href="/inquiry/">問い合わせへ進む</a>
+        <a class="button button-ghost" href="/">DiSA 公式へ戻る</a>
+      </div>
     </section>
   </main>
 

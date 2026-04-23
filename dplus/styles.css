@@ -688,3 +688,635 @@ h1 {
     filter: none;
   }
 }
+
+/* D+ Editorial Refresh */
+body.dplus-page {
+  color-scheme: light;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(0, 132, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 84% 10%, rgba(255, 154, 0, 0.08), transparent 24%),
+    linear-gradient(180deg, #f7f4ef 0%, #fbfaf7 42%, #f4efe7 100%);
+  color: #171717;
+  font-family: "Noto Sans JP", "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+body.dplus-page::before,
+body.dplus-page::after {
+  content: "";
+  position: fixed;
+  width: 32vw;
+  height: 32vw;
+  min-width: 260px;
+  min-height: 260px;
+  border-radius: 50%;
+  filter: blur(34px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body.dplus-page::before {
+  top: -8vw;
+  right: -10vw;
+  background: radial-gradient(circle, rgba(0, 132, 255, 0.2), rgba(0, 132, 255, 0.02) 60%, transparent 72%);
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+body.dplus-page::after {
+  bottom: -12vw;
+  left: -10vw;
+  background: radial-gradient(circle, rgba(255, 154, 0, 0.16), rgba(255, 154, 0, 0.02) 64%, transparent 74%);
+  animation: drift 24s ease-in-out infinite alternate-reverse;
+}
+
+body.dplus-page .masthead,
+body.dplus-page .footer,
+body.dplus-page .dplus-main {
+  width: min(1240px, calc(100% - 40px));
+}
+
+body.dplus-page .masthead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 18px 0 10px;
+  margin-bottom: 6px;
+  align-items: center;
+  background: rgba(247, 244, 239, 0.88);
+  backdrop-filter: blur(14px);
+}
+
+body.dplus-page .brand {
+  gap: 12px;
+}
+
+body.dplus-page .brand-mark {
+  width: 76px;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: none;
+}
+
+body.dplus-page .brand-copy {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  color: #6d6d6d;
+}
+
+body.dplus-page .masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+body.dplus-page .masthead-nav a {
+  position: relative;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  color: #171717;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+}
+
+body.dplus-page .masthead-link {
+  background: #171717;
+  color: #fff;
+  border-color: #171717;
+}
+
+body.dplus-page .masthead-link::before,
+body.dplus-page .button-primary::before {
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.38) 50%, transparent 100%);
+}
+
+body.dplus-page .dplus-main {
+  display: grid;
+  gap: 28px;
+  padding: 14px 0 10px;
+}
+
+body.dplus-page .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.03fr) minmax(320px, 0.97fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+body.dplus-page .hero-copy,
+body.dplus-page .hero-visual,
+body.dplus-page .section,
+body.dplus-page .cta-section {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  box-shadow: 0 22px 60px rgba(40, 29, 18, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+body.dplus-page .hero-copy {
+  border-radius: 34px;
+  padding: clamp(28px, 4vw, 54px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+body.dplus-page .hero-copy::after {
+  content: "";
+  position: absolute;
+  inset: auto -8% -16% auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192, 31, 192, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+body.dplus-page .kicker,
+body.dplus-page .section-label {
+  margin: 0;
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  letter-spacing: 0.24em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #6b6b6b;
+}
+
+body.dplus-page h1,
+body.dplus-page h2,
+body.dplus-page h3 {
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  letter-spacing: -0.05em;
+  color: #111;
+}
+
+body.dplus-page .hero h1 {
+  font-size: clamp(3.2rem, 7.8vw, 7rem);
+  line-height: 0.92;
+  margin: 8px 0 0;
+  max-width: 8.8ch;
+}
+
+body.dplus-page .hero h1 span {
+  color: #d31f9a;
+}
+
+body.dplus-page .lead,
+body.dplus-page .section-lead,
+body.dplus-page .cta-copy,
+body.dplus-page .story-card p,
+body.dplus-page .usecase-item p,
+body.dplus-page .timeline-step p,
+body.dplus-page .team-card p {
+  color: #4c4c4c;
+  line-height: 1.95;
+}
+
+body.dplus-page .lead {
+  max-width: 44rem;
+  font-size: clamp(1rem, 1.65vw, 1.14rem);
+}
+
+body.dplus-page .hero-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+body.dplus-page .hero-pills span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f4f1ea;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+body.dplus-page .hero-actions,
+body.dplus-page .cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+body.dplus-page .button {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+  font-size: 0.95rem;
+}
+
+body.dplus-page .button-primary {
+  background: #111;
+  color: #fff;
+}
+
+body.dplus-page .button-ghost {
+  background: rgba(255, 255, 255, 0.68);
+  color: #111;
+}
+
+body.dplus-page .hero-visual {
+  border-radius: 34px;
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+body.dplus-page .hero-visual img {
+  width: 100%;
+  display: block;
+  border-radius: 24px;
+  aspect-ratio: 920 / 450;
+  object-fit: cover;
+  box-shadow: 0 20px 40px rgba(29, 17, 8, 0.14);
+}
+
+body.dplus-page .hero-visual-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 4px;
+}
+
+body.dplus-page .hero-visual-card span {
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+  color: #6b6b6b;
+}
+
+body.dplus-page .hero-visual-card strong {
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  line-height: 1.2;
+  color: #111;
+}
+
+body.dplus-page .hero-visual-card p {
+  margin: 0;
+  color: #555;
+  line-height: 1.9;
+}
+
+body.dplus-page .ticker {
+  overflow: hidden;
+  border-top: 1px solid rgba(23, 23, 23, 0.08);
+  border-bottom: 1px solid rgba(23, 23, 23, 0.08);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+body.dplus-page .ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  white-space: nowrap;
+  padding: 14px 0;
+  animation: marquee 28s linear infinite;
+}
+
+body.dplus-page .ticker-track span {
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+body.dplus-page .related-strip {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 28px;
+}
+
+body.dplus-page .related-visual,
+body.dplus-page .related-copy {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  border-radius: 34px;
+  box-shadow: 0 22px 60px rgba(40, 29, 18, 0.08);
+  overflow: hidden;
+}
+
+body.dplus-page .related-visual {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #141414 0%, #1b1b1b 100%);
+}
+
+body.dplus-page .related-visual img {
+  width: min(100%, 520px);
+  display: block;
+  object-fit: contain;
+}
+
+body.dplus-page .related-copy {
+  padding: clamp(24px, 4vw, 42px);
+  display: grid;
+  align-content: center;
+  gap: 16px;
+}
+
+body.dplus-page .related-copy h2 {
+  font-size: clamp(2rem, 4.3vw, 4rem);
+  line-height: 1.04;
+}
+
+body.dplus-page .related-copy p {
+  max-width: 38rem;
+  color: #4e4e4e;
+  line-height: 1.95;
+  font-size: 1rem;
+}
+
+body.dplus-page .section {
+  border-radius: 34px;
+  padding: clamp(26px, 4vw, 48px);
+}
+
+body.dplus-page .section-heading {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+body.dplus-page .section-heading h2 {
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  line-height: 1.02;
+  max-width: 12ch;
+}
+
+body.dplus-page .story-grid,
+body.dplus-page .value-grid,
+body.dplus-page .team-grid,
+body.dplus-page .timeline,
+body.dplus-page .usecase-list {
+  display: grid;
+  gap: 16px;
+}
+
+body.dplus-page .story-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.dplus-page .story-card,
+body.dplus-page .value-item,
+body.dplus-page .timeline-step,
+body.dplus-page .usecase-item,
+body.dplus-page .team-card {
+  background: #fff;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  border-radius: 26px;
+  padding: 22px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+body.dplus-page .story-card:hover,
+body.dplus-page .value-item:hover,
+body.dplus-page .timeline-step:hover,
+body.dplus-page .usecase-item:hover,
+body.dplus-page .team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(35, 24, 14, 0.1);
+  border-color: rgba(23, 23, 23, 0.16);
+}
+
+body.dplus-page .story-num {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: #d31f9a;
+}
+
+body.dplus-page .story-card h3,
+body.dplus-page .timeline-step h3,
+body.dplus-page .team-card h3 {
+  font-size: clamp(1.1rem, 1.8vw, 1.38rem);
+  margin: 0 0 10px;
+}
+
+body.dplus-page .section-grid {
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  gap: 22px;
+  align-items: start;
+}
+
+body.dplus-page .value-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.dplus-page .value-item span,
+body.dplus-page .usecase-item span,
+body.dplus-page .timeline-step span,
+body.dplus-page .team-card span {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: #6a6a6a;
+}
+
+body.dplus-page .usecase-item {
+  padding: 24px;
+}
+
+body.dplus-page .timeline {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.dplus-page .team-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.dplus-page .team-card {
+  display: flex;
+  flex-direction: column;
+}
+
+body.dplus-page .team-avatar {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 16px;
+  border-radius: 28px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.08), rgba(255, 154, 0, 0.08));
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  box-shadow: 0 12px 28px rgba(35, 24, 14, 0.12);
+}
+
+body.dplus-page .team-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+body.dplus-page .team-avatar--icon {
+  padding: 16px;
+}
+
+body.dplus-page .team-avatar--icon img {
+  object-fit: contain;
+}
+
+body.dplus-page .cta-section {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.08), rgba(255, 154, 0, 0.08));
+}
+
+body.dplus-page .cta-links {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+body.dplus-page .cta-links .button {
+  min-width: 240px;
+}
+
+body.dplus-page .footer {
+  padding: 0 0 44px;
+  color: #6f6f6f;
+}
+
+body.dplus-page .footer a {
+  color: inherit;
+}
+
+body.dplus-page [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(8px);
+  transition:
+    opacity 0.75s cubic-bezier(0.2, 0.7, 0, 1),
+    transform 0.75s cubic-bezier(0.2, 0.7, 0, 1),
+    filter 0.75s cubic-bezier(0.2, 0.7, 0, 1);
+  transition-delay: var(--delay, 0ms);
+}
+
+body.dplus-page [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 960px) {
+  body.dplus-page .related-strip,
+  body.dplus-page .masthead,
+  body.dplus-page .hero,
+  body.dplus-page .section-grid,
+  body.dplus-page .cta-section {
+    grid-template-columns: 1fr;
+  }
+
+  body.dplus-page .masthead {
+    display: grid;
+    gap: 12px;
+  }
+
+  body.dplus-page .masthead-nav {
+    justify-content: flex-start;
+  }
+
+  body.dplus-page .story-grid,
+  body.dplus-page .value-grid,
+  body.dplus-page .timeline,
+  body.dplus-page .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.dplus-page .hero {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  body.dplus-page .masthead,
+  body.dplus-page .dplus-main,
+  body.dplus-page .footer {
+    width: min(100% - 24px, 1240px);
+  }
+
+  body.dplus-page .brand-copy {
+    display: none;
+  }
+
+  body.dplus-page .masthead-nav {
+    gap: 8px;
+  }
+
+  body.dplus-page .masthead-nav a {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+
+  body.dplus-page .hero-copy,
+  body.dplus-page .hero-visual,
+  body.dplus-page .section,
+  body.dplus-page .cta-section {
+    border-radius: 28px;
+  }
+
+  body.dplus-page .hero h1 {
+    font-size: clamp(2.8rem, 16vw, 4.6rem);
+  }
+
+  body.dplus-page .hero-visual img {
+    aspect-ratio: 920 / 450;
+  }
+
+  body.dplus-page .related-strip {
+    gap: 14px;
+  }
+
+  body.dplus-page .related-visual,
+  body.dplus-page .related-copy {
+    border-radius: 28px;
+  }
+
+  body.dplus-page .cta-links .button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  body.dplus-page .cta-section {
+    align-items: start;
+  }
+}
