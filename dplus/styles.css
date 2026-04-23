@@ -1077,7 +1077,7 @@ body.dplus-page .section-heading h2 {
 body.dplus-page #team .section-heading h2 {
   max-width: none;
   white-space: nowrap;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
 }
 
 body.dplus-page .story-grid,
