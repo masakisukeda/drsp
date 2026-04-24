@@ -2,13 +2,33 @@
   "posts": [
     {
       "source": "note",
-      "url": "https://note.com/disa_pr/n/na990919bb8f1",
-      "date": "2026.04.16",
+      "url": "https://note.com/disa_pr/n/n817369bff3b6",
+      "date": "2026.04.24",
       "name": "DiSA",
       "handle": "note.com/disa_pr",
       "avatar": "./assets/wp/note.webp",
       "avatarAlt": "note",
-      "text": "【更新はWebサイトか、スライドか】——その二択を終わらせる"
+      "text": "【AnthropicがFigmaに挑む。Claude Designの全貌を解説する】"
+    },
+    {
+      "source": "note",
+      "url": "https://note.com/disa_pr/n/n8843080757ef",
+      "date": "2026.04.24",
+      "name": "DiSA",
+      "handle": "note.com/disa_pr",
+      "avatar": "./assets/wp/note.webp",
+      "avatarAlt": "note",
+      "text": "【FigmaURLを貼るだけで、デザインからE2Eテストまで一気通貫に走る】"
+    },
+    {
+      "source": "note",
+      "url": "https://note.com/disa_pr/n/n4713b4e8a80a",
+      "date": "2026.04.24",
+      "name": "DiSA",
+      "handle": "note.com/disa_pr",
+      "avatar": "./assets/wp/note.webp",
+      "avatarAlt": "note",
+      "text": "【AIが作ったモックをFigmaで磨き、またコードに戻す。循環型ワークフローの実用度を検証した】"
     },
     {
       "source": "x",
@@ -19,26 +39,6 @@
       "avatar": "./assets/wp/ushi_00_500.webp",
       "avatarAlt": "うし3号",
       "text": "DiSA副会長 宇野 健児（UNO）＆まるみ師匠が登壇予定！「このやり方であってる？デザイナーが学びたいディレクション」4/24(木) 20:00〜"
-    },
-    {
-      "source": "note",
-      "url": "https://note.com/disa_pr/n/n9fefa32d7df4",
-      "date": "2026.04.13",
-      "name": "DiSA",
-      "handle": "note.com/disa_pr",
-      "avatar": "./assets/wp/note.webp",
-      "avatarAlt": "note",
-      "text": "【月10万円分のAIを1ヶ月使い倒してわかった、Claude CodeとCodexの役割分担】"
-    },
-    {
-      "source": "note",
-      "url": "https://note.com/disa_pr/n/n934f4bb10268",
-      "date": "2026.04.11",
-      "name": "DiSA",
-      "handle": "note.com/disa_pr",
-      "avatar": "./assets/wp/note.webp",
-      "avatarAlt": "note",
-      "text": "「ChatGPTで十分」と思っていた私が、Claudeをメインツールにした理由"
     },
     {
       "source": "x",
