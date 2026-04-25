@@ -132,6 +132,38 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
+      - name: Validate app directory safety
+        if: steps.changes.outputs.any == 'true'
+        run: |
+          required_dirs=(app/chat app/note app/mng app/pj)
+          required_files=(
+            app/chat/index.html
+            app/chat/api.php
+            app/note/index.html
+            app/note/app.js
+            app/note/data/categories.json
+            app/mng/index.html
+            app/mng/mng.html
+            app/pj/index.html
+          )
+
+          missing=()
+          for path in "${required_dirs[@]}" "${required_files[@]}"; do
+            if [ ! -e "$path" ]; then
+              missing+=("$path")
+            fi
+          done
+
+          if [ "${#missing[@]}" -ne 0 ]; then
+            {
+              echo "::error::Required app files are missing. Deploy aborted to avoid deleting live content."
+              for path in "${missing[@]}"; do
+                echo "::error::missing: $path"
+              done
+            } >&2
+            exit 1
+          fi
+
       - name: Disable mentor.drsp.cc and enforce redirect
         if: steps.changes.outputs.any == 'true'
         env:
