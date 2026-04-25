@@ -1,0 +1,9 @@
+# dic/api
+# 管理者キー（必ず後で変更してください）
+# SetEnv DIC_EDITOR_KEY "disa2026"
+
+# セキュリティ
+Options -Indexes
+<FilesMatch "^(comments\.sql|config\.sample\.php|config\.php|.*\.bak_.*)$">
+  Require all denied
+</FilesMatch>

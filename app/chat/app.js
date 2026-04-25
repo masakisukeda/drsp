@@ -1,0 +1,3315 @@
+      const params = new URLSearchParams(location.search);
+
+      const DEFAULT_LOCAL_API = 'http://127.0.0.1:8000/api.php';
+      const READ_STATE_PREFIX = 'chatapp-read:';
+      const DISPLAY_NAME_PREFIX = 'chatapp-display-name:';
+      const SURVEY_URL_PREFIX = 'chatapp-survey-url:';
+      const VOTE_DRAFT_PREFIX = 'chatapp-vote-draft:';
+      const explicitApiUrl = (params.get('api') || '').trim();
+      const isHostedHttp = (location.protocol === 'http:' || location.protocol === 'https:');
+      const sameOriginApiUrl = isHostedHttp
+        ? new URL('api.php', location.href).href
+        : DEFAULT_LOCAL_API;
+      // Hosted環境では常に同一オリジンAPIを使う（端末ごとの差分をなくす）
+      let API_URL = isHostedHttp ? sameOriginApiUrl : (explicitApiUrl || DEFAULT_LOCAL_API);
+      let SESSION = params.get('s') || params.get('session') || 'webinar-2026';
+      const initialViewParam = params.get('v') || params.get('view');
+      let VIEW = initialViewParam === 'screen' ? 'screen' : (initialViewParam === 'poll' ? 'poll' : (initialViewParam === 'vote' ? 'vote' : 'audience'));
+      const layoutParam = String(params.get('layout') || params.get('device') || '').toLowerCase();
+      const FORCED_LAYOUT = (layoutParam === 'mobile')
+        ? 'mobile'
+        : ((layoutParam === 'pc' || layoutParam === 'desktop') ? 'desktop' : '');
+      const DEBUG_CSS_PANEL_ENABLED = params.get('debug') === '1';
+      const operatorMode = true;
+      let sessionConfig = { anonymousOnly: true, tipUrl: '', surveyUrl: String(localStorage.getItem(storageKey(SURVEY_URL_PREFIX)) || '').trim(), metricLabels: ['満足度', '理解度'] };
+      let metricLabelDraft = ['満足度', '理解度'];
+      const appState = {
+        currentQuestions: [],
+        currentPoll: null,
+        currentVotePoll: null,
+        isMobile: false,
+        votePrevRankMap: new Map(),
+        votePrevWidthMap: new Map(),
+        voteLoadError: '',
+        forceVoteComposer: false,
+        voteDraftQuestion: '',
+        pollDraftQuestion: '',
+        pollDraftOptionList: [],
+        voteDraftOptionList: ['選択肢A', '選択肢B'],
+        voteDraftTargetVotes: 50,
+        voteDraftMaxVotesPerUser: 0,
+        voteDraftTimerMinutes: 0,
+        votePollCount: 0,
+        votePollLimit: 3,
+        votePollList: [],
+        selectedVotePollId: '',
+        pollDraftType: 'CHOICE',
+        livePollTopicDraft: '',
+        unreadOnly: true,
+        screenSortMode: 'new',
+        showStartGuide: false,
+        readQuestionIds: new Set(),
+        serverRevision: 0,
+        latestLoadSeq: 0,
+        voteLoadSeq: 0,
+        isLoading: false,
+        turboUntil: 0,
+        voteCountdownRemainingSec: -1,
+      };
+      let pollDraftTextPlaceholder = '';
+      let lastPollRenderKey = '';
+      let sessionListCache = ['webinar-2026'];
+      const votePending = new Set();
+      const replyVotePending = new Set();
+      const pendingQuestions = new Map();
+      const pendingReplies = new Map();
+const ADMIN_ACTIONS = new Set([
+        'updateQuestionMeta',
+        'editQuestion',
+        'editReply',
+        'setSessionConfig',
+        'createPoll',
+        'updatePollTarget',
+        'closePoll',
+        'clearPoll',
+        'clearQuestions',
+        'adjustLivePoll',
+        'clearLivePoll',
+        'deleteLivePollTopic',
+        'renameSession',
+        'hideSession',
+        'changeAdminKey',
+      ]);
+      const READ_ACTIONS = new Set(['listQuestions', 'getSessionConfig', 'getPoll', 'getLivePoll', 'getVoteDraft']);
+      const ADMIN_KEY_STORAGE = 'chatapp-admin-key';
+      const ADMIN_KEY_PERSIST_STORAGE = 'chatapp-admin-key-persist';
+      const POLL_AUDIENCE_MS = 5000;
+      const POLL_SCREEN_MS = 3000;
+      const TURBO_POLL_AUDIENCE_MS = 2000;
+      const TURBO_POLL_SCREEN_MS = 1500;
+      const TURBO_WINDOW_MS = 8000;
+      const FAST_SYNC_MS = 900;
+      const FAST_SYNC_TICKS = 1;
+      let fastSyncToken = 0;
+      let lastErrorAt = 0;
+      let pollTimer = null;
+      let lastPollTouchEndAt = 0;
+      let voteDraftSaveTimer = null;
+      let voteCountdownTimer = null;
+      let replyModalQuestionId = '';
+
+      const voterTokenKey = () => `voterToken:${SESSION}`;
+      let voterToken = '';
+      let authorToken = '';
+
+      function refreshActorToken() {
+        const key = voterTokenKey();
+        voterToken = localStorage.getItem(key);
+        if (!voterToken) {
+          voterToken = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+          localStorage.setItem(key, voterToken);
+        }
+        authorToken = voterToken;
+      }
+
+      function esc(str) {
+        return String(str)
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+      }
+
+      function linkifyText(str) {
+        const escaped = esc(str);
+        const urlRe = /(https?:\/\/[^\s<]+)/g;
+        return escaped.replace(urlRe, (rawUrl) => {
+          let url = rawUrl;
+          let trailing = '';
+          while (/[.,!?)]$/.test(url)) {
+            trailing = url.slice(-1) + trailing;
+            url = url.slice(0, -1);
+          }
+          if (!/^https?:\/\//i.test(url)) return `${url}${trailing}`;
+          return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow">${url}</a>${trailing}`;
+        });
+      }
+
+      function renderButton({ label, onClick = '', className = '', variant = 'ghost', attrs = '', type = 'button' }) {
+        const classAttr = [variant, className].filter(Boolean).join(' ');
+        const typeAttr = type ? ` type="${type}"` : '';
+        const onClickAttr = onClick ? ` onclick="${onClick}"` : '';
+        const extraAttr = attrs ? ` ${attrs}` : '';
+        return `<button class="${classAttr}"${typeAttr}${onClickAttr}${extraAttr}>${label}</button>`;
+      }
+
+      function renderLikeButton({ onClick = '', count = 0, className = '', attrs = '', type = 'button' }) {
+        const voteCount = Number.isFinite(Number(count)) ? Number(count) : 0;
+        return renderButton({
+          label: `<span class="heart-mark" aria-hidden="true">♥︎</span> ${voteCount}`,
+          onClick,
+          className: ['like-count-btn', 'vote-action-btn', className].filter(Boolean).join(' '),
+          attrs,
+          type,
+        });
+      }
+
+      function createModal({ id, title, onBackdrop, onClose, bodyHtml, cardClass = '' }) {
+        const cardClassName = cardClass ? ` ${cardClass}` : '';
+        return `
+          <div id="${id}" class="modal" onclick="${onBackdrop}(event)">
+            <div class="modal-card${cardClassName}">
+              <div class="modal-head">
+                <h3>${title}</h3>
+                ${renderButton({ label: '×', onClick: onClose, className: 'modal-close' })}
+              </div>
+              ${bodyHtml}
+            </div>
+          </div>`;
+      }
+
+      function isMobileLayout() {
+        if (FORCED_LAYOUT === 'mobile') return true;
+        if (FORCED_LAYOUT === 'desktop') return false;
+        const bp = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bp-mobile'), 10) || 700;
+        return typeof window !== 'undefined' && window.matchMedia(`(max-width: ${bp}px)`).matches;
+      }
+
+      appState.isMobile = isMobileLayout();
+
+      function liveHeartLimit() {
+        return appState.isMobile ? 5 : 10;
+      }
+
+      function storageKey(prefix) {
+        return prefix + SESSION;
+      }
+
+      function normalizeIntDraft(value, min, max) {
+        const n = parseInt(value, 10);
+        return isNaN(n) ? min : Math.min(Math.max(n, min), max);
+      }
+
+      function formatRemainingTime(sec) {
+        const total = Math.max(0, Number(sec || 0));
+        const m = Math.floor(total / 60);
+        const s = total % 60;
+        return `${m}:${String(s).padStart(2, '0')}`;
+      }
+
+      function getVoteRemainingSeconds(poll) {
+        if (!poll) return 0;
+        const timerMinutes = Number(poll.timerMinutes || 0);
+        if (timerMinutes <= 0) return 0;
+        const endsAtRaw = String(poll.endsAt || '').trim();
+        if (endsAtRaw) {
+          const ts = Date.parse(endsAtRaw);
+          if (Number.isFinite(ts)) {
+            return Math.max(0, Math.floor((ts - Date.now()) / 1000));
+          }
+        }
+        return Math.max(0, Number(poll.remainingSeconds || 0));
+      }
+
+      function renderVoteTimerHtml(poll) {
+        const hasTimer = Number(poll && poll.timerMinutes || 0) > 0;
+        const remaining = getVoteRemainingSeconds(poll);
+        return hasTimer
+          ? `<span class="vote-timer-pill">⏱ <span class="vote-countdown" data-vote-countdown="${remaining}">${formatRemainingTime(remaining)}</span></span>`
+          : `<span class="vote-timer-pill is-off">⏱ タイマーなし</span>`;
+      }
+
+      function renderVoteInfoText(poll, myVoteTotal, maxVotes) {
+        return `あなたの投票 ${myVoteTotal} / 上限: ${maxVotes > 0 ? `${maxVotes}票` : '無制限'} / 状態: ${esc((poll && poll.status) || 'OPEN')}`;
+      }
+
+      function renderVoteMetaLine(poll, myVoteTotal, maxVotes) {
+        const timerText = renderVoteTimerHtml(poll);
+        return `<div class="vote-meta-line"><div class="vote-meta-top">${timerText}</div><div class="vote-meta-sub">${renderVoteInfoText(poll, myVoteTotal, maxVotes)}</div></div>`;
+      }
+
+      function stopVoteCountdownTicker() {
+        if (voteCountdownTimer) {
+          clearInterval(voteCountdownTimer);
+          voteCountdownTimer = null;
+        }
+        appState.voteCountdownRemainingSec = -1;
+      }
+
+      function paintVoteCountdown() {
+        const labels = document.querySelectorAll('[data-vote-countdown]');
+        if (!labels.length) return;
+        const text = formatRemainingTime(appState.voteCountdownRemainingSec);
+        labels.forEach((el) => {
+          el.textContent = text;
+        });
+      }
+
+      function startVoteCountdownTicker() {
+        stopVoteCountdownTicker();
+        if (VIEW !== 'vote' || !appState.currentVotePoll) return;
+        const timerMinutes = Number(appState.currentVotePoll.timerMinutes || 0);
+        if (timerMinutes <= 0) return;
+        appState.voteCountdownRemainingSec = getVoteRemainingSeconds(appState.currentVotePoll);
+        paintVoteCountdown();
+        voteCountdownTimer = setInterval(() => {
+          appState.voteCountdownRemainingSec = Math.max(0, appState.voteCountdownRemainingSec - 1);
+          paintVoteCountdown();
+          if (appState.voteCountdownRemainingSec <= 0) {
+            stopVoteCountdownTicker();
+            loadVotePoll();
+          }
+        }, 1000);
+      }
+
+      function saveVoteDraft() {
+        try {
+          const q = String(appState.voteDraftQuestion || '').slice(0, 200);
+          const optsRaw = Array.isArray(appState.voteDraftOptionList) ? appState.voteDraftOptionList : [];
+          const opts = optsRaw.map((x) => String(x || '').slice(0, 80));
+          const targetVotes = Math.max(10, Math.min(1000, Number(appState.voteDraftTargetVotes || 50) || 50));
+          const maxVotesPerUser = normalizeIntDraft(appState.voteDraftMaxVotesPerUser, 0, 1000);
+          const timerMinutes = normalizeIntDraft(appState.voteDraftTimerMinutes, 0, 720);
+          localStorage.setItem(storageKey(VOTE_DRAFT_PREFIX), JSON.stringify({ q, opts, targetVotes, maxVotesPerUser, timerMinutes }));
+        } catch (e) {}
+
+        if (voteDraftSaveTimer) clearTimeout(voteDraftSaveTimer);
+        voteDraftSaveTimer = setTimeout(async () => {
+          try {
+            await api('saveVoteDraft', {
+              sessionCode: SESSION,
+              authorToken,
+              questionText: String(appState.voteDraftQuestion || '').slice(0, 200),
+              options: (Array.isArray(appState.voteDraftOptionList) ? appState.voteDraftOptionList : []).map((x) => String(x || '').slice(0, 80)),
+              targetVotes: Math.max(10, Math.min(1000, Number(appState.voteDraftTargetVotes || 50) || 50)),
+              maxVotesPerUser: normalizeIntDraft(appState.voteDraftMaxVotesPerUser, 0, 1000),
+              timerMinutes: normalizeIntDraft(appState.voteDraftTimerMinutes, 0, 720),
+            });
+          } catch (e) {}
+        }, 300);
+      }
+
+      function resetVoteDraft() {
+        appState.voteDraftQuestion = '';
+        appState.voteDraftOptionList = ['選択肢A', '選択肢B'];
+        appState.voteDraftTargetVotes = 50;
+        appState.voteDraftMaxVotesPerUser = 0;
+        appState.voteDraftTimerMinutes = 0;
+      }
+
+      async function loadVoteDraft() {
+        resetVoteDraft();
+
+        try {
+          const raw = localStorage.getItem(storageKey(VOTE_DRAFT_PREFIX));
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            const q = String((parsed && parsed.q) || '').trim();
+            const opts = Array.isArray(parsed && parsed.opts) ? parsed.opts : [];
+            const cleaned = opts.map((x) => String(x || '').trim()).filter(Boolean).slice(0, 6);
+            const tv = Math.max(10, Math.min(1000, Number(parsed && parsed.targetVotes || 50) || 50));
+            const mv = normalizeIntDraft(parsed && parsed.maxVotesPerUser, 0, 1000);
+            const tm = normalizeIntDraft(parsed && parsed.timerMinutes, 0, 720);
+            appState.voteDraftQuestion = q;
+            appState.voteDraftOptionList = cleaned.length >= 2 ? cleaned : ['選択肢A', '選択肢B'];
+            appState.voteDraftTargetVotes = tv;
+            appState.voteDraftMaxVotesPerUser = mv;
+            appState.voteDraftTimerMinutes = tm;
+          }
+        } catch (e) {
+          resetVoteDraft();
+        }
+
+        try {
+          const res = await api('getVoteDraft', { sessionCode: SESSION, authorToken });
+          const draft = res && res.draft ? res.draft : null;
+          const hasRemoteDraft = !!(draft && String(draft.updatedAt || '').trim());
+          if (hasRemoteDraft) {
+            const q = String((draft.questionText || '')).trim();
+            const opts = Array.isArray(draft.options) ? draft.options : [];
+            const cleaned = opts.map((x) => String(x || '').trim()).filter(Boolean).slice(0, 6);
+            const tv = Math.max(10, Math.min(1000, Number(draft.targetVotes || 50) || 50));
+            const mv = normalizeIntDraft(draft.maxVotesPerUser, 0, 1000);
+            const tm = normalizeIntDraft(draft.timerMinutes, 0, 720);
+            appState.voteDraftQuestion = q;
+            appState.voteDraftOptionList = cleaned.length >= 2 ? cleaned : ['選択肢A', '選択肢B'];
+            appState.voteDraftTargetVotes = tv;
+            appState.voteDraftMaxVotesPerUser = mv;
+            appState.voteDraftTimerMinutes = tm;
+            try {
+              localStorage.setItem(storageKey(VOTE_DRAFT_PREFIX), JSON.stringify({ q: appState.voteDraftQuestion, opts: appState.voteDraftOptionList, targetVotes: appState.voteDraftTargetVotes, maxVotesPerUser: appState.voteDraftMaxVotesPerUser, timerMinutes: appState.voteDraftTimerMinutes }));
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+
+      function startGuideKey() {
+        return `chatapp-start-guide:${SESSION}`;
+      }
+
+      function updateStartGuideVisibility() {
+        appState.showStartGuide = !localStorage.getItem(startGuideKey());
+      }
+
+      function dismissStartGuide(openPost) {
+        localStorage.setItem(startGuideKey(), '1');
+        appState.showStartGuide = false;
+        renderPanel();
+        if (openPost) openQuestionModal();
+      }
+
+      function normalizeDisplayName(name) {
+        const val = String(name || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, 40);
+        return val || '匿名';
+      }
+
+      function getDisplayName() {
+        return normalizeDisplayName(localStorage.getItem(storageKey(DISPLAY_NAME_PREFIX)) || '匿名');
+      }
+
+      function setDisplayName(name) {
+        localStorage.setItem(storageKey(DISPLAY_NAME_PREFIX), normalizeDisplayName(name));
+      }
+
+      function loadReadState() {
+        try {
+          const raw = localStorage.getItem(storageKey(READ_STATE_PREFIX));
+          const arr = raw ? JSON.parse(raw) : [];
+          if (Array.isArray(arr)) {
+            appState.readQuestionIds = new Set(arr.map((x) => String(x)));
+            return;
+          }
+        } catch (e) {}
+        appState.readQuestionIds = new Set();
+      }
+
+      function saveReadState() {
+        localStorage.setItem(storageKey(READ_STATE_PREFIX), JSON.stringify(Array.from(appState.readQuestionIds)));
+      }
+
+      function isQuestionRead(id) {
+        return appState.readQuestionIds.has(String(id));
+      }
+
+      function setQuestionRead(id, read) {
+        const key = String(id);
+        if (read) appState.readQuestionIds.add(key);
+        else appState.readQuestionIds.delete(key);
+        saveReadState();
+      }
+
+      function toggleQuestionRead(id) {
+        setQuestionRead(id, !isQuestionRead(id));
+        renderList(appState.currentQuestions);
+      }
+
+      function defaultSessions() {
+        return ['webinar-2026', 'webinar-2027'];
+      }
+
+      function normalizeSessionCode(raw) {
+        return String(raw || '')
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/[^\p{L}\p{N}_-]/gu, '')
+          .slice(0, 40);
+      }
+
+      async function fetchSessionList() {
+        try {
+          const res = await api('listSessions', {});
+          const raw = Array.isArray(res.sessions) ? res.sessions : [];
+          const normalized = Array.from(new Set(raw.map(normalizeSessionCode).filter(Boolean)));
+          sessionListCache = normalized.length ? normalized : defaultSessions();
+        } catch (e) {
+          sessionListCache = sessionListCache.length ? sessionListCache : defaultSessions();
+        }
+        return sessionListCache;
+      }
+
+      async function renderSessionOptions(selected) {
+        const sessionSelect = document.getElementById('sessionSelect');
+        if (!sessionSelect) return;
+        const list = await fetchSessionList();
+        sessionSelect.innerHTML = list.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+        const normalizedSelected = normalizeSessionCode(selected);
+        sessionSelect.value = list.includes(normalizedSelected) ? normalizedSelected : list[0];
+      }
+
+      async function addSession() {
+        const raw = window.prompt('新しいセッション名を入力してください', 'webinar-2028');
+        if (raw == null) return;
+        const code = normalizeSessionCode(raw);
+        if (!code) {
+          alert('セッション名が不正です');
+          return;
+        }
+        try {
+          await api('createSession', { sessionCode: code });
+        } catch (e) {
+          alert(e.message || 'セッション作成に失敗しました');
+          return;
+        }
+        await renderSessionOptions(code);
+        await applyFromToolbar();
+      }
+
+      async function renameSession() {
+        const sessionSelect = document.getElementById('sessionSelect');
+        if (!sessionSelect) return;
+        const target = normalizeSessionCode(sessionSelect.value);
+        if (!target) return;
+        const raw = window.prompt('新しい名称を入力してください', target);
+        if (raw == null) return;
+        const renamed = normalizeSessionCode(raw);
+        if (!renamed) {
+          alert('セッション名が不正です');
+          return;
+        }
+        if (renamed === target) return;
+        try {
+          await api('renameSession', { fromSessionCode: target, toSessionCode: renamed });
+        } catch (e) {
+          alert(e.message || '名称変更に失敗しました');
+          return;
+        }
+        await renderSessionOptions(renamed);
+        await applyFromToolbar();
+      }
+
+      async function deleteSession() {
+        const sessionSelect = document.getElementById('sessionSelect');
+        if (!sessionSelect) return;
+        const target = normalizeSessionCode(sessionSelect.value);
+        if (!target) return;
+        const list = await fetchSessionList();
+        if (list.length <= 1) {
+          alert('最低1つのセッションは必要です');
+          return;
+        }
+        const ok = window.confirm(`セッション「${target}」を候補から削除します。よろしいですか？\n（投稿データ自体は削除されません）`);
+        if (!ok) return;
+        try {
+          await api('hideSession', { sessionCode: target });
+        } catch (e) {
+          alert(e.message || '削除に失敗しました');
+          return;
+        }
+        await renderSessionOptions(SESSION === target ? 'webinar-2026' : SESSION);
+        await applyFromToolbar();
+      }
+
+      function preferredTheme() {
+        const saved = localStorage.getItem('qna-theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.textContent = theme === 'dark' ? '☾' : '☀︎';
+        const logo = document.getElementById('brandLogo');
+        if (logo) logo.src = theme === 'dark' ? './img/logo-chatapp-dark.svg' : './img/logo-chatapp-light.svg';
+      }
+
+      function toggleTheme() {
+        const current = document.body.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('qna-theme', next);
+        applyTheme(next);
+      }
+
+      const DEBUG_CSS_VAR_GROUPS = [
+        {
+          title: 'Typography',
+          vars: [
+            { name: '--font-xs', min: 10, max: 24, step: 1, fallback: 14 },
+            { name: '--font-sm', min: 12, max: 28, step: 1, fallback: 16 },
+            { name: '--font-md', min: 12, max: 30, step: 1, fallback: 16 },
+            { name: '--font-lg', min: 14, max: 34, step: 1, fallback: 20 },
+            { name: '--font-xl', min: 16, max: 38, step: 1, fallback: 20 },
+          ],
+        },
+        {
+          title: 'Spacing',
+          vars: [
+            { name: '--space-1', min: 2, max: 12, step: 1, fallback: 4 },
+            { name: '--space-2', min: 4, max: 20, step: 1, fallback: 8 },
+            { name: '--space-3', min: 8, max: 28, step: 1, fallback: 12 },
+            { name: '--space-4', min: 12, max: 36, step: 1, fallback: 16 },
+            { name: '--space-5', min: 16, max: 44, step: 1, fallback: 20 },
+          ],
+        },
+        {
+          title: 'Shape',
+          vars: [
+            { name: '--radius-md', min: 8, max: 24, step: 1, fallback: 12 },
+            { name: '--radius-lg', min: 10, max: 28, step: 1, fallback: 14 },
+          ],
+        },
+      ];
+      const DEBUG_CSS_VARS = DEBUG_CSS_VAR_GROUPS.flatMap((group) => group.vars);
+      let debugCssPanelEl = null;
+      let debugCssInitialValues = null;
+      let debugCssPosition = null;
+      let debugCssDismissed = false;
+
+      function parsePxValue(raw, fallback) {
+        const n = Number.parseFloat(String(raw || '').replace('px', '').trim());
+        return Number.isFinite(n) ? n : fallback;
+      }
+
+      function clampValue(n, min, max) {
+        return Math.min(max, Math.max(min, n));
+      }
+
+      function readCssVarNumber(varName, fallback) {
+        const computed = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+        return parsePxValue(computed, fallback);
+      }
+
+      function formatPx(n) {
+        const rounded = Math.round(Number(n) * 100) / 100;
+        return Number.isInteger(rounded) ? String(rounded) : String(rounded);
+      }
+
+      function shouldShowDebugCssPanel() {
+        if (!DEBUG_CSS_PANEL_ENABLED) return false;
+        return !!getAdminKeyCached();
+      }
+
+      function getDebugCssCurrentValues() {
+        const values = {};
+        DEBUG_CSS_VARS.forEach((meta) => {
+          values[meta.name] = readCssVarNumber(meta.name, meta.fallback);
+        });
+        return values;
+      }
+
+      function ensureDebugCssInitialValues() {
+        if (debugCssInitialValues) return;
+        debugCssInitialValues = getDebugCssCurrentValues();
+      }
+
+      function buildDebugCssCopyText(values) {
+        const lines = DEBUG_CSS_VARS.map((meta) => `  ${meta.name}: ${formatPx(values[meta.name])}px;`);
+        return `:root {\n${lines.join('\n')}\n}`;
+      }
+
+      function updateDebugCssValueLabel(varName, value) {
+        if (!debugCssPanelEl) return;
+        const valueEl = debugCssPanelEl.querySelector(`[data-debug-css-value="${varName}"]`);
+        if (!valueEl) return;
+        valueEl.textContent = `${formatPx(value)}px`;
+      }
+
+      function setDebugCssVar(varName, value) {
+        const rootStyle = document.documentElement.style;
+        rootStyle.setProperty(varName, `${formatPx(value)}px`);
+        updateDebugCssValueLabel(varName, value);
+      }
+
+      function syncDebugCssInputsWithCurrentValues() {
+        if (!debugCssPanelEl) return;
+        const values = getDebugCssCurrentValues();
+        DEBUG_CSS_VARS.forEach((meta) => {
+          const input = debugCssPanelEl.querySelector(`input[data-debug-css-var="${meta.name}"]`);
+          if (input) input.value = String(values[meta.name]);
+          updateDebugCssValueLabel(meta.name, values[meta.name]);
+        });
+      }
+
+      async function copyDebugCssValues() {
+        const values = getDebugCssCurrentValues();
+        const text = buildDebugCssCopyText(values);
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            alert('CSS変数をコピーしました');
+            return;
+          }
+        } catch (_e) {}
+        window.prompt('以下をコピーしてください', text);
+      }
+
+      function resetDebugCssValues() {
+        ensureDebugCssInitialValues();
+        if (!debugCssInitialValues) return;
+        DEBUG_CSS_VARS.forEach((meta) => {
+          const base = Number(debugCssInitialValues[meta.name]);
+          const safe = Number.isFinite(base) ? base : meta.fallback;
+          setDebugCssVar(meta.name, safe);
+        });
+        syncDebugCssInputsWithCurrentValues();
+      }
+
+      function installDebugCssPanelDrag(panel, handle) {
+        let dragState = null;
+
+        const onMove = (event) => {
+          if (!dragState) return;
+          const dx = event.clientX - dragState.startX;
+          const dy = event.clientY - dragState.startY;
+          const maxLeft = Math.max(8, window.innerWidth - panel.offsetWidth - 8);
+          const maxTop = Math.max(8, window.innerHeight - panel.offsetHeight - 8);
+          const left = clampValue(dragState.left + dx, 8, maxLeft);
+          const top = clampValue(dragState.top + dy, 8, maxTop);
+          panel.style.left = `${Math.round(left)}px`;
+          panel.style.top = `${Math.round(top)}px`;
+          panel.style.right = 'auto';
+          debugCssPosition = { left: Math.round(left), top: Math.round(top) };
+        };
+
+        const onUp = () => {
+          if (!dragState) return;
+          dragState = null;
+          panel.classList.remove('is-dragging');
+          document.removeEventListener('pointermove', onMove);
+          document.removeEventListener('pointerup', onUp);
+        };
+
+        handle.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0) return;
+          const target = event.target instanceof Element ? event.target : null;
+          if (target && target.closest('button,input,label')) return;
+          event.preventDefault();
+          const rect = panel.getBoundingClientRect();
+          panel.style.left = `${Math.round(rect.left)}px`;
+          panel.style.top = `${Math.round(rect.top)}px`;
+          panel.style.right = 'auto';
+          dragState = {
+            startX: event.clientX,
+            startY: event.clientY,
+            left: rect.left,
+            top: rect.top,
+          };
+          panel.classList.add('is-dragging');
+          document.addEventListener('pointermove', onMove);
+          document.addEventListener('pointerup', onUp);
+        });
+      }
+
+      function buildDebugCssPanelHtml() {
+        const values = getDebugCssCurrentValues();
+        const groupHtml = DEBUG_CSS_VAR_GROUPS.map((group) => {
+          const rows = group.vars.map((meta) => {
+            const value = values[meta.name];
+            return `
+              <div class="debug-css-row">
+                <label for="debug-css-${meta.name.slice(2)}">${meta.name}</label>
+                <div class="debug-css-control">
+                  <input id="debug-css-${meta.name.slice(2)}" type="range" min="${meta.min}" max="${meta.max}" step="${meta.step}" value="${value}" data-debug-css-var="${meta.name}">
+                  <span class="debug-css-value" data-debug-css-value="${meta.name}">${formatPx(value)}px</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+          return `
+            <section class="debug-css-group">
+              <h4>${group.title}</h4>
+              ${rows}
+            </section>
+          `;
+        }).join('');
+
+        return `
+          <div class="debug-css-head" data-debug-css-drag-handle="1">
+            <p class="debug-css-title">CSS Debug Panel</p>
+            <div class="debug-css-head-right">
+              <span class="debug-css-badge">admin + debug=1</span>
+              <button type="button" class="ghost debug-css-close" data-debug-css-close="1" aria-label="デバッグパネルを閉じる">×</button>
+            </div>
+          </div>
+          <div class="debug-css-body">
+            ${groupHtml}
+          </div>
+          <div class="debug-css-actions">
+            <button type="button" class="ghost" data-debug-css-copy="1">値をコピー</button>
+            <button type="button" class="ghost" data-debug-css-reset="1">リセット</button>
+          </div>
+        `;
+      }
+
+      function createDebugCssPanel() {
+        ensureDebugCssInitialValues();
+        const panel = document.createElement('aside');
+        panel.id = 'debugCssPanel';
+        panel.className = 'card debug-css-panel';
+        panel.innerHTML = buildDebugCssPanelHtml();
+        if (debugCssPosition && Number.isFinite(debugCssPosition.left) && Number.isFinite(debugCssPosition.top)) {
+          panel.style.left = `${debugCssPosition.left}px`;
+          panel.style.top = `${debugCssPosition.top}px`;
+          panel.style.right = 'auto';
+        }
+
+        panel.addEventListener('input', (event) => {
+          const target = event.target instanceof HTMLInputElement ? event.target : null;
+          if (!target || target.type !== 'range') return;
+          const varName = target.getAttribute('data-debug-css-var');
+          if (!varName) return;
+          const meta = DEBUG_CSS_VARS.find((item) => item.name === varName);
+          if (!meta) return;
+          const raw = Number(target.value);
+          const safe = Number.isFinite(raw) ? clampValue(raw, meta.min, meta.max) : meta.fallback;
+          setDebugCssVar(varName, safe);
+        });
+
+        const copyBtn = panel.querySelector('[data-debug-css-copy="1"]');
+        if (copyBtn) copyBtn.addEventListener('click', copyDebugCssValues);
+        const resetBtn = panel.querySelector('[data-debug-css-reset="1"]');
+        if (resetBtn) resetBtn.addEventListener('click', resetDebugCssValues);
+        const closeBtn = panel.querySelector('[data-debug-css-close="1"]');
+        if (closeBtn) closeBtn.addEventListener('click', closeDebugCssPanel);
+        const handle = panel.querySelector('[data-debug-css-drag-handle="1"]');
+        if (handle) installDebugCssPanelDrag(panel, handle);
+
+        document.body.appendChild(panel);
+        debugCssPanelEl = panel;
+      }
+
+      function removeDebugCssPanel() {
+        if (!debugCssPanelEl) return;
+        debugCssPanelEl.remove();
+        debugCssPanelEl = null;
+      }
+
+      function closeDebugCssPanel() {
+        debugCssDismissed = true;
+        removeDebugCssPanel();
+      }
+
+      function syncDebugCssPanelVisibility() {
+        if (!DEBUG_CSS_PANEL_ENABLED) return;
+        if (debugCssDismissed) {
+          removeDebugCssPanel();
+          return;
+        }
+        if (!shouldShowDebugCssPanel()) {
+          removeDebugCssPanel();
+          return;
+        }
+        if (!debugCssPanelEl) {
+          createDebugCssPanel();
+          return;
+        }
+        syncDebugCssInputsWithCurrentValues();
+      }
+
+function getAdminKeyCached() {
+        const fromSession = sessionStorage.getItem(ADMIN_KEY_STORAGE) || '';
+        if (fromSession) return fromSession;
+        const fromPersist = localStorage.getItem(ADMIN_KEY_PERSIST_STORAGE) || '';
+        if (fromPersist) {
+          sessionStorage.setItem(ADMIN_KEY_STORAGE, fromPersist);
+          return fromPersist;
+        }
+        return '';
+      }
+
+      function setAdminKeyCached(key) {
+        const next = String(key || '').trim();
+        if (!next) {
+          sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+          localStorage.removeItem(ADMIN_KEY_PERSIST_STORAGE);
+          return;
+        }
+        sessionStorage.setItem(ADMIN_KEY_STORAGE, next);
+        localStorage.setItem(ADMIN_KEY_PERSIST_STORAGE, next);
+      }
+
+      function clearAdminKeyCached() {
+        setAdminKeyCached('');
+        syncDebugCssPanelVisibility();
+      }
+
+      function syncAdminKeyUi() {
+        const input = document.getElementById("adminKeyInput");
+        if (!input) return;
+        input.value = getAdminKeyCached();
+      }
+
+      function syncVoteTargetMenuUi() {
+        const input = document.getElementById('voteTargetInput');
+        if (!input) return;
+        const fromPoll = appState.currentVotePoll && appState.currentVotePoll.targetVotes != null ? Number(appState.currentVotePoll.targetVotes) : NaN;
+        const raw = Number.isFinite(fromPoll)
+          ? fromPoll
+          : Math.max(10, Math.min(1000, Number(appState.voteDraftTargetVotes || 50) || 50));
+        const n = Math.max(10, Math.min(1000, raw));
+        input.value = String(n);
+      }
+
+      async function saveVoteTargetFromMenu() {
+        const input = document.getElementById('voteTargetInput');
+        if (!input) return;
+        const n = Math.max(10, Math.min(1000, Number(input.value || 50) || 50));
+        appState.voteDraftTargetVotes = n;
+        saveVoteDraft();
+        try {
+          const res = await api('updatePollTarget', { sessionCode: SESSION, targetVotes: n, voterToken });
+          const updated = res && res.poll ? res.poll : null;
+          if (updated) {
+            appState.currentVotePoll = updated;
+            if (VIEW === 'vote') renderPanel();
+          }
+          syncVoteTargetMenuUi();
+          alert(updated ? `投票目標を ${n}票 に更新しました` : `次回投票の目標を ${n}票 に保存しました`);
+        } catch (e) {
+          alert(e.message || '投票目標の保存に失敗しました');
+        }
+      }
+
+      async function saveVoteTargetQuick() {
+        const n = Math.max(10, Math.min(1000, Number(appState.voteDraftTargetVotes || 50) || 50));
+        appState.voteDraftTargetVotes = n;
+        saveVoteDraft();
+        try {
+          const res = await api('updatePollTarget', { sessionCode: SESSION, targetVotes: n, voterToken });
+          const updated = res && res.poll ? res.poll : null;
+          if (updated) {
+            appState.currentVotePoll = updated;
+            if (VIEW === 'vote') renderPanel();
+            alert(`投票目標を ${n}票 に更新しました`);
+          } else {
+            alert(`次回投票の目標を ${n}票 に保存しました`);
+          }
+        } catch (e) {
+          alert(e.message || '投票目標の保存に失敗しました');
+        }
+      }
+      async function saveAdminKeyFromMenu() {
+        const input = document.getElementById("adminKeyInput");
+        if (!input) return;
+        const key = String(input.value || "").trim();
+        if (!key) {
+          clearAdminKeyCached();
+          alert("運営者パスワードを入力してください");
+          return;
+        }
+        try {
+          await api('verifyAdminKey', { adminKey: key });
+          setAdminKeyCached(key);
+          syncDebugCssPanelVisibility();
+          alert("運営者パスワードを保存しました");
+        } catch (e) {
+          clearAdminKeyCached();
+          syncDebugCssPanelVisibility();
+          alert(e.message || "運営者パスワードが正しくありません");
+        }
+      }
+
+      async function changeAdminKeyFromMenu() {
+        const currentInput = document.getElementById('adminKeyInput');
+        const currentKey = String((currentInput && currentInput.value) || getAdminKeyCached() || '').trim();
+
+        if (!currentKey) {
+          alert('現在の運営者パスワードを入力してください');
+          return;
+        }
+
+        const nextKey = String(window.prompt('新しい運営者パスワードを入力してください', '') || '').trim();
+        if (!nextKey) return;
+        if (nextKey.length < 4) {
+          alert('新しい運営者パスワードは4文字以上で入力してください');
+          return;
+        }
+
+        try {
+          await api('verifyAdminKey', { adminKey: currentKey });
+          await api('changeAdminKey', { adminKey: currentKey, newAdminKey: nextKey });
+          setAdminKeyCached(nextKey);
+          syncDebugCssPanelVisibility();
+          if (currentInput) currentInput.value = nextKey;
+          alert('運営者パスワードを変更しました');
+        } catch (e) {
+          alert(e.message || '運営者パスワードの変更に失敗しました');
+        }
+      }
+
+      async function validateCachedAdminKeyOnBoot() {
+        const key = getAdminKeyCached();
+        if (!key) {
+          syncDebugCssPanelVisibility();
+          return;
+        }
+        try {
+          await api('verifyAdminKey', { adminKey: key });
+          syncDebugCssPanelVisibility();
+        } catch (_e) {
+          clearAdminKeyCached();
+          syncAdminKeyUi();
+          syncDebugCssPanelVisibility();
+        }
+      }
+
+      async function ensureAdminKeyIfNeeded(action) {
+        if (!ADMIN_ACTIONS.has(action)) return '';
+        let key = getAdminKeyCached();
+        if (key) return key;
+        key = (window.prompt('運営者パスワードを入力してください', '') || '').trim();
+        if (!key) throw new Error('運営者パスワードが未入力です');
+        setAdminKeyCached(key);
+        return key;
+      }
+
+      function buildGetPayload_(action, payload) {
+        const p = payload || {};
+        if (action === 'listQuestions') {
+          return {
+            session: p.sessionCode || 'default',
+            authorToken: p.authorToken || '',
+            sinceRevision: Number.isFinite(Number(p.sinceRevision)) ? Number(p.sinceRevision) : 0,
+            includeAnswered: p.includeAnswered ? 1 : 0,
+          };
+        }
+        if (action === 'getSessionConfig') {
+          return { session: p.sessionCode || 'default' };
+        }
+        if (action === 'getPoll') {
+          return { session: p.sessionCode || 'default', voterToken: p.voterToken || '', pollId: p.pollId || '' };
+        }
+        if (action === 'getLivePoll') {
+          return { session: p.sessionCode || 'default', voterToken: p.voterToken || '' };
+        }
+        return p;
+      }
+
+      async function getApi_(url, action, payload) {
+        const u = new URL(url, location.href);
+        u.searchParams.set('action', action);
+        u.searchParams.set('_t', String(Date.now()));
+        const getPayload = buildGetPayload_(action, payload);
+        Object.entries(getPayload || {}).forEach(([k, v]) => {
+          if (v == null || v === '') return;
+          u.searchParams.set(k, String(v));
+        });
+
+        const res = await fetch(u.toString(), { method: 'GET', cache: 'no-store' });
+        const text = await res.text();
+        const data = tryParseJsonPayload_(text, action);
+        if (!data) {
+          throw new Error(`API応答の解析に失敗しました (${action})`);
+        }
+        if (!data || !data.ok) {
+          throw new Error((data && data.error) ? data.error : `APIエラー (${action})`);
+        }
+        return data;
+      }
+
+      function tryParseJsonPayload_(text, action) {
+        const raw = String(text || '');
+        if (!raw.trim()) return null;
+
+        try {
+          return JSON.parse(raw);
+        } catch (_e) {}
+
+        const candidates = [];
+        const t = raw.trim();
+        candidates.push(t);
+
+        const i0 = t.indexOf('{');
+        const j0 = t.lastIndexOf('}');
+        if (i0 >= 0 && j0 > i0) candidates.push(t.slice(i0, j0 + 1));
+
+        const okStart = t.indexOf('{"ok"');
+        if (okStart >= 0) {
+          const tail = t.slice(okStart);
+          const j1 = tail.lastIndexOf('}');
+          if (j1 >= 0) candidates.push(tail.slice(0, j1 + 1));
+        }
+
+        for (let i = 0; i < candidates.length; i += 1) {
+          try {
+            return JSON.parse(candidates[i]);
+          } catch (_e2) {}
+        }
+        return null;
+      }
+
+      async function postApi_(url, action, payload) {
+        const res = await fetch(url, {
+          method: 'POST',
+          cache: 'no-store',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action, payload }),
+        });
+        const text = await res.text();
+        const data = tryParseJsonPayload_(text, action);
+        if (!data) {
+          throw new Error(`API応答の解析に失敗しました (${action})`);
+        }
+        if (!data || !data.ok) {
+          throw new Error((data && data.error) ? data.error : `APIエラー (${action})`);
+        }
+        return data;
+      }
+
+      async function postApiWithRetry_(url, action, payload, retries) {
+        let lastErr = null;
+        const maxRetries = Number.isFinite(retries) ? retries : 2;
+        for (let i = 0; i <= maxRetries; i += 1) {
+          try {
+            return await postApi_(url, action, payload);
+          } catch (err) {
+            lastErr = err;
+            const message = err && err.message ? err.message : String(err);
+            const retryable = /load failed|failed to fetch|networkerror|timeout/i.test(message);
+            if (!retryable || i === maxRetries) break;
+            await new Promise((resolve) => setTimeout(resolve, 120 * (i + 1)));
+          }
+        }
+        throw lastErr || new Error('API通信に失敗しました');
+      }
+
+      function syncApiUrlInput_(nextUrl) {
+        const normalized = String(nextUrl || '').trim();
+        if (!normalized || normalized === API_URL) return;
+        API_URL = normalized;
+        const apiInput = document.getElementById('apiUrl');
+        if (apiInput) apiInput.value = API_URL;
+      }
+
+      function wrapApiError_(err, action) {
+        const message = err && err.message ? err.message : String(err);
+        if (/load failed|failed to fetch|networkerror/i.test(message)) {
+          return new Error(`load failed (${action}) / API: ${API_URL}`);
+        }
+        return new Error(`${message} / API: ${API_URL}`);
+      }
+
+      async function callReadApi_(action, payload) {
+        try {
+          return await getApi_(API_URL, action, payload);
+        } catch (err) {
+          try {
+            return await postApiWithRetry_(API_URL, action, payload, 1);
+          } catch (_postErr) {}
+          if (isHostedHttp && sameOriginApiUrl && API_URL !== sameOriginApiUrl) {
+            try {
+              const data = await getApi_(sameOriginApiUrl, action, payload);
+              syncApiUrlInput_(sameOriginApiUrl);
+              return data;
+            } catch (_e) {}
+            try {
+              const data = await postApiWithRetry_(sameOriginApiUrl, action, payload, 1);
+              syncApiUrlInput_(sameOriginApiUrl);
+              return data;
+            } catch (_e2) {}
+          }
+          throw wrapApiError_(err, action);
+        }
+      }
+
+      async function callWriteApi_(action, payload) {
+        const requestPayload = { ...payload };
+        if (ADMIN_ACTIONS.has(action)) {
+          let cached = getAdminKeyCached();
+          if (!cached) cached = await ensureAdminKeyIfNeeded(action);
+          if (cached) requestPayload.adminKey = cached;
+        }
+
+        const attempt = async (reqPayload) => {
+          try {
+            return await postApiWithRetry_(API_URL, action, reqPayload, 2);
+          } catch (err) {
+            const canFallbackToSameOrigin = isHostedHttp && sameOriginApiUrl && API_URL !== sameOriginApiUrl;
+            if (!canFallbackToSameOrigin) throw err;
+            const data = await postApiWithRetry_(sameOriginApiUrl, action, reqPayload, 2);
+            syncApiUrlInput_(sameOriginApiUrl);
+            return data;
+          }
+        };
+
+        try {
+          return await attempt(requestPayload);
+        } catch (err) {
+          const message = err && err.message ? err.message : String(err);
+          const needAdminKey = ADMIN_ACTIONS.has(action)
+            && /管理者キーが正しくありません|管理者パスワードが正しくありません|運営者パスワードが正しくありません|運営者パスワード未設定/.test(String(message));
+          if (!needAdminKey) throw wrapApiError_(err, action);
+          clearAdminKeyCached();
+          const prompted = await ensureAdminKeyIfNeeded(action);
+          return await attempt({ ...payload, adminKey: prompted });
+        }
+      }
+
+      async function api(action, payload) {
+        if (!API_URL) throw new Error('API URL を入力してください（ローカルは http://127.0.0.1:8000/api.php）');
+        const reqPayload = payload || {};
+        if (READ_ACTIONS.has(action)) return callReadApi_(action, reqPayload);
+        return callWriteApi_(action, reqPayload);
+      }
+
+      async function loadSessionConfig() {
+        try {
+          const res = await api('getSessionConfig', { sessionCode: SESSION });
+          const rawLabels = Array.isArray(res.config && res.config.metricLabels) ? res.config.metricLabels : ['満足度', '理解度'];
+          const normalizedLabels = normalizeMetricLabels(rawLabels);
+          const fromApiSurvey = String((res.config && res.config.surveyUrl) || '').trim();
+          const fromLocalSurvey = String(localStorage.getItem(storageKey(SURVEY_URL_PREFIX)) || '').trim();
+          sessionConfig = {
+            anonymousOnly: !!(res.config && res.config.anonymousOnly),
+            tipUrl: String((res.config && res.config.tipUrl) || '').trim(),
+            surveyUrl: fromApiSurvey || fromLocalSurvey,
+            metricLabels: normalizedLabels,
+          };
+          metricLabelDraft = normalizedLabels.slice();
+        } catch (e) {
+          sessionConfig = { anonymousOnly: true, tipUrl: '', surveyUrl: '', metricLabels: ['満足度', '理解度'] };
+          metricLabelDraft = ['満足度', '理解度'];
+        }
+      }
+
+      function normalizeMetricLabels(raw) {
+        const arr = Array.isArray(raw) ? raw : [];
+        const cleaned = arr
+          .map((x) => String(x || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, 30))
+          .filter((x) => x.length > 0)
+          .slice(0, 5);
+        return cleaned.length ? cleaned : ['満足度', '理解度'];
+      }
+
+      async function updateQuestionMeta(questionId, patch) {
+        const target = appState.currentQuestions.find((q) => q.id === questionId);
+        if (!target) return;
+        const nextStatus = patch.status || target.status || 'OPEN';
+        const nextPinned = patch.pinned == null ? !!target.pinned : !!patch.pinned;
+        try {
+          await api('updateQuestionMeta', {
+            questionId,
+            status: nextStatus,
+            pinned: nextPinned ? 1 : 0,
+          });
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '更新失敗');
+        }
+      }
+
+      function downloadCsv() {
+        if (!API_URL) {
+          alert('API URL が未設定です');
+          return;
+        }
+        const u = new URL(API_URL, location.href);
+        u.searchParams.set('action', 'exportCsv');
+        u.searchParams.set('session', SESSION);
+        window.open(u.toString(), '_blank');
+      }
+
+      async function tipSupport() {
+        let url = String(sessionConfig.tipUrl || '').trim();
+        if (!url) {
+          const entered = window.prompt('Stripe Payment Link URL を入力してください（https://buy.stripe.com/...）', '');
+          if (!entered) return;
+          if (!/^https?:\/\//i.test(entered.trim())) {
+            alert('URLは http(s) で始まる形式で入力してください');
+            return;
+          }
+          try {
+            const res = await api('setSessionConfig', {
+              sessionCode: SESSION,
+              tipUrl: entered.trim(),
+            });
+            const savedSurvey = String((res.config && res.config.surveyUrl) || url || '').trim();
+          sessionConfig = {
+            anonymousOnly: !!(res.config && res.config.anonymousOnly),
+            tipUrl: String((res.config && res.config.tipUrl) || '').trim(),
+            surveyUrl: savedSurvey,
+            metricLabels: normalizeMetricLabels(res.config && res.config.metricLabels),
+          };
+          if (savedSurvey) localStorage.setItem(storageKey(SURVEY_URL_PREFIX), savedSurvey); else localStorage.removeItem(storageKey(SURVEY_URL_PREFIX));
+            url = sessionConfig.tipUrl;
+          } catch (e) {
+            alert(e.message || '投げ銭リンクの保存に失敗しました');
+            return;
+          }
+        }
+        if (!url) {
+          alert('投げ銭リンクが未設定です');
+          return;
+        }
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+
+
+      function shell() {
+        const subtitle = VIEW === 'poll'
+          ? 'ライブアンケート'
+          : (VIEW === 'vote'
+            ? 'ライブ投票'
+            : (VIEW === 'screen'
+              ? '投稿リスト表示'
+              : '投稿表示'));
+
+        return `
+          <section class="hero">
+            <div class="hero-meta">
+              <p>${subtitle}</p>
+              <div id="heroAction" class="hero-action"></div>
+            </div>
+          </section>
+          <section id="panel"></section>
+          <section id="list" class="list"></section>
+        `;
+      }
+
+      function renderHeroAction() {
+        const root = document.getElementById('heroAction');
+        if (!root) return;
+        if (appState.isMobile) {
+          root.innerHTML = '';
+          return;
+        }
+        let html = '';
+        if (VIEW === 'audience') {
+          html = '<button class="ghost" onclick="clearQuestionsData()">投稿リセット</button>';
+        } else if (VIEW === 'screen') {
+          html = `
+            <button class="ghost" onclick="toggleUnreadOnly()">${appState.unreadOnly ? '全件表示' : '未読のみ表示'}</button>
+            <button class="ghost" onclick="toggleScreenSortMode()">${appState.screenSortMode === 'new' ? '人気順' : '新着順'}</button>
+            <button class="ghost" onclick="clearReadState()">既読を全解除</button>
+          `;
+        } else if (VIEW === 'poll') {
+          html = '<button class="ghost" onclick="clearLivePollData()">アンケートリセット</button>';
+        } else if (VIEW === 'vote') {
+          html = '<button class="ghost" onclick="clearVotePoll()">投票リセット</button>';
+        }
+        root.innerHTML = html;
+      }
+
+      async function submitQ() {
+        const displayName = normalizeDisplayName(document.getElementById('modalName')?.value || getDisplayName());
+        setDisplayName(displayName);
+        const questionText = (document.getElementById('modalQuestion')?.value || '').trim();
+        if (!questionText) return alert('質問を入力してください');
+
+        const tempId = `temp-${Date.now()}`;
+        const optimistic = {
+          id: tempId,
+          createdAt: new Date().toISOString(),
+          sessionCode: SESSION,
+          displayName,
+          questionText,
+          votes: 0,
+          status: 'OPEN',
+          isMine: true,
+          replies: [],
+        };
+        pendingQuestions.set(tempId, optimistic);
+        appState.currentQuestions = [optimistic, ...appState.currentQuestions];
+        renderList(appState.currentQuestions);
+        document.getElementById('modalQuestion').value = '';
+        closeQuestionModal();
+
+        try {
+          const res = await api('submitQuestion', { sessionCode: SESSION, displayName, questionText, authorToken });
+          appState.currentQuestions = appState.currentQuestions.map((q) => (q.id === tempId ? { ...q, id: res.id } : q));
+          const p = pendingQuestions.get(tempId);
+          if (p) {
+            pendingQuestions.delete(tempId);
+            pendingQuestions.set(res.id, { ...p, id: res.id });
+          }
+          renderList(appState.currentQuestions);
+          triggerFastSync();
+        } catch (e) {
+          pendingQuestions.delete(tempId);
+          appState.currentQuestions = appState.currentQuestions.filter((q) => q.id !== tempId);
+          renderList(appState.currentQuestions);
+          alert(e.message || '送信失敗');
+        }
+      }
+
+      async function vote(id) {
+        if (votePending.has(id)) return;
+        votePending.add(id);
+        const before = appState.currentQuestions.slice();
+        appState.currentQuestions = appState.currentQuestions.map((q) => (q.id === id ? { ...q, votes: q.votes + 1 } : q));
+        renderList(appState.currentQuestions);
+        try {
+          const res = await api('voteQuestion', { questionId: id, voterToken });
+          if (res && res.duplicated) {
+            appState.currentQuestions = before;
+            renderList(appState.currentQuestions);
+            alert('この投稿にはすでに♥︎しています');
+            return;
+          }
+          triggerFastSync();
+        } catch (e) {
+          appState.currentQuestions = before;
+          renderList(appState.currentQuestions);
+          alert(e.message || '投票失敗');
+        } finally {
+          votePending.delete(id);
+        }
+      }
+
+      async function deleteItem(action, id, optimisticFn, rollbackFn) {
+        optimisticFn();
+        try {
+          await api(action, id);
+          triggerFastSync();
+        } catch (e) {
+          rollbackFn(e);
+        }
+      }
+
+      async function deleteMyQuestion(id) {
+        const before = appState.currentQuestions.slice();
+        const req = { questionId: id, authorToken };
+        if (!appState.isMobile) {
+          const adminKey = getAdminKeyCached();
+          if (adminKey) req.adminKey = adminKey;
+        }
+        await deleteItem(
+          'deleteMyQuestion',
+          req,
+          () => {
+            appState.currentQuestions = appState.currentQuestions.filter((q) => q.id !== id);
+            renderList(appState.currentQuestions);
+          },
+          (e) => {
+            appState.currentQuestions = before;
+            renderList(appState.currentQuestions);
+            alert((e && e.message) || '削除失敗');
+          }
+        );
+      }
+
+      async function voteReply(questionId, replyId) {
+        if (replyVotePending.has(replyId)) return;
+        replyVotePending.add(replyId);
+        const before = appState.currentQuestions.slice();
+        appState.currentQuestions = appState.currentQuestions.map((q) => {
+          if (q.id !== questionId) return q;
+          const replies = (q.replies || []).map((r) => (r.id === replyId ? { ...r, votes: (r.votes || 0) + 1 } : r));
+          return { ...q, replies };
+        });
+        renderList(appState.currentQuestions);
+        try {
+          const res = await api('voteReply', { replyId, voterToken });
+          if (res && res.duplicated) {
+            appState.currentQuestions = before;
+            renderList(appState.currentQuestions);
+            alert('この返信にはすでに♥︎しています');
+            return;
+          }
+          triggerFastSync();
+        } catch (e) {
+          appState.currentQuestions = before;
+          renderList(appState.currentQuestions);
+          alert(e.message || '返信いいね失敗');
+        } finally {
+          replyVotePending.delete(replyId);
+        }
+      }
+
+      async function deleteMyReply(questionId, replyId) {
+        const before = appState.currentQuestions.slice();
+        const req = { replyId, authorToken };
+        if (!appState.isMobile) {
+          const adminKey = getAdminKeyCached();
+          if (adminKey) req.adminKey = adminKey;
+        }
+        await deleteItem(
+          'deleteMyReply',
+          req,
+          () => {
+            appState.currentQuestions = appState.currentQuestions.map((q) => {
+              if (q.id !== questionId) return q;
+              return { ...q, replies: (q.replies || []).filter((r) => r.id !== replyId) };
+            });
+            renderList(appState.currentQuestions);
+          },
+          (e) => {
+            appState.currentQuestions = before;
+            renderList(appState.currentQuestions);
+            alert((e && e.message) || '返信削除失敗');
+          }
+        );
+      }
+
+      async function editQuestionAsAdmin(questionId) {
+        const target = appState.currentQuestions.find((q) => q.id === questionId);
+        if (!target) return;
+        const currentText = String(target.questionText || '');
+        const raw = window.prompt('投稿内容を編集してください', currentText);
+        if (raw == null) return;
+        const nextText = String(raw || '').trim();
+        if (!nextText) {
+          alert('投稿内容を入力してください');
+          return;
+        }
+        if (nextText === currentText) return;
+
+        const before = appState.currentQuestions.slice();
+        appState.currentQuestions = appState.currentQuestions.map((q) => (q.id === questionId ? { ...q, questionText: nextText } : q));
+        renderList(appState.currentQuestions);
+        try {
+          await api('editQuestion', { questionId, questionText: nextText });
+          triggerFastSync();
+        } catch (e) {
+          appState.currentQuestions = before;
+          renderList(appState.currentQuestions);
+          alert(e.message || '投稿編集失敗');
+        }
+      }
+
+      async function editReplyAsAdmin(questionId, replyId) {
+        const targetQuestion = appState.currentQuestions.find((q) => q.id === questionId);
+        if (!targetQuestion) return;
+        const replies = Array.isArray(targetQuestion.replies) ? targetQuestion.replies : [];
+        const targetReply = replies.find((r) => r.id === replyId);
+        if (!targetReply) return;
+        const currentText = String(targetReply.replyText || '');
+        const raw = window.prompt('コメント内容を編集してください', currentText);
+        if (raw == null) return;
+        const nextText = String(raw || '').trim();
+        if (!nextText) {
+          alert('コメント内容を入力してください');
+          return;
+        }
+        if (nextText === currentText) return;
+
+        const before = appState.currentQuestions.slice();
+        appState.currentQuestions = appState.currentQuestions.map((q) => {
+          if (q.id !== questionId) return q;
+          const nextReplies = (q.replies || []).map((r) => (r.id === replyId ? { ...r, replyText: nextText } : r));
+          return { ...q, replies: nextReplies };
+        });
+        renderList(appState.currentQuestions);
+        try {
+          await api('editReply', { replyId, replyText: nextText });
+          triggerFastSync();
+        } catch (e) {
+          appState.currentQuestions = before;
+          renderList(appState.currentQuestions);
+          alert(e.message || 'コメント編集失敗');
+        }
+      }
+
+      async function submitReplyByText(questionId, replyText, displayName) {
+        const text = String(replyText || '').trim();
+        if (!text) return;
+        const name = normalizeDisplayName(displayName || getDisplayName());
+        setDisplayName(name);
+        const tempId = `temp-r-${Date.now()}`;
+
+        const before = appState.currentQuestions.slice();
+        const optimisticReply = {
+          id: tempId,
+          createdAt: new Date().toISOString(),
+          displayName: name,
+          replyText: text,
+          votes: 0,
+          isMine: true,
+        };
+        pendingReplies.set(tempId, { ...optimisticReply, questionId });
+        appState.currentQuestions = appState.currentQuestions.map((q) => {
+          if (q.id !== questionId) return q;
+          const replies = Array.isArray(q.replies) ? q.replies.slice() : [];
+          replies.push(optimisticReply);
+          return { ...q, replies };
+        });
+        renderList(appState.currentQuestions);
+
+        try {
+          const res = await api('submitReply', {
+            questionId,
+            sessionCode: SESSION,
+            displayName: name,
+            replyText: text,
+            authorToken,
+          });
+          appState.currentQuestions = appState.currentQuestions.map((q) => {
+            if (q.id !== questionId) return q;
+            const replies = (q.replies || []).map((r) => (r.id === tempId ? { ...r, id: res.id } : r));
+            return { ...q, replies };
+          });
+          const p = pendingReplies.get(tempId);
+          if (p) {
+            pendingReplies.delete(tempId);
+            pendingReplies.set(res.id, { ...p, id: res.id });
+          }
+          renderList(appState.currentQuestions);
+          triggerFastSync();
+        } catch (e) {
+          pendingReplies.delete(tempId);
+          appState.currentQuestions = before;
+          renderList(appState.currentQuestions);
+          alert(e.message || '返信失敗');
+        }
+      }
+
+      function openReplyModal(questionId) {
+        if (!questionId) return;
+        const modal = document.getElementById('replyModal');
+        if (!modal) return;
+        replyModalQuestionId = String(questionId);
+        const hidden = document.getElementById('modalReplyQuestionId');
+        if (hidden) hidden.value = replyModalQuestionId;
+        const nameInput = document.getElementById('replyModalName');
+        if (nameInput) nameInput.value = getDisplayName();
+        const textArea = document.getElementById('modalReplyText');
+        if (textArea) textArea.value = '';
+        const target = appState.currentQuestions.find((q) => String(q.id) === replyModalQuestionId);
+        const targetEl = document.getElementById('replyModalTarget');
+        if (targetEl) {
+          const source = String(target?.questionText || '').replace(/\s+/g, ' ').trim();
+          targetEl.textContent = source ? `返信先: ${source.length > 60 ? `${source.slice(0, 60)}…` : source}` : '';
+        }
+        modal.classList.add('open');
+        if (textArea) {
+          setTimeout(() => textArea.focus(), 0);
+        }
+      }
+
+      function closeReplyModal() {
+        const modal = document.getElementById('replyModal');
+        if (modal) modal.classList.remove('open');
+        replyModalQuestionId = '';
+        const hidden = document.getElementById('modalReplyQuestionId');
+        if (hidden) hidden.value = '';
+      }
+
+      function onReplyModalBackdrop(event) {
+        if (event.target && event.target.id === 'replyModal') closeReplyModal();
+      }
+
+      async function submitReplyModal() {
+        const questionId = String(
+          replyModalQuestionId
+          || document.getElementById('modalReplyQuestionId')?.value
+          || ''
+        ).trim();
+        if (!questionId) return;
+        const displayName = normalizeDisplayName(document.getElementById('replyModalName')?.value || getDisplayName());
+        const replyText = String(document.getElementById('modalReplyText')?.value || '').trim();
+        if (!replyText) {
+          alert('コメントを入力してください');
+          return;
+        }
+        closeReplyModal();
+        await submitReplyByText(questionId, replyText, displayName);
+      }
+
+      function submitReply(questionId) {
+        openReplyModal(questionId);
+      }
+
+      async function loadPoll() {
+        const prevKey = lastPollRenderKey;
+        try {
+          const res = await api('getLivePoll', { sessionCode: SESSION, voterToken });
+          appState.currentPoll = res && res.poll ? res.poll : null;
+        } catch (e) {
+          appState.currentPoll = null;
+        }
+        const nextKey = appState.currentPoll
+          ? `${appState.currentPoll.revision || 0}:${JSON.stringify(appState.currentPoll.metrics || [])}:${appState.currentPoll.topicTotal || 0}`
+          : 'none';
+        if (VIEW === 'poll') {
+          const activeId = document.activeElement && document.activeElement.id ? document.activeElement.id : '';
+          const editingDraft = activeId === 'liveTopicInput';
+          if (!editingDraft && nextKey !== prevKey) {
+            renderPanel();
+          }
+        }
+        lastPollRenderKey = nextKey;
+      }
+
+      async function submitLiveHeart(kind) {
+        const heartLimit = liveHeartLimit();
+        if (appState.isMobile) {
+          const metrics = getBoardMetrics(appState.currentPoll || {});
+          const target = metrics.find((m) => String(m.kind) === String(kind));
+          const mine = Number((target && target.myHearts) || 0);
+          if (mine >= heartLimit) {
+            alert('モバイルは1項目あたり5♥︎までです');
+            return;
+          }
+        }
+        try {
+          await api('submitLivePoll', {
+            sessionCode: SESSION,
+            pollKind: kind,
+            voterToken,
+            clientLayout: appState.isMobile ? 'mobile' : 'desktop',
+          });
+          await loadPoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '送信に失敗しました');
+        }
+      }
+
+      async function submitLiveTopic() {
+        const text = String(document.getElementById('liveTopicInput')?.value || appState.livePollTopicDraft || '').trim();
+        if (!text) return alert('次回テーマを入力してください');
+        try {
+          await api('submitLivePoll', { sessionCode: SESSION, pollKind: 'topic', topicText: text, voterToken });
+          appState.livePollTopicDraft = '';
+          const input = document.getElementById('liveTopicInput');
+          if (input) input.value = '';
+          await loadPoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '送信に失敗しました');
+        }
+      }
+
+      async function deleteLiveTopic(topicEncoded) {
+        if (appState.isMobile) return;
+        const topicText = decodeURIComponent(String(topicEncoded || ''));
+        if (!topicText) return;
+        const ok = window.confirm('この次回テーマを削除しますか？');
+        if (!ok) return;
+        try {
+          await api('deleteLivePollTopic', { sessionCode: SESSION, topicText });
+          await loadPoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '次回テーマの削除に失敗しました');
+        }
+      }
+
+      function heartsCompact(count) {
+        const c = Math.max(0, Number(count || 0));
+        const visualCap = appState.isMobile ? 5 : 10;
+        const shown = Math.min(visualCap, c);
+        return shown > 0 ? `<span class="heart-mark">${'♥︎'.repeat(shown)}</span>` : '0';
+      }
+
+      function getBoardMetrics(board) {
+        if (Array.isArray(board.metrics) && board.metrics.length) {
+          return board.metrics.map((m, idx) => ({
+            kind: String(m.kind || `metric${idx + 1}`),
+            label: String(m.label || `項目${idx + 1}`),
+            totalHearts: Number(m.totalHearts || 0),
+            myHearts: Number(m.myHearts || 0),
+          }));
+        }
+        const labels = normalizeMetricLabels(sessionConfig.metricLabels);
+        return labels.map((label, idx) => ({
+          kind: `metric${idx + 1}`,
+          label,
+          totalHearts: idx === 0 ? Number(board.satisfactionHearts || 0) : (idx === 1 ? Number(board.understandingHearts || 0) : 0),
+          myHearts: idx === 0 ? Number(board.mySatisfactionHearts || 0) : (idx === 1 ? Number(board.myUnderstandingHearts || 0) : 0),
+        }));
+      }
+
+      function updateMetricLabelDraft(index, value) {
+        if (index < 0 || index >= metricLabelDraft.length) return;
+        metricLabelDraft[index] = String(value || '').slice(0, 30);
+      }
+
+      function addMetricLabel() {
+        if (metricLabelDraft.length >= 5) return;
+        metricLabelDraft.push(`項目${metricLabelDraft.length + 1}`);
+        renderPanel();
+      }
+
+      function removeMetricLabel(index) {
+        if (metricLabelDraft.length <= 1) return;
+        metricLabelDraft.splice(index, 1);
+        renderPanel();
+      }
+
+      async function saveMetricLabels() {
+        if (appState.isMobile) return;
+        const labels = normalizeMetricLabels(metricLabelDraft);
+        try {
+          const res = await api('setSessionConfig', { sessionCode: SESSION, metricLabels: labels });
+          const normalized = normalizeMetricLabels(res.config && res.config.metricLabels);
+          sessionConfig.metricLabels = normalized.slice();
+          metricLabelDraft = normalized.slice();
+          await loadPoll();
+          renderPanel();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '項目設定の保存に失敗しました');
+        }
+      }
+
+      function renderPollMetrics(board, metrics, heartLimit) {
+        const metricsForResult = metrics
+          .map((m, idx) => ({ ...m, _idx: idx }))
+          .sort((a, b) => {
+            const diff = Number(b.totalHearts || 0) - Number(a.totalHearts || 0);
+            if (diff !== 0) return diff;
+            return a._idx - b._idx;
+          });
+        const resultRows = metricsForResult.map((m) => `
+                  <div class="poll-result-item">
+                    <div class="poll-result-label">${esc(m.label)}</div>
+                    <div class="poll-result-value">${heartsCompact(m.totalHearts)}<span class="poll-heart-count">${Number(m.totalHearts || 0)}票</span></div>
+                  </div>
+        `).join('');
+        const inputRows = metrics.map((m) => {
+          const myHearts = Number(m.myHearts || 0);
+          const atLimit = myHearts >= heartLimit;
+          return `
+                <div class="field">
+                  <div class="poll-input-row">
+                    <div class="poll-input-label">${esc(m.label)}</div>
+                    <div class="poll-input-controls">
+                      <span class="poll-meta">あなた ${myHearts}／${heartLimit}</span>
+                      <button class="ghost like-count-btn vote-action-btn poll-heart-btn" onclick="submitLiveHeart('${esc(m.kind)}')" ${atLimit ? 'disabled aria-disabled="true"' : ''}><span class="heart-mark" aria-hidden="true">♥︎</span>${myHearts}</button>
+                    </div>
+                  </div>
+                </div>`;
+        }).join('');
+        const totalHearts = metrics.reduce((sum, m) => sum + Number(m.totalHearts || 0), 0);
+        return {
+          totalHearts,
+          resultRows,
+          inputRows,
+          topicTotal: Number(board.topicTotal || 0),
+        };
+      }
+
+      function renderPollTopics(board, canManageTopics) {
+        return (Array.isArray(board.topics) ? board.topics : []).map((t, idx) => {
+          const topicText = String(t.text || '');
+          const topicEncoded = encodeURIComponent(topicText);
+          return `
+            <div class="poll-list">
+              <div class="poll-row poll-topic-item">
+                <div class="poll-opt-label">${idx + 1}. ${linkifyText(topicText)}</div>
+                <div class="poll-topic-right">
+                  <div class="poll-meta poll-topic-votes">${Number(t.count || 0)}票</div>
+                  ${canManageTopics ? `<button class="ghost poll-topic-delete" onclick="deleteLiveTopic('${topicEncoded}')">削除</button>` : ""}
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      function renderPollComposer(metricsView, heartLimit, metricEditor) {
+        return `
+            <div class="poll-input-split">
+              <div class="poll-input-main">
+                <div class="card poll-box">
+                  <p class="poll-q">入力</p>
+                  <p class="poll-meta">ハートで評価をお願いします（ひとり${heartLimit}<span class="heart-mark" aria-hidden="true">♥︎</span>まで押せます）</p>
+                  ${metricsView.inputRows}
+                  <div class="field">
+                    <label>聞きたいテーマ（記述式）</label>
+                    <textarea id="liveTopicInput" maxlength="300" placeholder="例）実践事例、運用フロー、失敗パターン" oninput="appState.livePollTopicDraft=this.value">${esc(appState.livePollTopicDraft)}</textarea>
+                    <div class="actions poll-topic-actions">
+                      <button class="ghost" onclick="submitLiveTopic()">送信</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              ${metricEditor ? `<div class="poll-input-editor"><div class="card poll-box">${metricEditor}</div></div>` : ''}
+            </div>`;
+      }
+
+      function renderPollPanelHtml() {
+        const board = appState.currentPoll || {
+          satisfactionHearts: 0,
+          understandingHearts: 0,
+          mySatisfactionHearts: 0,
+          myUnderstandingHearts: 0,
+          topics: [],
+          topicTotal: 0,
+        };
+        const metrics = getBoardMetrics(board);
+        const canManageTopics = operatorMode && !appState.isMobile;
+        const heartLimit = liveHeartLimit();
+        const topicRows = renderPollTopics(board, canManageTopics);
+        const metricsView = renderPollMetrics(board, metrics, heartLimit);
+        const metricEditor = !appState.isMobile ? `
+                <p class="poll-q poll-settings-title">設定</p>
+                <label>評価項目設定（1〜5）</label>
+                  ${(metricLabelDraft || []).map((label, idx) => `
+                    <div class="poll-input-row poll-input-row-editor">
+                      <input value="${esc(label)}" maxlength="30" oninput="updateMetricLabelDraft(${idx}, this.value)" placeholder="項目名">
+                      <button class="ghost" onclick="removeMetricLabel(${idx})">削除</button>
+                    </div>
+                  `).join('')}
+                  <div class="actions poll-editor-actions" style="justify-content:flex-end;">
+                    <button class="ghost" onclick="addMetricLabel()">項目追加</button>
+                    <button class="primary" onclick="saveMetricLabels()">項目保存</button>
+                  </div>` : '';
+        const resultBlock = `
+            <div class="poll-result-col">
+              <div class="card poll-box">
+                <p class="poll-q">結果</p>
+                <div class="poll-list">
+                  <div class="poll-meta poll-result-summary" style="margin-bottom:10px; font-weight:700;">投票数：合計 ${metricsView.totalHearts}票</div>
+                  ${metricsView.resultRows}
+                </div>
+                <div class="poll-meta poll-result-summary" style="margin-top:14px; margin-bottom:10px; font-weight:700;">次回テーマ：合計 ${metricsView.topicTotal}票</div>
+                <div class="poll-list poll-topic-list">
+                  ${topicRows || '<div class="muted-note">まだ投稿がありません。</div>'}
+                </div>
+              </div>
+                </div>`;
+        const inputBlock = renderPollComposer(metricsView, heartLimit, metricEditor);
+        return `
+          <div class="poll-stack">
+            ${resultBlock + inputBlock}
+          </div>`;
+      }
+
+      async function loadVotePoll() {
+        const seq = ++appState.voteLoadSeq;
+        const requestedSession = SESSION;
+        const prevPoll = appState.currentVotePoll;
+        const prevErr = appState.voteLoadError;
+        const pollKey = (p) => {
+          if (!p) return 'none';
+          const counts = Array.isArray(p.counts) ? p.counts.join(',') : '';
+          return [p.id || '', p.status || '', p.updatedAt || '', p.totalVotes || 0, counts].join('|');
+        };
+        const prevKey = pollKey(prevPoll);
+        const normalizeVotePollList = (items) => {
+          if (!Array.isArray(items)) return [];
+          return items
+            .map((item) => ({
+              id: String(item && item.id || ''),
+              questionText: String(item && item.questionText || ''),
+              status: String(item && item.status || 'CLOSED'),
+              createdAt: String(item && item.createdAt || ''),
+            }))
+            .filter((item) => !!item.id);
+        };
+        const syncVoteSelection = (poll, list) => {
+          if (poll && poll.id) {
+            appState.selectedVotePollId = String(poll.id);
+            return;
+          }
+          if (Array.isArray(list) && list.length) {
+            appState.selectedVotePollId = String(list[0].id || '');
+            return;
+          }
+          appState.selectedVotePollId = '';
+        };
+
+        try {
+          const res = await api("getPoll", { sessionCode: SESSION, voterToken, pollId: appState.selectedVotePollId });
+          if (seq !== appState.voteLoadSeq || requestedSession !== SESSION) return;
+          const poll = res && res.poll ? res.poll : null;
+          appState.votePollCount = Math.max(0, Number(res && res.pollCount || 0));
+          appState.votePollLimit = Math.max(1, Number(res && res.maxPolls || 3));
+          appState.votePollList = normalizeVotePollList(res && res.pollList);
+          appState.currentVotePoll = poll || null;
+          syncVoteSelection(appState.currentVotePoll, appState.votePollList);
+          appState.voteLoadError = '';
+          syncVoteTargetMenuUi();
+          if (VIEW === 'vote') {
+            const nextKey = pollKey(appState.currentVotePoll);
+            if (nextKey !== prevKey || prevErr) {
+              renderPanel();
+            }
+          }
+          return;
+        } catch (e) {
+          if (seq !== appState.voteLoadSeq || requestedSession !== SESSION) return;
+          appState.voteLoadError = e && e.message ? String(e.message) : '投票データの取得に失敗しました';
+        }
+
+        // 追加フォールバック: 直接GETで再取得（iPhone系の一部通信失敗対策）
+        try {
+          const u = new URL(API_URL || sameOriginApiUrl, location.href);
+          u.searchParams.set('action', 'getPoll');
+          u.searchParams.set('session', SESSION);
+          u.searchParams.set('voterToken', voterToken || '');
+          if (appState.selectedVotePollId) u.searchParams.set('pollId', appState.selectedVotePollId);
+          u.searchParams.set('_t', String(Date.now()));
+          const r = await fetch(u.toString(), { cache: 'no-store' });
+          const j = await r.json();
+          if (seq !== appState.voteLoadSeq || requestedSession !== SESSION) return;
+          if (j && j.ok) {
+            appState.votePollCount = Math.max(0, Number(j && j.pollCount || appState.votePollCount || 0));
+            appState.votePollLimit = Math.max(1, Number(j && j.maxPolls || appState.votePollLimit || 3));
+            appState.votePollList = normalizeVotePollList(j && j.pollList);
+            appState.currentVotePoll = j.poll || null;
+            syncVoteSelection(appState.currentVotePoll, appState.votePollList);
+            appState.voteLoadError = '';
+            syncVoteTargetMenuUi();
+            if (VIEW === 'vote') {
+              const nextKey = pollKey(appState.currentVotePoll);
+              if (nextKey !== prevKey || prevErr) {
+                renderPanel();
+              }
+            }
+            return;
+          }
+        } catch (e2) {
+          // no-op
+        }
+        if (seq !== appState.voteLoadSeq || requestedSession !== SESSION) return;
+
+        // 取得失敗時は既存データを保持（nullで消さない）
+        syncVoteTargetMenuUi();
+        if (VIEW === 'vote' && appState.voteLoadError !== prevErr) {
+          renderPanel();
+        }
+      }
+
+      async function retryLoadVotePoll() {
+        await loadVotePoll();
+      }
+
+      function setVoteTargetDraft(value) {
+        const n = Math.max(10, Math.min(1000, Number(value || 50) || 50));
+        appState.voteDraftTargetVotes = n;
+        saveVoteDraft();
+        syncVoteTargetMenuUi();
+        if (VIEW === 'vote') {
+          renderPanel();
+        }
+      }
+
+      function updateVoteOptionDraft(index, value) {
+        if (index < 0 || index >= appState.voteDraftOptionList.length) return;
+        appState.voteDraftOptionList[index] = String(value || "").slice(0, 80);
+        saveVoteDraft();
+      }
+
+      function addVoteOptionDraft() {
+        if (appState.voteDraftOptionList.length >= 6) return;
+        appState.voteDraftOptionList.push(`選択肢${String.fromCharCode(65 + appState.voteDraftOptionList.length)}`);
+        saveVoteDraft();
+        renderPanel();
+      }
+
+      function removeVoteOptionDraft(index) {
+        if (appState.voteDraftOptionList.length <= 2) return;
+        appState.voteDraftOptionList.splice(index, 1);
+        saveVoteDraft();
+        renderPanel();
+      }
+
+      function setVoteMaxMode(mode) {
+        if (mode === 'unlimited') {
+          appState.voteDraftMaxVotesPerUser = 0;
+        } else {
+          const base = normalizeIntDraft(appState.voteDraftMaxVotesPerUser, 0, 1000) || 5;
+          appState.voteDraftMaxVotesPerUser = base;
+        }
+        saveVoteDraft();
+        if (VIEW === 'vote') renderPanel();
+      }
+
+      function setVoteMaxDraft(value) {
+        appState.voteDraftMaxVotesPerUser = normalizeIntDraft(value, 0, 1000);
+        saveVoteDraft();
+      }
+
+      function setVoteTimerDraft(value) {
+        appState.voteDraftTimerMinutes = normalizeIntDraft(value, 0, 720);
+        saveVoteDraft();
+      }
+
+      function canCreateMoreVotePolls() {
+        return Number(appState.votePollCount || 0) < Number(appState.votePollLimit || 3);
+      }
+
+      function openNewVoteComposer() {
+        if (!canCreateMoreVotePolls()) {
+          alert(`ライブ投票は最大${Number(appState.votePollLimit || 3)}件までです`);
+          return;
+        }
+        appState.forceVoteComposer = true;
+        resetVoteDraft();
+        saveVoteDraft();
+        renderPanel();
+      }
+
+      async function openVotePollById(pollId) {
+        const nextId = String(pollId || '').trim();
+        if (!nextId || nextId === appState.selectedVotePollId) return;
+        appState.selectedVotePollId = nextId;
+        await loadVotePoll();
+      }
+
+      async function createVotePoll() {
+        const questionText = String(appState.voteDraftQuestion || "").trim();
+        const options = (appState.voteDraftOptionList || []).map((x) => String(x || "").trim()).filter(Boolean);
+        if (!questionText) return alert("投票タイトルを入力してください");
+        if (options.length < 2) return alert("選択肢は2つ以上必要です");
+        if (!canCreateMoreVotePolls()) return alert(`ライブ投票は最大${Number(appState.votePollLimit || 3)}件までです`);
+        try {
+          const createRes = await api("createPoll", {
+            sessionCode: SESSION,
+            questionText,
+            options,
+            pollType: "CHOICE",
+            targetVotes: Math.max(10, Math.min(1000, Number(appState.voteDraftTargetVotes || 50) || 50)),
+            maxVotesPerUser: normalizeIntDraft(appState.voteDraftMaxVotesPerUser, 0, 1000),
+            timerMinutes: normalizeIntDraft(appState.voteDraftTimerMinutes, 0, 720),
+          });
+          if (createRes && typeof createRes.pollCount !== 'undefined') {
+            appState.votePollCount = Math.max(0, Number(createRes.pollCount || 0));
+          }
+          if (createRes && typeof createRes.maxPolls !== 'undefined') {
+            appState.votePollLimit = Math.max(1, Number(createRes.maxPolls || 3));
+          }
+          if (createRes && createRes.id) {
+            appState.selectedVotePollId = String(createRes.id);
+          }
+          appState.forceVoteComposer = false;
+          saveVoteDraft();
+          await loadVotePoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || "投票の作成に失敗しました");
+        }
+      }
+
+      async function castVotePoll(choiceIndex) {
+        if (!appState.currentVotePoll || !appState.currentVotePoll.id) return;
+        const maxVotes = Number(appState.currentVotePoll.maxVotesPerUser || 0);
+        const myVoteTotal = Number(appState.currentVotePoll.myVoteTotal || 0);
+        if (maxVotes > 0 && myVoteTotal >= maxVotes) {
+          alert(`この投票は1人${maxVotes}票までです`);
+          return;
+        }
+        try {
+          const res = await api("votePoll", { pollId: appState.currentVotePoll.id, choiceIndex, voterToken });
+          if (res && res.duplicated) {
+            alert("この投票はすでに送信済みです");
+            return;
+          }
+          await loadVotePoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || "投票に失敗しました");
+        }
+      }
+
+      async function closeVotePoll() {
+        if (!appState.currentVotePoll || !appState.currentVotePoll.id) return;
+        const ok = window.confirm("この投票を終了しますか？");
+        if (!ok) return;
+        try {
+          const adminKey = await ensureAdminKeyIfNeeded('closePoll');
+          await api('verifyAdminKey', { adminKey });
+          await api("closePoll", { pollId: appState.currentVotePoll.id, adminKey });
+          await loadVotePoll();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || "投票の終了に失敗しました");
+        }
+      }
+
+      async function clearVotePoll() {
+        const ok = window.confirm("投票データをクリアしますか？");
+        if (!ok) return;
+        try {
+          const adminKey = await ensureAdminKeyIfNeeded('clearPoll');
+          await api('verifyAdminKey', { adminKey });
+          await api("clearPoll", { sessionCode: SESSION, adminKey });
+          appState.currentVotePoll = null;
+          appState.votePollCount = 0;
+          appState.votePollLimit = 3;
+          appState.votePollList = [];
+          appState.selectedVotePollId = '';
+          appState.votePrevRankMap = new Map();
+          appState.votePrevWidthMap = new Map();
+          renderPanel();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || "投票データのクリアに失敗しました");
+        }
+      }
+
+      async function clearQuestionsData() {
+        const ok = window.confirm("投稿データ（質問・返信・いいね）をクリアしますか？");
+        if (!ok) return;
+        try {
+          const adminKey = await ensureAdminKeyIfNeeded('clearQuestions');
+          await api('verifyAdminKey', { adminKey });
+          await api('clearQuestions', { sessionCode: SESSION, adminKey });
+          appState.currentQuestions = [];
+          pendingQuestions.clear();
+          pendingReplies.clear();
+          renderList(appState.currentQuestions);
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || '投稿データのクリアに失敗しました');
+        }
+      }
+
+      async function clearLivePollData() {
+        const ok = window.confirm('アンケートデータをクリアしますか？');
+        if (!ok) return;
+        try {
+          const adminKey = await ensureAdminKeyIfNeeded('clearLivePoll');
+          await api('verifyAdminKey', { adminKey });
+          await api('clearLivePoll', { sessionCode: SESSION, adminKey });
+          await loadPoll();
+          renderPanel();
+          triggerFastSync();
+        } catch (e) {
+          alert(e.message || 'アンケートデータのクリアに失敗しました');
+        }
+      }
+      function renderVoteHeader(poll, myVoteTotal, maxVotes, timerHtml) {
+        return `
+            <div class="vote-title-row">
+              <p class="poll-q vote-title-inline">${esc(poll.questionText || "ライブ投票")}</p>
+              ${timerHtml}
+            </div>
+            <div class="poll-meta vote-meta-sub">${renderVoteInfoText(poll, myVoteTotal, maxVotes)}</div>`;
+      }
+
+      function renderVoteOptions(rowModels, view) {
+        return rowModels.map((row, rankIdx) => {
+          const idx = row.idx;
+          const mine = view.myVotes.includes(idx);
+          const myCount = Number(view.myChoiceCounts[idx] || 0);
+          if (view.isMobileVote) {
+            return `
+              <div class="vote-row">
+                <div class="vote-head">
+                  <div class="vote-label">${esc(row.label)}</div>
+                  <button class="ghost vote-action-btn ${mine ? "active" : ""}" onclick="castVotePoll(${idx})" ${view.pollOpen ? '' : 'disabled'}>${view.pollOpen ? (mine ? "✅ 投票中" : "👍 投票") : "終了"}</button>
+                </div>
+                <div class="vote-row-meta">あなた ${myCount}票</div>
+              </div>`;
+          }
+          const c = row.count;
+          const width = view.leaderCount > 0 ? Math.max(0, Math.min(100, Math.round((c / view.leaderCount) * 100))) : 0;
+          const prevWidth = appState.votePrevWidthMap.has(idx) ? Number(appState.votePrevWidthMap.get(idx)) : width;
+          const isLeader = rankIdx === 0 && c > 0;
+          const prevRank = appState.votePrevRankMap.has(idx) ? Number(appState.votePrevRankMap.get(idx)) : rankIdx;
+          const rankDelta = prevRank - rankIdx;
+          const rankShiftPx = Math.max(-420, Math.min(420, rankDelta * 84));
+          const rankAnimClass = rankDelta !== 0 ? ' vote-row-rank-shift' : '';
+          return `
+            <div class="vote-row${rankAnimClass}" style="--rank-shift:${rankShiftPx}px;">
+              <div class="vote-head">
+                <div class="vote-label">${esc(row.label)}</div>
+                <button class="ghost vote-action-btn ${mine ? "active" : ""}" onclick="castVotePoll(${idx})" ${view.pollOpen ? '' : 'disabled'}>${view.pollOpen ? (mine ? "✅ 投票中" : "👍 投票") : "終了"}</button>
+              </div>
+              <div class="vote-bar-wrap"><div class="vote-bar vote-bar-anim" style="--vote-from:${prevWidth}%;--vote-to:${width}%"></div></div>
+              <div class="vote-row-meta">${c}票${isLeader && view.leaderDiff > 0 ? ` / 現在トップ` : ""}</div>
+            </div>`;
+        }).join("");
+      }
+
+      function renderVoteResult(rowsHtml, voteNavHtml) {
+        return `${voteNavHtml}<div class="vote-board">${rowsHtml}</div>`;
+      }
+
+      function renderVoteFooter(poll, canManage, pollOpen) {
+        const timerHtml = `<div class="vote-title-timer">${renderVoteTimerHtml(poll)}</div>`;
+        const actionHtml = canManage && pollOpen
+          ? `<div class="actions" style="margin-top:10px;justify-content:flex-end;">
+              <button class="ghost" onclick="appState.forceVoteComposer=true;renderPanel()">編集</button>
+              <button class="ghost" onclick="closeVotePoll()">投票終了</button>
+            </div>`
+          : (canManage && !pollOpen
+            ? `<div class="actions" style="margin-top:10px;justify-content:flex-end;">
+                <button class="ghost" onclick="appState.forceVoteComposer=true;renderPanel()">編集</button>
+                <button class="primary" onclick="openNewVoteComposer()" ${canCreateMoreVotePolls() ? '' : 'disabled'}>新規追加</button>
+              </div>`
+            : '');
+        return { timerHtml, actionHtml };
+      }
+
+      function renderVoteNavHtml(activePollId) {
+        if (appState.isMobile || !Array.isArray(appState.votePollList) || !appState.votePollList.length) return '';
+        return `<div class="field" style="margin-top:12px;">
+            <div class="actions" style="margin-top:6px; flex-wrap:wrap;">
+              ${appState.votePollList.map((item, idx) => {
+                const pollId = String(item && item.id || '');
+                const title = String(item && item.questionText || '').trim() || `投票${idx + 1}`;
+                const status = String(item && item.status || 'CLOSED') === 'OPEN' ? '進行中' : '終了';
+                const label = `${idx + 1}. ${title.slice(0, 20)}${title.length > 20 ? '…' : ''}（${status}）`;
+                return renderButton({
+                  label: esc(label),
+                  onClick: `openVotePollById('${esc(pollId)}')`,
+                  className: pollId === activePollId ? 'active' : '',
+                  attrs: pollId === activePollId ? 'disabled' : '',
+                });
+              }).join('')}
+            </div>
+          </div>`;
+      }
+
+      function buildVotePanelContext(poll) {
+        const options = Array.isArray(poll.options) ? poll.options : [];
+        const counts = Array.isArray(poll.counts) ? poll.counts : [];
+        const baseModels = options.map((label, idx) => ({ idx, label, count: Number(counts[idx] || 0) }));
+        const sortedByCount = baseModels.slice().sort((a, b) => (b.count !== a.count ? b.count - a.count : a.idx - b.idx));
+        const leaderCount = sortedByCount.length ? sortedByCount[0].count : 0;
+        const leaderDiff = Math.max(0, leaderCount - (sortedByCount[1] ? sortedByCount[1].count : 0));
+        return {
+          baseModels,
+          leaderCount,
+          leaderDiff,
+          myVotes: Array.isArray(poll.myVotes) ? poll.myVotes : [],
+          myChoiceCounts: (poll && typeof poll.myChoiceCounts === "object" && poll.myChoiceCounts) ? poll.myChoiceCounts : {},
+          myVoteTotal: Number(poll.myVoteTotal || 0),
+          maxVotes: Number(poll.maxVotesPerUser || 0),
+          pollOpen: String(poll.status || 'OPEN') === 'OPEN',
+        };
+      }
+
+      function renderVoteComposerPanel(poll, voteNavHtml) {
+        const editorRows = (appState.voteDraftOptionList || []).map((opt, idx) => `
+          <div class="poll-input-row poll-input-row-editor">
+            <input value="${esc(opt)}" maxlength="80" oninput="updateVoteOptionDraft(${idx}, this.value)" placeholder="選択肢">
+            ${renderButton({ label: '削除', onClick: `removeVoteOptionDraft(${idx})` })}
+          </div>`).join("");
+        return `
+          <div class="card poll-box">
+            <p class="poll-q">ライブ投票を作成（運営）</p>
+            <div class="poll-meta">作成数 ${Number(appState.votePollCount || 0)} / ${Number(appState.votePollLimit || 3)}</div>
+            ${voteNavHtml}
+            <div class="field">
+              <label>投票タイトル</label>
+              <input value="${esc(appState.voteDraftQuestion)}" maxlength="200" oninput="appState.voteDraftQuestion=this.value;saveVoteDraft()" placeholder="例）今日もっと聞きたいのは？">
+            </div>
+            <div class="field">
+              <label>選択肢（2〜6）</label>
+              ${editorRows}
+            </div>
+            <div class="field">
+              <label>1人あたり投票上限</label>
+              <div class="actions" style="margin-top:4px; align-items:center;">
+                ${renderButton({
+                  label: `${appState.voteDraftMaxVotesPerUser > 0 ? '☑︎' : '☐'} 単一フォーム`,
+                  onClick: "setVoteMaxMode('single')",
+                  className: appState.voteDraftMaxVotesPerUser > 0 ? 'active' : '',
+                })}
+                <input type="number" min="1" max="1000" step="1" value="${Number(appState.voteDraftMaxVotesPerUser > 0 ? appState.voteDraftMaxVotesPerUser : 5)}" oninput="setVoteMaxDraft(this.value)" ${appState.voteDraftMaxVotesPerUser === 0 ? 'disabled' : ''} style="width:84px; min-width:84px; text-align:right;" aria-label="1人あたり上限票">
+                <span class="poll-meta" style="margin:0;">票</span>
+                ${renderButton({
+                  label: `${appState.voteDraftMaxVotesPerUser === 0 ? '☑︎' : '☐'} 無制限`,
+                  onClick: "setVoteMaxMode('unlimited')",
+                  className: appState.voteDraftMaxVotesPerUser === 0 ? 'active' : '',
+                })}
+              </div>
+            </div>
+            <div class="field">
+              <label>タイマー（分）</label>
+              <div class="actions" style="margin-top:4px; align-items:center;">
+                <input type="number" min="0" max="720" step="1" value="${Number(appState.voteDraftTimerMinutes || 0)}" oninput="setVoteTimerDraft(this.value)" style="width:96px; min-width:96px; text-align:right;" aria-label="投票タイマー分">
+                <span class="poll-meta" style="margin:0;">分</span>
+                <span class="poll-meta" style="margin:0;">0でタイマーなし</span>
+              </div>
+            </div>
+            <div class="actions" style="margin-top:8px;">
+              ${renderButton({ label: '選択肢追加', onClick: 'addVoteOptionDraft()' })}
+              ${poll ? renderButton({ label: '結果に戻る', onClick: 'appState.forceVoteComposer=false;renderPanel()' }) : ''}
+              ${renderButton({ label: '投票開始', variant: 'primary', onClick: 'createVotePoll()', attrs: canCreateMoreVotePolls() ? '' : 'disabled' })}
+            </div>
+            ${canCreateMoreVotePolls() ? '' : `<div class="poll-meta" style="margin-top:8px;">上限に達したため、新規作成はできません</div>`}
+          </div>`;
+      }
+
+      function renderVotePanelMobile(poll) {
+        if (!poll || appState.forceVoteComposer) {
+          appState.votePrevRankMap = new Map();
+          appState.votePrevWidthMap = new Map();
+          const err = appState.voteLoadError
+            ? `<div class="muted-note" style="color:#dc4c64;">${esc(appState.voteLoadError)}</div><div class="actions" style="margin-top:8px;">${renderButton({ label: '再取得', onClick: 'retryLoadVotePoll()' })}</div>`
+            : '';
+          return `<div class="card poll-box"><p class="poll-q">投票</p><div class="muted-note">運営が投票を開始すると、ここに選択肢が表示されます。</div>${err}</div>`;
+        }
+        const voteView = buildVotePanelContext(poll);
+        const footerView = renderVoteFooter(poll, false, voteView.pollOpen);
+        appState.votePrevRankMap = new Map();
+        appState.votePrevWidthMap = new Map();
+        const rows = renderVoteOptions(voteView.baseModels, { ...voteView, isMobileVote: true });
+        return `
+          <div class="card poll-box">
+            ${renderVoteHeader(poll, voteView.myVoteTotal, voteView.maxVotes, footerView.timerHtml)}
+            ${renderVoteResult(rows, '')}
+          </div>`;
+      }
+
+      function renderVotePanelDesktop(poll, voteNavHtml) {
+        if (!poll || appState.forceVoteComposer) {
+          appState.votePrevRankMap = new Map();
+          appState.votePrevWidthMap = new Map();
+          return renderVoteComposerPanel(poll, voteNavHtml);
+        }
+        const voteView = buildVotePanelContext(poll);
+        const footerView = renderVoteFooter(poll, true, voteView.pollOpen);
+        const rowModels = voteView.baseModels.slice().sort((a, b) => (b.count !== a.count ? b.count - a.count : a.idx - b.idx));
+        const rows = renderVoteOptions(rowModels, { ...voteView, isMobileVote: false });
+        appState.votePrevRankMap = new Map(rowModels.map((row, rankIdx) => [row.idx, rankIdx]));
+        appState.votePrevWidthMap = new Map(rowModels.map((row) => {
+          const width = voteView.leaderCount > 0 ? Math.max(0, Math.min(100, Math.round((row.count / voteView.leaderCount) * 100))) : 0;
+          return [row.idx, width];
+        }));
+        return `
+          <div class="card poll-box">
+            ${renderVoteHeader(poll, voteView.myVoteTotal, voteView.maxVotes, footerView.timerHtml)}
+            ${renderVoteResult(rows, voteNavHtml)}
+            ${footerView.actionHtml}
+          </div>`;
+      }
+
+      function renderVotePanelHtml() {
+        const poll = appState.currentVotePoll;
+        const activePollId = String((poll && poll.id) || appState.selectedVotePollId || '');
+        const voteNavHtml = renderVoteNavHtml(activePollId);
+        return appState.isMobile
+          ? renderVotePanelMobile(poll)
+          : renderVotePanelDesktop(poll, voteNavHtml);
+      }
+
+      function renderQuestionModalHtml() {
+        const bodyHtml = `
+          <div class="field">
+            <label>名前</label>
+            <input id="modalName" maxlength="40" placeholder="例）すけだ" value="${esc(getDisplayName())}">
+          </div>
+          <div class="field">
+            <label>質問</label>
+            <textarea id="modalQuestion" placeholder="例）今回の機能で一番効果が高い使い方は？"></textarea>
+          </div>
+          <div class="actions">
+            ${renderButton({ label: '送信🐮', variant: 'primary', onClick: 'submitQ()' })}
+          </div>`;
+        return createModal({
+          id: 'questionModal',
+          title: '質問を投稿🐮',
+          onBackdrop: 'onModalBackdrop',
+          onClose: 'closeQuestionModal()',
+          bodyHtml,
+        });
+      }
+
+      function renderReplyModalHtml() {
+        const bodyHtml = `
+          <input id="modalReplyQuestionId" type="hidden">
+          <p class="reply-modal-target" id="replyModalTarget"></p>
+          <div class="field">
+            <label>名前</label>
+            <input id="replyModalName" maxlength="40" placeholder="例）すけだ" value="${esc(getDisplayName())}">
+          </div>
+          <div class="field">
+            <label>コメント</label>
+            <textarea id="modalReplyText" placeholder="返信コメントを入力してください"></textarea>
+          </div>
+          <div class="actions">
+            ${renderButton({ label: '返信する', variant: 'primary', onClick: 'submitReplyModal()' })}
+          </div>`;
+        return createModal({
+          id: 'replyModal',
+          title: 'コメントを返信',
+          onBackdrop: 'onReplyModalBackdrop',
+          onClose: 'closeReplyModal()',
+          bodyHtml,
+        });
+      }
+
+      function renderPanel() {
+        const panel = document.getElementById('panel');
+        if (DEBUG_CSS_PANEL_ENABLED) syncDebugCssPanelVisibility();
+        renderHeroAction();
+        if (VIEW === 'poll') {
+          const pollNotice = String(sessionConfig.surveyUrl || '').trim()
+            ? `<div class="card poll-box poll-notice-card"><p class="poll-q poll-notice-title">運営からのお知らせ</p><div class="note"><a href="#" onclick="openSurveyForm(); return false;">⚠️ 本イベントではフォーム（別ウィンドウ）でアンケートをお願いしています！</a></div></div>`
+            : '';
+          panel.innerHTML = `${pollNotice}${renderPollPanelHtml()}`;
+          return;
+        }
+        if (VIEW === 'vote') {
+          panel.innerHTML = renderVotePanelHtml();
+          startVoteCountdownTicker();
+          return;
+        }
+        stopVoteCountdownTicker();
+        const screenPanel = '';
+        if (VIEW === 'audience') {
+          const startGuideHtml = appState.showStartGuide ? `
+            <div class="card start-guide">
+              <p class="start-guide-title">このイベント（${esc(SESSION)}）で投稿を開始します</p>
+              <p class="start-guide-text">右下の＋から質問できます。</p>
+              <div class="actions">
+                ${renderButton({ label: 'OK', onClick: 'dismissStartGuide(false)' })}
+                ${renderButton({ label: '投稿する', variant: 'primary', onClick: 'dismissStartGuide(true)' })}
+              </div>
+            </div>
+          ` : '';
+          panel.innerHTML = `
+            ${startGuideHtml}
+            ${renderQuestionModalHtml()}
+            ${renderReplyModalHtml()}
+            ${renderButton({ label: '+', variant: 'primary', className: 'fab', onClick: 'openQuestionModal()' })}`;
+          return;
+        }
+
+        panel.innerHTML = screenPanel;
+      }
+
+      function renderAudienceMetaActions(canEdit, canDelete, editHtml, deleteHtml) {
+        const editMeta = canEdit ? editHtml : '';
+        const deleteMeta = canDelete ? deleteHtml : '';
+        return (editMeta || deleteMeta)
+          ? `<span class="meta-actions">${editMeta}${deleteMeta}</span>`
+          : '';
+      }
+
+      function renderAudienceReplies(q, canForceDelete, replyLikeClassName) {
+        const replies = Array.isArray(q.replies) ? q.replies : [];
+        return replies.map((r) => {
+          const canEditReply = canForceDelete;
+          const canDeleteReply = canForceDelete || !!r.isMine;
+          const replyMetaActions = renderAudienceMetaActions(
+            canEditReply,
+            canDeleteReply,
+            ` <button class="meta-edit-link" type="button" onclick="editReplyAsAdmin('${esc(q.id)}','${esc(r.id)}')">編集</button>`,
+            ` <button class="meta-delete-link" type="button" onclick="deleteMyReply('${esc(q.id)}','${esc(r.id)}')">削除</button>`
+          );
+          const replySwipeClass = canDeleteReply ? ' swipe-ready' : '';
+          return `
+          <div class="reply-item${replySwipeClass}" data-rid="${esc(r.id)}" data-qid="${esc(q.id)}">
+            <p class="reply-text">${linkifyText(r.replyText)}</p>
+            <div class="reply-meta reply-meta-audience"><span class="reply-meta-main">${esc(r.displayName)} ・ ${new Date(r.createdAt).toLocaleString()}</span>${replyMetaActions}</div>
+            <div class="reply-actions reply-actions-audience">
+              ${renderLikeButton({ onClick: `voteReply('${esc(q.id)}','${esc(r.id)}')`, count: r.votes || 0, className: replyLikeClassName })}
+            </div>
+          </div>
+        `;
+        }).join('');
+      }
+
+      function renderAudienceItemLayout(q, { canForceDelete, audienceLayoutClass, mobileButtonClass }) {
+        const statusChip = q.status === 'ANSWERED'
+          ? '<span class="status-chip answered">回答済み</span>'
+          : '';
+        const pinChip = q.pinned ? '<span class="status-chip">📍</span>' : '';
+        const canDeleteQuestion = canForceDelete || !!q.isMine;
+        const questionMetaActions = renderAudienceMetaActions(
+          canForceDelete,
+          canDeleteQuestion,
+          ` <button class="meta-edit-link" type="button" onclick="editQuestionAsAdmin('${esc(q.id)}')">編集</button>`,
+          ` <button class="meta-delete-link" type="button" onclick="deleteMyQuestion('${esc(q.id)}')">削除</button>`
+        );
+        const questionSwipeClass = canDeleteQuestion ? ' swipe-ready' : '';
+        const replies = Array.isArray(q.replies) ? q.replies : [];
+        const repliesHtml = renderAudienceReplies(q, canForceDelete, mobileButtonClass);
+        const mobileLikeClassName = ['q-like-mobile', mobileButtonClass].filter(Boolean).join(' ');
+        return `
+          <article class="card q-item q-item-audience${audienceLayoutClass}${questionSwipeClass}" data-qid="${esc(q.id)}">
+            <div class="q-main">
+              <p class="q-title">${linkifyText(q.questionText)}</p>
+              <div class="q-meta q-meta-audience">${pinChip}${statusChip}<span class="q-meta-main">${esc(q.displayName)} ・ ${new Date(q.createdAt).toLocaleString()}</span>${questionMetaActions}</div>
+              ${replies.length ? `<div class="replies">${repliesHtml}</div>` : ''}
+              <div class="reply-form reply-form-audience">
+                <div class="reply-form-actions mobile-post-btn-group">
+                  ${renderButton({ label: '返信', onClick: `submitReply('${esc(q.id)}')`, className: mobileButtonClass })}
+                  ${renderLikeButton({ onClick: `vote('${esc(q.id)}')`, count: q.votes || 0, className: mobileLikeClassName })}
+                </div>
+              </div>
+            </div>
+            <div class="q-side q-side-audience">
+              ${renderLikeButton({ onClick: `vote('${esc(q.id)}')`, count: q.votes || 0, className: 'q-like-desktop' })}
+            </div>
+          </article>`;
+      }
+
+      function renderAudienceItemMobile(q) {
+        return renderAudienceItemLayout(q, {
+          canForceDelete: false,
+          audienceLayoutClass: '',
+          mobileButtonClass: 'mobile-post-btn',
+        });
+      }
+
+      function renderAudienceItemDesktop(q) {
+        return renderAudienceItemLayout(q, {
+          canForceDelete: !!getAdminKeyCached(),
+          audienceLayoutClass: ' q-item-audience-desktop',
+          mobileButtonClass: '',
+        });
+      }
+
+      function renderAudienceItem(q) {
+        return appState.isMobile ? renderAudienceItemMobile(q) : renderAudienceItemDesktop(q);
+      }
+
+      function renderAudienceDesktopRows(questions) {
+        const canForceDelete = !!getAdminKeyCached();
+        const entries = [];
+        const toTime = (value) => {
+          const ts = Date.parse(String(value || ''));
+          return Number.isFinite(ts) ? ts : 0;
+        };
+        const summarize = (value) => {
+          const text = String(value || '').replace(/\s+/g, ' ').trim();
+          if (!text) return '';
+          return text.length > 36 ? `${text.slice(0, 36)}…` : text;
+        };
+
+        questions.forEach((q) => {
+          const replies = Array.isArray(q.replies) ? q.replies : [];
+          const latestReplyTs = replies.reduce((maxTs, r) => {
+            const ts = toTime(r && r.createdAt);
+            return ts > maxTs ? ts : maxTs;
+          }, 0);
+          const latestQuestionTs = Math.max(toTime(q.createdAt), latestReplyTs);
+          const statusChip = q.status === 'ANSWERED'
+            ? '<span class="status-chip answered">回答済み</span>'
+            : '';
+          const pinChip = q.pinned ? '<span class="status-chip">📍</span>' : '';
+          const canDeleteQuestion = canForceDelete || !!q.isMine;
+          const questionEditAction = canForceDelete
+            ? `<button class="ghost feed-action-btn" type="button" onclick="editQuestionAsAdmin('${esc(q.id)}')">編集</button>`
+            : '';
+          const questionDeleteAction = canDeleteQuestion
+            ? `<button class="ghost feed-action-btn" type="button" onclick="deleteMyQuestion('${esc(q.id)}')">削除</button>`
+            : '';
+          const questionHeartAction = renderLikeButton({
+            onClick: `vote('${esc(q.id)}')`,
+            count: q.votes || 0,
+            className: 'feed-action-btn',
+          });
+          entries.push({
+            type: 'q',
+            ts: latestQuestionTs,
+            html: `
+              <article class="card feed-row feed-row-question">
+                <div class="feed-main">
+                  <span class="feed-kind">投稿</span>
+                  <span class="feed-text">${linkifyText(q.questionText)}</span>
+                  <span class="feed-meta-inline">${pinChip}${statusChip}${esc(q.displayName)} ・ ${new Date(q.createdAt).toLocaleString()}</span>
+                </div>
+                <div class="feed-actions">
+                  ${questionEditAction}
+                  ${questionDeleteAction}
+                  ${questionHeartAction}
+                </div>
+              </article>`,
+          });
+          replies.forEach((r) => {
+            const canDeleteReply = canForceDelete || !!r.isMine;
+            const replyEditAction = canForceDelete
+              ? `<button class="ghost feed-action-btn" type="button" onclick="editReplyAsAdmin('${esc(q.id)}','${esc(r.id)}')">編集</button>`
+              : '';
+            const replyDeleteAction = canDeleteReply
+              ? `<button class="ghost feed-action-btn" type="button" onclick="deleteMyReply('${esc(q.id)}','${esc(r.id)}')">削除</button>`
+              : '';
+            const replyHeartAction = renderLikeButton({
+              onClick: `voteReply('${esc(q.id)}','${esc(r.id)}')`,
+              count: r.votes || 0,
+              className: 'feed-action-btn',
+            });
+            entries.push({
+              type: 'r',
+              ts: toTime(r.createdAt),
+              html: `
+                <article class="card feed-row feed-row-reply">
+                  <div class="feed-main">
+                    <span class="feed-kind">コメント</span>
+                    <span class="feed-text">${linkifyText(r.replyText)}</span>
+                    <span class="feed-meta-inline">${esc(r.displayName)} ・ ${new Date(r.createdAt).toLocaleString()}</span>
+                    <span class="feed-parent-inline" title="${esc(q.questionText)}">↳ ${esc(summarize(q.questionText))}</span>
+                  </div>
+                  <div class="feed-actions">
+                    ${replyEditAction}
+                    ${replyDeleteAction}
+                    ${replyHeartAction}
+                  </div>
+                </article>`,
+            });
+          });
+        });
+
+        entries.sort((a, b) => {
+          if (b.ts !== a.ts) return b.ts - a.ts;
+          if (a.type !== b.type) return a.type === 'r' ? -1 : 1;
+          return 0;
+        });
+
+        return entries.map((entry) => entry.html).join('');
+      }
+
+      function renderScreenItem(q) {
+        const statusChip = q.status === 'ANSWERED'
+          ? '<span class="status-chip answered">回答済み</span>'
+          : '';
+        const pinChip = q.pinned ? '<span class="status-chip">📍</span>' : '';
+        const readChip = isQuestionRead(q.id)
+          ? '<span class="status-chip answered">既読</span>'
+          : '<span class="status-chip">未読</span>';
+        const replies = Array.isArray(q.replies) ? q.replies : [];
+        const repliesHtml = replies.map((r) => `
+          <div class="reply-item">
+            <p class="reply-text">${linkifyText(r.replyText)}</p>
+            <div class="reply-meta">${esc(r.displayName)} ・ ${new Date(r.createdAt).toLocaleString()}</div>
+            <div class="reply-actions">
+              ${renderLikeButton({ onClick: `voteReply('${esc(q.id)}','${esc(r.id)}')`, count: r.votes || 0 })}
+            </div>
+          </div>
+        `).join('');
+        return `
+          <article class="card q-item">
+            <div class="q-main">
+              <p class="q-title">${linkifyText(q.questionText)}</p>
+              <div class="q-meta">${pinChip}${statusChip}${readChip}${esc(q.displayName)}</div>
+              ${replies.length ? `<div class="replies replies-view-grid">${repliesHtml}</div>` : ''}
+              <div class="ops-row">
+                <button class="ghost" onclick="toggleQuestionRead('${esc(q.id)}')">${isQuestionRead(q.id) ? '未読に戻す' : '既読にする'}</button>
+                ${operatorMode ? `<button class="ghost" onclick="updateQuestionMeta('${esc(q.id)}', { pinned: ${q.pinned ? 0 : 1}, status: '${esc(q.status || 'OPEN')}' })">${q.pinned ? 'ピン解除' : 'ピン留め'}</button>` : ''}
+              </div>
+            </div>
+            <div class="q-side">
+              ${renderLikeButton({ onClick: `vote('${esc(q.id)}')`, count: q.votes || 0 })}
+            </div>
+          </article>`;
+      }
+
+      function renderList(questions) {
+        const root = document.getElementById('list');
+        if (VIEW === 'poll' || VIEW === 'vote') {
+          root.innerHTML = '';
+          return;
+        }
+        if (VIEW === 'audience') {
+          questions = questions.slice().sort((a, b) => {
+            const pa = a && a.pinned ? 1 : 0;
+            const pb = b && b.pinned ? 1 : 0;
+            if (pb !== pa) return pb - pa;
+            const ta = new Date(a.createdAt || 0).getTime();
+            const tb = new Date(b.createdAt || 0).getTime();
+            return tb - ta;
+          });
+        }
+        if (VIEW === 'screen') {
+          questions = questions.slice().sort((a, b) => {
+            const pa = a && a.pinned ? 1 : 0;
+            const pb = b && b.pinned ? 1 : 0;
+            if (pb !== pa) return pb - pa;
+            if (appState.screenSortMode === 'popular') {
+              const va = Number(a && a.votes ? a.votes : 0);
+              const vb = Number(b && b.votes ? b.votes : 0);
+              if (vb !== va) return vb - va;
+            }
+            const ta = new Date(a.createdAt || 0).getTime();
+            const tb = new Date(b.createdAt || 0).getTime();
+            return tb - ta;
+          });
+        }
+        if (VIEW === 'screen' && appState.unreadOnly) {
+          questions = questions.filter((q) => !isQuestionRead(q.id));
+        }
+
+        if (!questions.length) {
+          root.innerHTML = `<div class="card muted-note">まだ質問はありません🐮</div>`;
+          return;
+        }
+
+        if (VIEW === 'screen') {
+          root.innerHTML = questions.map(renderScreenItem).join('');
+        } else if (VIEW === 'audience' && !appState.isMobile) {
+          root.innerHTML = `<div class="audience-flat-list">${renderAudienceDesktopRows(questions)}</div>`;
+        } else {
+          root.innerHTML = questions.map(renderAudienceItem).join('');
+        }
+        bindSwipeDelete();
+      }
+
+      function bindSwipeDelete() {
+        if (VIEW !== 'audience') return;
+        if (!appState.isMobile) return;
+
+        const touchTargets = Array.from(document.querySelectorAll('.swipe-ready[data-qid], .swipe-ready[data-rid]'));
+        touchTargets.forEach((el) => {
+          if (el.dataset.swipeBound === '1') return;
+          el.dataset.swipeBound = '1';
+          let sx = 0;
+          let sy = 0;
+          let tracking = false;
+
+          el.addEventListener('touchstart', (ev) => {
+            if (!ev.touches || ev.touches.length !== 1) return;
+            const t = ev.touches[0];
+            sx = t.clientX;
+            sy = t.clientY;
+            tracking = true;
+            el.classList.remove('swipe-active');
+          }, { passive: true });
+
+          el.addEventListener('touchmove', (ev) => {
+            if (!tracking || !ev.touches || ev.touches.length !== 1) return;
+            const t = ev.touches[0];
+            const dx = t.clientX - sx;
+            const dy = Math.abs(t.clientY - sy);
+            if (dx < -36 && dy < 26) {
+              el.classList.add('swipe-active');
+            } else {
+              el.classList.remove('swipe-active');
+            }
+          }, { passive: true });
+
+          el.addEventListener('touchend', async (ev) => {
+            if (!tracking) return;
+            tracking = false;
+            const t = ev.changedTouches && ev.changedTouches[0];
+            if (!t) {
+              el.classList.remove('swipe-active');
+              return;
+            }
+            const dx = t.clientX - sx;
+            const dy = Math.abs(t.clientY - sy);
+            const isSwipeDelete = dx < -72 && dy < 28;
+            el.classList.remove('swipe-active');
+            if (!isSwipeDelete) return;
+
+            const rid = el.dataset.rid || '';
+            const qid = el.dataset.qid || '';
+            if (rid && qid) {
+              await deleteMyReply(qid, rid);
+              return;
+            }
+            if (qid) {
+              await deleteMyQuestion(qid);
+            }
+          }, { passive: true });
+
+          el.addEventListener('touchcancel', () => {
+            tracking = false;
+            el.classList.remove('swipe-active');
+          }, { passive: true });
+        });
+      }
+
+      async function loadQuestions() {
+        if (appState.isLoading) return;
+        appState.isLoading = true;
+        const seq = ++appState.latestLoadSeq;
+        try {
+          const prevRevision = appState.serverRevision;
+          const res = await fetchListQuestionsStable_({
+            sessionCode: SESSION,
+            authorToken,
+            sinceRevision: appState.serverRevision,
+            includeAnswered: operatorMode ? 1 : 0,
+          });
+          if (seq !== appState.latestLoadSeq) return;
+          const nextRevision = typeof res.revision === 'number' ? res.revision : prevRevision;
+          if (typeof res.revision === 'number') appState.serverRevision = res.revision;
+          if (res && res.changed === false) {
+            return;
+          }
+          // 入力中のみ再描画スキップ（VIEWは入力がないので常時反映）
+          const activeEl = document.activeElement;
+          const isTyping = !!(activeEl && activeEl.matches && activeEl.matches('input, textarea, select'));
+          if (nextRevision === prevRevision && pendingQuestions.size === 0 && pendingReplies.size === 0 && isTyping) {
+            return;
+          }
+          const server = Array.isArray(res.data) ? res.data : [];
+          const merged = server.slice();
+          const serverQuestionIds = new Set(server.map((q) => String(q.id)));
+
+          pendingQuestions.forEach((p, id) => {
+            if (serverQuestionIds.has(String(id))) {
+              pendingQuestions.delete(id);
+              return;
+            }
+            merged.unshift({ ...p });
+          });
+
+          const qMap = new Map();
+          for (let i = 0; i < merged.length; i += 1) {
+            qMap.set(String(merged[i].id), merged[i]);
+          }
+
+          pendingReplies.forEach((r, id) => {
+            const target = qMap.get(String(r.questionId));
+            if (!target) return;
+            const replies = Array.isArray(target.replies) ? target.replies.slice() : [];
+            const exists = replies.some((x) => String(x.id) === String(id));
+            if (!exists) replies.push({ ...r });
+            target.replies = replies;
+            const serverExists = replies.some((x) => String(x.id) === String(id) && !String(x.id).startsWith('temp-r-'));
+            if (serverExists) pendingReplies.delete(id);
+          });
+
+          appState.currentQuestions = merged;
+          renderList(appState.currentQuestions);
+        } catch (e) {
+          const now = Date.now();
+          if (now - lastErrorAt > 4000) {
+            lastErrorAt = now;
+            console.warn('[Chat.app] loadQuestions:', e.message || '取得失敗');
+          }
+        } finally {
+          appState.isLoading = false;
+        }
+      }
+
+      async function fetchListQuestionsStable_(payload) {
+        const retries = 2;
+        const candidates = [];
+        const pushCandidate = (u) => {
+          const v = String(u || '').trim();
+          if (!v) return;
+          if (!candidates.includes(v)) candidates.push(v);
+        };
+        pushCandidate(API_URL);
+        pushCandidate(sameOriginApiUrl);
+        if (isHostedHttp) {
+          pushCandidate(new URL('/app/chat/api.php', location.origin).href);
+        }
+
+        let lastErr = null;
+        for (let attempt = 0; attempt <= retries; attempt += 1) {
+          for (let i = 0; i < candidates.length; i += 1) {
+            const url = candidates[i];
+            try {
+              const data = await getApi_(url, 'listQuestions', payload || {});
+              if (API_URL !== url) {
+                API_URL = url;
+                const apiInput = document.getElementById('apiUrl');
+                if (apiInput) apiInput.value = API_URL;
+              }
+              return data;
+            } catch (err) {
+              lastErr = err;
+            }
+          }
+          if (attempt < retries) await new Promise((resolve) => setTimeout(resolve, 220 * (attempt + 1)));
+        }
+        throw lastErr || new Error('listQuestions の取得に失敗しました');
+      }
+
+      function triggerFastSync() {
+        const token = ++fastSyncToken;
+        appState.turboUntil = Date.now() + TURBO_WINDOW_MS;
+        startPolling();
+        loadQuestions();
+        loadVotePoll();
+        for (let i = 1; i <= FAST_SYNC_TICKS; i += 1) {
+          setTimeout(() => {
+            if (token !== fastSyncToken) return;
+            loadQuestions();
+            loadVotePoll();
+          }, i * FAST_SYNC_MS);
+        }
+      }
+
+      function toggleUnreadOnly() {
+        appState.unreadOnly = !appState.unreadOnly;
+        renderPanel();
+        renderList(appState.currentQuestions);
+      }
+
+      function toggleScreenSortMode() {
+        appState.screenSortMode = appState.screenSortMode === 'new' ? 'popular' : 'new';
+        renderPanel();
+        renderList(appState.currentQuestions);
+      }
+
+      function clearReadState() {
+        appState.readQuestionIds.clear();
+        saveReadState();
+        renderPanel();
+        renderList(appState.currentQuestions);
+      }
+
+      function currentPollInterval() {
+        const turbo = Date.now() < appState.turboUntil;
+        if (VIEW === 'screen' || VIEW === 'poll' || VIEW === 'vote') return turbo ? TURBO_POLL_SCREEN_MS : POLL_SCREEN_MS;
+        return turbo ? TURBO_POLL_AUDIENCE_MS : POLL_AUDIENCE_MS;
+      }
+
+      function pollAllData() {
+        // 直列待ちを避けて、1サイクルの待機時間を短縮する
+        return Promise.allSettled([
+          loadQuestions(),
+          loadPoll(),
+          loadVotePoll(),
+        ]);
+      }
+
+      function scheduleNextPoll() {
+        if (pollTimer) clearTimeout(pollTimer);
+        pollTimer = setTimeout(() => {
+          pollAllData().finally(() => {
+            scheduleNextPoll();
+          });
+        }, currentPollInterval());
+      }
+
+      function startPolling() {
+        if (pollTimer) clearTimeout(pollTimer);
+        scheduleNextPoll();
+      }
+
+      function syncCompactUrl() {
+        const next = new URL(location.href);
+        next.searchParams.delete('api');
+        next.searchParams.delete('session');
+        next.searchParams.delete('view');
+        next.searchParams.delete('layout');
+        next.searchParams.delete('device');
+        next.searchParams.set('s', SESSION);
+        next.searchParams.set('v', VIEW);
+        if (FORCED_LAYOUT) next.searchParams.set('layout', FORCED_LAYOUT);
+        history.replaceState(null, '', next.toString());
+      }
+
+      async function applyFromToolbar() {
+        API_URL = isHostedHttp ? sameOriginApiUrl : document.getElementById('apiUrl').value.trim();
+        SESSION = document.getElementById('sessionSelect').value || 'webinar-2026';
+        refreshActorToken();
+        loadReadState();
+        updateStartGuideVisibility();
+        pendingQuestions.clear();
+        pendingReplies.clear();
+        appState.currentPoll = null;
+        appState.currentVotePoll = null;
+        appState.votePollCount = 0;
+        appState.votePollLimit = 3;
+        appState.votePollList = [];
+        appState.selectedVotePollId = '';
+        appState.pollDraftQuestion = '';
+        appState.pollDraftOptionList = ['', ''];
+        await loadVoteDraft();
+        appState.pollDraftType = 'CHOICE';
+        pollDraftTextPlaceholder = '';
+        appState.livePollTopicDraft = '';
+        lastPollRenderKey = '';
+        appState.serverRevision = 0;
+        fastSyncToken += 1;
+        appState.latestLoadSeq += 1;
+        appState.voteLoadSeq += 1;
+
+        syncCompactUrl();
+
+        if (VIEW === 'screen') { appState.unreadOnly = true; appState.screenSortMode = 'new'; }
+
+        const app = document.getElementById('app');
+        app.innerHTML = shell();
+        document.body.classList.toggle('presenter', VIEW === 'screen');
+        document.getElementById('sessionCode').textContent = SESSION;
+
+        await loadSessionConfig();
+        renderPanel();
+        await loadQuestions();
+        await loadPoll();
+        await loadVotePoll();
+        syncVoteTargetMenuUi();
+        startPolling();
+        updateToolbarVisibility();
+        updateViewTabs();
+      }
+
+      function updateToolbarVisibility() {
+        const toolbar = document.getElementById('toolbar');
+        const apiInput = document.getElementById('apiUrl');
+        if (toolbar) toolbar.classList.toggle('is-hidden', VIEW === 'screen');
+        if (!apiInput) return;
+        apiInput.classList.toggle('is-hidden', VIEW === 'audience');
+      }
+
+
+      function buildShareUrl(sessionCode) {
+        const base = new URL(location.href);
+        const u = new URL(base.origin + base.pathname);
+        u.searchParams.set('s', sessionCode);
+        u.searchParams.set('v', 'audience');
+        const defaultApi = new URL('api.php', u.toString()).href;
+        if (API_URL && API_URL !== defaultApi) {
+          u.searchParams.set('api', API_URL);
+        }
+        return u.toString();
+      }
+
+      async function copySessionUrl() {
+        const sessionSelect = document.getElementById('sessionSelect');
+        const target = normalizeSessionCode((sessionSelect && sessionSelect.value) || SESSION || 'webinar-2026');
+        const url = buildShareUrl(target || 'webinar-2026');
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(url);
+            alert('イベントURLをコピーしました');
+            return;
+          }
+        } catch (e) {}
+        const ok = window.prompt('このURLをコピーしてください', url);
+        if (ok !== null) {
+          alert('イベントURLを表示しました');
+        }
+      }
+
+      function buildSessionQrImageUrl(url) {
+        return "https://api.qrserver.com/v1/create-qr-code/?size=360x360&format=png&margin=16&data=" + encodeURIComponent(url);
+      }
+
+      function openSessionQr() {
+        const sessionSelect = document.getElementById("sessionSelect");
+        const target = normalizeSessionCode((sessionSelect && sessionSelect.value) || SESSION || "webinar-2026");
+        const url = buildShareUrl(target || "webinar-2026");
+        const modal = document.getElementById("sessionQrModal");
+        const img = document.getElementById("sessionQrImage");
+        const text = document.getElementById("sessionQrUrlText");
+        if (!modal || !img || !text) return;
+        img.src = buildSessionQrImageUrl(url);
+        text.textContent = url;
+        modal.classList.add("open");
+      }
+
+      function closeSessionQr() {
+        const modal = document.getElementById("sessionQrModal");
+        if (modal) modal.classList.remove("open");
+        const card = document.getElementById("qrModalCard");
+        if (card) card.classList.remove("is-zoomed");
+        const btn = document.getElementById("qrZoomBtn");
+        if (btn) btn.textContent = "⤢ 拡大";
+      }
+
+      function toggleQrZoom() {
+        const card = document.getElementById("qrModalCard");
+        const btn = document.getElementById("qrZoomBtn");
+        if (!card || !btn) return;
+        const zoomed = card.classList.toggle("is-zoomed");
+        btn.textContent = zoomed ? "⤡ 縮小" : "⤢ 拡大";
+      }
+
+      function onQrModalBackdrop(event) {
+        if (event && event.target && event.target.id === "sessionQrModal") closeSessionQr();
+      }
+
+      async function copySessionQrUrl() {
+        const el = document.getElementById("sessionQrUrlText");
+        const text = el ? String(el.textContent || "") : "";
+        if (!text) return;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            alert("イベントURLをコピーしました");
+            return;
+          }
+        } catch (e) {}
+        window.prompt("このURLをコピーしてください", text);
+      }
+
+      function downloadSessionQr() {
+        const img = document.getElementById("sessionQrImage");
+        if (!img || !img.src) return;
+        const a = document.createElement("a");
+        a.href = img.src;
+        a.download = (SESSION || "session") + "-qr.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+
+      function openManual() {
+        const u = new URL('manual.html', location.href);
+        window.open(u.toString(), '_blank', 'noopener,noreferrer');
+      }
+
+      async function configureSurveyFormUrl() {
+        const current = String(sessionConfig.surveyUrl || '').trim();
+        const entered = window.prompt('GoogleフォームURLを入力してください（空欄で解除）', current);
+        if (entered == null) return;
+        const url = String(entered || '').trim();
+        if (url && !/^https?:\/\//i.test(url)) {
+          alert('URLは http(s) で始まる形式で入力してください');
+          return;
+        }
+        try {
+          const res = await api('setSessionConfig', { sessionCode: SESSION, surveyUrl: url });
+          sessionConfig = {
+            anonymousOnly: !!(res.config && res.config.anonymousOnly),
+            tipUrl: String((res.config && res.config.tipUrl) || '').trim(),
+            surveyUrl: String((res.config && res.config.surveyUrl) || '').trim(),
+            metricLabels: normalizeMetricLabels(res.config && res.config.metricLabels),
+          };
+          if (VIEW === 'poll') renderPanel();
+          alert(url ? 'フォームURLを保存しました' : 'フォームURLを解除しました');
+        } catch (e) {
+          alert(e.message || 'フォームURLの保存に失敗しました');
+        }
+      }
+
+      function openSurveyForm() {
+        const url = String(sessionConfig.surveyUrl || '').trim();
+        if (!url) {
+          alert('フォームURLが未設定です');
+          return;
+        }
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+
+      async function initToolbar() {
+        const adminMenu = document.getElementById('adminMenu');
+        document.addEventListener('click', (event) => {
+          if (!adminMenu || !adminMenu.open) return;
+          const t = event.target instanceof Element ? event.target : null;
+          if (!t) return;
+          if (t.closest('#adminMenu')) return;
+          adminMenu.open = false;
+        });
+        document.getElementById('apiUrl').value = API_URL;
+        await renderSessionOptions(SESSION);
+        document.getElementById('sessionSelect').addEventListener('change', async () => {
+          if (adminMenu) adminMenu.open = false;
+          await applyFromToolbar();
+        });
+        syncAdminKeyUi();
+        const saveAdminKeyBtn = document.getElementById('saveAdminKeyBtn');
+        if (saveAdminKeyBtn) saveAdminKeyBtn.addEventListener('click', saveAdminKeyFromMenu);
+        const changeAdminKeyBtn = document.getElementById('changeAdminKeyBtn');
+        if (changeAdminKeyBtn) changeAdminKeyBtn.addEventListener('click', changeAdminKeyFromMenu);
+        const addBtn = document.getElementById('addSessionBtn');
+        if (addBtn) addBtn.addEventListener('click', addSession);
+        const renameBtn = document.getElementById('renameSessionBtn');
+        if (renameBtn) renameBtn.addEventListener('click', renameSession);
+        const deleteBtn = document.getElementById('deleteSessionBtn');
+        if (deleteBtn) deleteBtn.addEventListener('click', deleteSession);
+        const tipBtn = document.getElementById('tipBtn');
+        if (tipBtn) tipBtn.addEventListener('click', tipSupport);
+        const csvBtn = document.getElementById('downloadCsvBtn');
+        if (csvBtn) csvBtn.addEventListener('click', downloadCsv);
+        const qrBtn = document.getElementById('openSessionQrBtn');
+        if (qrBtn) qrBtn.addEventListener('click', openSessionQr);
+        const surveyBtn = document.getElementById('surveyFormBtn');
+        if (surveyBtn) surveyBtn.addEventListener('click', configureSurveyFormUrl);
+        const manualBtn = document.getElementById('openManualBtn');
+        if (manualBtn) manualBtn.addEventListener('click', openManual);
+        const brandHomeLink = document.getElementById('brandHomeLink');
+        if (brandHomeLink) brandHomeLink.addEventListener('click', (event) => {
+          event.preventDefault();
+          setView(appState.isMobile ? 'audience' : 'screen');
+        });
+        // Floating tab bar (PC) + Mobile tabs: bind click events
+        const tabIds = [
+          ['tabScreen', 'screen'], ['tabAudience', 'audience'],
+          ['tabPoll', 'poll'], ['tabVote', 'vote'],
+          ['tabScreenMobile', 'screen'], ['tabAudienceMobile', 'audience'],
+          ['tabPollMobile', 'poll'], ['tabVoteMobile', 'vote'],
+        ];
+        tabIds.forEach(([id, view]) => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('click', (event) => {
+            if (maybeOpenViewInNewTab(event, view)) return;
+            setView(view);
+          });
+        });
+        // Floating tab bar toggle
+        const ftbToggle = document.getElementById('ftbToggle');
+        const ftb = document.getElementById('floatingTabBar');
+        if (ftbToggle && ftb) {
+          ftbToggle.addEventListener('click', () => {
+            const collapsed = ftb.classList.toggle('is-collapsed');
+            ftbToggle.textContent = collapsed ? '▲' : '☰';
+          });
+        }
+        updateToolbarVisibility();
+        updateViewTabs();
+      }
+
+      function updateViewTabs() {
+        // Floating (PC) + Mobile tabs both get active state
+        const pairs = [
+          ['tabScreen', 'screen'], ['tabAudience', 'audience'],
+          ['tabPoll', 'poll'], ['tabVote', 'vote'],
+          ['tabScreenMobile', 'screen'], ['tabAudienceMobile', 'audience'],
+          ['tabPollMobile', 'poll'], ['tabVoteMobile', 'vote'],
+        ];
+        pairs.forEach(([id, view]) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('active', VIEW === view);
+        });
+      }
+
+      function maybeOpenViewInNewTab(event, nextView) {
+        if (!event || !(event.metaKey || event.ctrlKey)) return false;
+        if (typeof event.button === 'number' && event.button !== 0) return false;
+        event.preventDefault();
+        event.stopPropagation();
+        const u = new URL(location.href);
+        u.searchParams.set('s', SESSION);
+        u.searchParams.set('v', nextView);
+        window.open(u.toString(), '_blank', 'noopener,noreferrer');
+        return true;
+      }
+
+      function setView(nextView) {
+        const v = nextView === 'screen' ? 'screen' : (nextView === 'poll' ? 'poll' : (nextView === 'vote' ? 'vote' : 'audience'));
+        if (appState.isMobile && v === 'screen') {
+          VIEW = 'audience';
+          applyFromToolbar();
+          return;
+        }
+        if (VIEW === v) return;
+        VIEW = v;
+        if (VIEW === 'screen') { appState.unreadOnly = true; appState.screenSortMode = 'new'; }
+        applyFromToolbar();
+      }
+
+      function openQuestionModal() {
+        const modal = document.getElementById('questionModal');
+        if (modal) modal.classList.add('open');
+      }
+
+      function closeQuestionModal() {
+        const modal = document.getElementById('questionModal');
+        if (modal) modal.classList.remove('open');
+      }
+
+      function onModalBackdrop(event) {
+        if (event.target && event.target.id === 'questionModal') closeQuestionModal();
+      }
+
+      function installPollTapGuard() {
+        document.addEventListener('touchend', (event) => {
+          if (VIEW !== 'poll' && VIEW !== 'vote') return;
+          const target = event.target instanceof Element ? event.target : null;
+          if (!target) return;
+          if (target.closest('input, textarea, select, [contenteditable="true"]')) return;
+          if (!target.closest('button, .view-tab, .admin-summary, .theme-toggle')) return;
+          const now = Date.now();
+          if (now - lastPollTouchEndAt < 320) {
+            event.preventDefault();
+          }
+          lastPollTouchEndAt = now;
+        }, { passive: false });
+      }
+
+      async function init() {
+        refreshActorToken();
+        appState.isMobile = isMobileLayout();
+        window.addEventListener('resize', () => {
+          appState.isMobile = isMobileLayout();
+        });
+        loadReadState();
+        await loadVoteDraft();
+        updateStartGuideVisibility();
+        if (appState.isMobile && VIEW === 'screen') {
+          VIEW = 'audience';
+        }
+        installPollTapGuard();
+        await initToolbar();
+        await validateCachedAdminKeyOnBoot();
+        syncCompactUrl();
+        applyTheme(preferredTheme());
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        document.getElementById('sessionCode').textContent = SESSION;
+
+        const app = document.getElementById('app');
+        app.innerHTML = shell();
+        document.body.classList.toggle('presenter', VIEW === 'screen');
+
+        await loadSessionConfig();
+        renderPanel();
+        await loadQuestions();
+        await loadPoll();
+        await loadVotePoll();
+        syncVoteTargetMenuUi();
+        startPolling();
+      }
+
+      init();

@@ -1,0 +1,658 @@
+[
+  {
+    "id": "planning",
+    "icon": "💡",
+    "name": "企画・プロデュース",
+    "count": 20,
+    "items": [
+      {
+        "title": "AI導入ロードマップ",
+        "id": "ai_planning_roadmap"
+      },
+      {
+        "title": "AI時代のディレクションについて",
+        "id": "2c3d0f0a00268005a02bd61646318b64"
+      },
+      {
+        "title": "Webサイト企画全般",
+        "id": "2bdd0f0a00268065ae7adf0b06c4ac9c"
+      },
+      {
+        "title": "企画提案書",
+        "id": "2bdd0f0a0026809db0bedf5b083e8458"
+      },
+      {
+        "title": "アプリ企画",
+        "id": "2bdd0f0a002680f38b59c1e7dafe4265"
+      },
+      {
+        "title": "SNS連携企画",
+        "id": "2bdd0f0a0026809f9634d50c5cf7483e"
+      },
+      {
+        "title": "キャンペーンサイト企画",
+        "id": "2bdd0f0a002680a5b288e7836ba00c30"
+      },
+      {
+        "title": "生成AI活用企画",
+        "id": "2bdd0f0a002680f7a124d66524ea0c5d"
+      },
+      {
+        "title": "採用サイト企画",
+        "id": "2bdd0f0a002680748ff8c0130ab92899"
+      },
+      {
+        "title": "プレゼンテーション",
+        "id": "2bdd0f0a00268049bd49f834c1a977c9"
+      },
+      {
+        "title": "リサーチ全般",
+        "id": "2bdd0f0a002680b8a0e3ea5e70f812f1"
+      },
+      {
+        "title": "競合調査分析",
+        "id": "2bdd0f0a0026800f8530c3a1217141a7"
+      },
+      {
+        "title": "統計データ収集・解析",
+        "id": "2bdd0f0a002680b58970dd901b65709a"
+      },
+      {
+        "title": "SNS分析（ソーシャルリスニング）",
+        "id": "2bdd0f0a00268067b7baf02f658260ea"
+      },
+      {
+        "title": "数値目標全般",
+        "id": "2bdd0f0a0026801caa56de32432e01e3"
+      },
+      {
+        "title": "KPI・KGI設定",
+        "id": "2bdd0f0a00268063a17ccc6ba496b871"
+      },
+      {
+        "title": "OKR策定",
+        "id": "2bdd0f0a002680399d01f126a46bc12f"
+      },
+      {
+        "title": "予算計画（P/L・ROI）",
+        "id": "2bdd0f0a002680c8b4f7cc1d769b6dea"
+      },
+      {
+        "title": "見積もり（金額・工数）",
+        "id": "2bdd0f0a002680fa9450c9e341e7fe76"
+      },
+      {
+        "title": "工数見積り",
+        "id": "2bdd0f0a0026803caef4c90b16ca8c90"
+      }
+    ]
+  },
+  {
+    "id": "ia",
+    "icon": "🗂",
+    "name": "情報設計・仕様設計",
+    "count": 17,
+    "items": [
+      {
+        "title": "RAG向け情報設計",
+        "id": "ai_rag_information_architecture"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a0026806a9144d3b4906587d4"
+      },
+      {
+        "title": "メタデータ設計（SEO・OGP・構造化データ）",
+        "id": "2bdd0f0a002680bbb0a0f63969a2b862"
+      },
+      {
+        "title": "サイトマップ作成",
+        "id": "2bdd0f0a002680979173e6d177717390"
+      },
+      {
+        "title": "ディレクトリマップ作成",
+        "id": "2bdd0f0a00268041876ae4b87a8c547b"
+      },
+      {
+        "title": "ユーザシナリオ作成",
+        "id": "2bdd0f0a002680919aa1d403d4552bf7"
+      },
+      {
+        "title": "UI設計（ワイヤーフレーム/プロトタイプ作成）",
+        "id": "2bdd0f0a0026802aa2f4dafe0230f6d9"
+      },
+      {
+        "title": "開発言語仕様定義",
+        "id": "2bdd0f0a002680e69ec6f2c452e31d39"
+      },
+      {
+        "title": "トーン＆マナー定義",
+        "id": "2bdd0f0a0026803eaa77d2f87bf0c7fb"
+      },
+      {
+        "title": "コンテンツグルーピング",
+        "id": "2bdd0f0a00268016b13efa03e6f9c998"
+      },
+      {
+        "title": "ユーザ環境定義（マルチデバイス/アクセシビリティ）",
+        "id": "2bdd0f0a00268004a910d1b9cec83f26"
+      },
+      {
+        "title": "ポジションマップ作成",
+        "id": "2bdd0f0a0026808f824aee6dc4eafee9"
+      },
+      {
+        "title": "ペルソナモデル作成",
+        "id": "2bdd0f0a002680729560fb4dde501d9a"
+      },
+      {
+        "title": "ユーザベネフィット定義",
+        "id": "2bdd0f0a002680f3bbaff13a452538c2"
+      },
+      {
+        "title": "UX設計",
+        "id": "2bdd0f0a002680f3974de7edf2bcacf8"
+      },
+      {
+        "title": "ユーザーインタビュー",
+        "id": "2bdd0f0a002680afb15ced3f22500eb4"
+      },
+      {
+        "title": "競合比較分析",
+        "id": "2bdd0f0a002680debbf2fc6bf27812e5"
+      }
+    ]
+  },
+  {
+    "id": "production",
+    "icon": "⚙️",
+    "name": "制作・開発ディレクション",
+    "count": 29,
+    "items": [
+      {
+        "title": "AI協業ディレクション",
+        "id": "ai_collaboration_direction"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a00268047a23ecff64bbc2cbb"
+      },
+      {
+        "title": "クライアントとのコミュニケーション",
+        "id": "2bdd0f0a0026803088c3faf71fc9abbf"
+      },
+      {
+        "title": "代理店とのコミュニケーション",
+        "id": "2bdd0f0a002680d1bda7df7dd1a4dd1d"
+      },
+      {
+        "title": "広告運用担当者とのコミュニケーション",
+        "id": "2bdd0f0a002680cd8b43d59fbca14a31"
+      },
+      {
+        "title": "デザイナーとのコミュニケーション",
+        "id": "2bdd0f0a00268083abf7c7ade212c0ca"
+      },
+      {
+        "title": "フロントエンドエンジニアとのコミュニケーション",
+        "id": "2bdd0f0a002680248bedd41da7c72311"
+      },
+      {
+        "title": "バックエンドエンジニアとのコミュニケーション",
+        "id": "2bdd0f0a0026808f8b2fe23a4abf475b"
+      },
+      {
+        "title": "QAエンジニアとのコミュニケーション",
+        "id": "2bdd0f0a002680b98decd5d900c9670c"
+      },
+      {
+        "title": "外部パートナーとのコミュニケーション",
+        "id": "2bdd0f0a00268084895cec402c5ea6d0"
+      },
+      {
+        "title": "要件定義",
+        "id": "2bdd0f0a0026801094baf17661e44931"
+      },
+      {
+        "title": "デザイン仕様書作成",
+        "id": "2bdd0f0a002680188cd5f9ffb57999d9"
+      },
+      {
+        "title": "CMSマニュアル作成",
+        "id": "2bdd0f0a00268032826af68f0b2c65a8"
+      },
+      {
+        "title": "CMS運用フロー計画",
+        "id": "2bdd0f0a00268020b239e47f71e05e47"
+      },
+      {
+        "title": "コーディング仕様書作成",
+        "id": "2bdd0f0a002680fd9780e607f6e67e8d"
+      },
+      {
+        "title": "CMSカスタマイズ仕様書作成",
+        "id": "2bdd0f0a0026803cab48ea2681d66bb2"
+      },
+      {
+        "title": "プログラム仕様書作成",
+        "id": "2bdd0f0a0026804e8b04fb828f997851"
+      },
+      {
+        "title": "進行管理",
+        "id": "2bdd0f0a00268003bc2fe091cf130299"
+      },
+      {
+        "title": "外部コントロール",
+        "id": "2bdd0f0a002680d082a5eb118990e6a2"
+      },
+      {
+        "title": "スケジュール計画",
+        "id": "2bdd0f0a00268062b887e05e3ef35637"
+      },
+      {
+        "title": "リリース計画",
+        "id": "2bdd0f0a002680559d49efa52d2b5323"
+      },
+      {
+        "title": "WBS（ワークブレークダウンストラクチャー）",
+        "id": "2bdd0f0a00268058a83ec5a9f0c5d431"
+      },
+      {
+        "title": "デザインレビュー",
+        "id": "2bdd0f0a00268014b7bff50c4a427b4d"
+      },
+      {
+        "title": "素材管理",
+        "id": "2bdd0f0a002680768499c07f4dec4b04"
+      },
+      {
+        "title": "校正",
+        "id": "2bdd0f0a0026806b8036c0cd77f4d102"
+      },
+      {
+        "title": "ユーザーテスト",
+        "id": "2bdd0f0a002680ada179da8663b11404"
+      },
+      {
+        "title": "デバッグ/テスト自動化",
+        "id": "2bdd0f0a0026800ab36cdbded174e28c"
+      },
+      {
+        "title": "コーディングチェック",
+        "id": "2bdd0f0a0026800983d1f98db7765ae0"
+      },
+      {
+        "title": "プログラムチェック",
+        "id": "2bdd0f0a002680e2a3b8c28c49a3614e"
+      }
+    ]
+  },
+  {
+    "id": "operation",
+    "icon": "🔄",
+    "name": "サービス運営・運用",
+    "count": 22,
+    "items": [
+      {
+        "title": "AI運用ガバナンス",
+        "id": "ai_operation_governance"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a002680ae8636eb5f3bd323c6"
+      },
+      {
+        "title": "GoogleAnalyticsを使った改善提案",
+        "id": "2bdd0f0a00268031abb4c3c931a0382d"
+      },
+      {
+        "title": "ヒートマップ/BIツール分析",
+        "id": "2bdd0f0a0026802bb695d70a3d08db75"
+      },
+      {
+        "title": "問い合わせ＆クレーム窓口の設計",
+        "id": "2bdd0f0a002680d48375fc1b82ad34f5"
+      },
+      {
+        "title": "アクティブサポート対応",
+        "id": "2bdd0f0a002680089db1d565bc3bf8bf"
+      },
+      {
+        "title": "ユーザーサポート対応",
+        "id": "2bdd0f0a002680c39ae3f5d69d034ee2"
+      },
+      {
+        "title": "問い合わせ状況の管理・ナレッジ化",
+        "id": "2bdd0f0a002680c781b8dff1f7b7cd8f"
+      },
+      {
+        "title": "モバイル/レスポンシブサイト運営",
+        "id": "2bdd0f0a002680068611d42480349603"
+      },
+      {
+        "title": "Webサービス運営",
+        "id": "2bdd0f0a0026804f8665de5e92e9b365"
+      },
+      {
+        "title": "SNSアカウント運営",
+        "id": "2bdd0f0a0026804cbc77f0d7d3514114"
+      },
+      {
+        "title": "ブログ/オウンドメディア運営",
+        "id": "2bdd0f0a00268043b5f4ddcf11180b49"
+      },
+      {
+        "title": "ECサイト運営",
+        "id": "2bdd0f0a00268033896ffae33750241a"
+      },
+      {
+        "title": "キャンペーンサイト運営",
+        "id": "2bdd0f0a00268055ab0ad8878d214a1f"
+      },
+      {
+        "title": "ポータルサイト運営",
+        "id": "2bdd0f0a002680bb852ddca86cfebed4"
+      },
+      {
+        "title": "スマートフォンアプリ運営",
+        "id": "2bdd0f0a0026804a96dcde1419cc951c"
+      },
+      {
+        "title": "SaaSサービス運営",
+        "id": "2bdd0f0a0026804ba44fccfd7e71c0de"
+      },
+      {
+        "title": "マッチングサービス運営",
+        "id": "2bdd0f0a0026805ca2e1fe4562f49410"
+      },
+      {
+        "title": "コミュニティ運営",
+        "id": "2bdd0f0a002680c6a7e2c83d37896cfc"
+      },
+      {
+        "title": "データマイニング/BI分析",
+        "id": "2bdd0f0a002680dc9d7dc3455023c2a1"
+      },
+      {
+        "title": "修正・変更指示書作成",
+        "id": "2bdd0f0a0026809193bed1fc178169e7"
+      },
+      {
+        "title": "Webサイトの全体像解析",
+        "id": "2bdd0f0a00268022a05aca5374b0484b"
+      }
+    ]
+  },
+  {
+    "id": "promotion",
+    "icon": "📣",
+    "name": "プロモーション",
+    "count": 14,
+    "items": [
+      {
+        "title": "AIクリエイティブ検証",
+        "id": "ai_creative_testing"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a002680d68568f8e588f7f5d0"
+      },
+      {
+        "title": "SEO（検索最適化/構造化データ/コアウェブバイタル対応）",
+        "id": "2bdd0f0a00268031901fe028ed3c6a44"
+      },
+      {
+        "title": "リスティング広告",
+        "id": "2bdd0f0a002680a2a63cc647cfc57bbb"
+      },
+      {
+        "title": "SNS広告運用",
+        "id": "2bdd0f0a002680708a8df9c7bd35aff3"
+      },
+      {
+        "title": "アフィリエイト広告",
+        "id": "2bdd0f0a002680278931ec771e888c14"
+      },
+      {
+        "title": "アドネットワーク/運用型広告（DSP/リターゲティング）",
+        "id": "2bdd0f0a00268020838dc956f23b42dd"
+      },
+      {
+        "title": "MEO（マップエンジン最適化）",
+        "id": "2bdd0f0a002680139855cde45d419cac"
+      },
+      {
+        "title": "LLMO（大規模言語モデル最適化）",
+        "id": "2bdd0f0a002680c89340c0a45f5268d1"
+      },
+      {
+        "title": "LPO（ランディングページ最適化）",
+        "id": "2bdd0f0a002680369094f0cc5d75e28f"
+      },
+      {
+        "title": "EFO（エントリーフォーム最適化）",
+        "id": "2bdd0f0a002680109f84e74dcc2c129f"
+      },
+      {
+        "title": "プロモーションKPI・KGI設定",
+        "id": "2bdd0f0a00268083a674ffc6f104e13b"
+      },
+      {
+        "title": "インフルエンサーマーケティング",
+        "id": "2bdd0f0a002680efb175d1092e92a6db"
+      },
+      {
+        "title": "デジタルPR（動画）",
+        "id": "2bdd0f0a002680e9a1e6c0e5d981fd41"
+      }
+    ]
+  },
+  {
+    "id": "writing",
+    "icon": "✍️",
+    "name": "ライティング",
+    "count": 7,
+    "items": [
+      {
+        "title": "AI時代の編集ガイドライン",
+        "id": "ai_editorial_guidelines"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a002680e88acdf4ada491a863"
+      },
+      {
+        "title": "コピーライティング",
+        "id": "2bdd0f0a002680e48b00f20918058e19"
+      },
+      {
+        "title": "記事構成・編集",
+        "id": "2bdd0f0a00268088a572c40854eb1250"
+      },
+      {
+        "title": "記事執筆",
+        "id": "2bdd0f0a0026806bb6edcbb16798e864"
+      },
+      {
+        "title": "受領原稿のリライト",
+        "id": "2bdd0f0a002680f6bed7fde5d2d41cb1"
+      },
+      {
+        "title": "AIを用いた文章生成・編集",
+        "id": "2bdd0f0a0026801cb66be0c66d033b8e"
+      }
+    ]
+  },
+  {
+    "id": "tools",
+    "icon": "🛠",
+    "name": "ツール・効率化",
+    "count": 26,
+    "items": [
+      {
+        "title": "NotebookLM",
+        "id": "tool_notebooklm"
+      },
+      {
+        "title": "Stitch",
+        "id": "tool_stitch"
+      },
+      {
+        "title": "Windsurf",
+        "id": "tool_windsurf"
+      },
+      {
+        "title": "v0",
+        "id": "tool_v0"
+      },
+      {
+        "title": "Bolt.new",
+        "id": "tool_bolt_new"
+      },
+      {
+        "title": "Cursor",
+        "id": "tool_cursor"
+      },
+      {
+        "title": "Linear",
+        "id": "tool_linear"
+      },
+      {
+        "title": "Fireflies.ai",
+        "id": "tool_fireflies"
+      },
+      {
+        "title": "Descript",
+        "id": "tool_descript"
+      },
+      {
+        "title": "Lovable",
+        "id": "tool_lovable"
+      },
+      {
+        "title": "Gamma",
+        "id": "tool_gamma"
+      },
+      {
+        "title": "Perplexity",
+        "id": "tool_perplexity"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a002680059327da9b2088404c"
+      },
+      {
+        "title": "Figma",
+        "id": "2bdd0f0a002680b69934e271b3aaec8b"
+      },
+      {
+        "title": "WordPress",
+        "id": "2bdd0f0a002680218c37d179fcdb4fb6"
+      },
+      {
+        "title": "STUDIO",
+        "id": "2bdd0f0a00268052a2fbd61cfe0990fb"
+      },
+      {
+        "title": "Slack",
+        "id": "2bdd0f0a002680db93cdd8548cc52fe9"
+      },
+      {
+        "title": "Miro",
+        "id": "2bdd0f0a0026803d8a68fbe326d0b911"
+      },
+      {
+        "title": "Teams",
+        "id": "2bdd0f0a0026805e80fff78432726e74"
+      },
+      {
+        "title": "Backlog",
+        "id": "2bdd0f0a002680ee9be9c54d04c706f0"
+      },
+      {
+        "title": "Adobe CC",
+        "id": "2bdd0f0a002680e88e4ee904f081c77d"
+      },
+      {
+        "title": "Claude",
+        "id": "tool_claude"
+      },
+      {
+        "title": "Relume",
+        "id": "tool_relume"
+      },
+      {
+        "title": "できるくんAI",
+        "id": "tool_dekirukun_ai"
+      },
+      {
+        "title": "Antigravity",
+        "id": "tool_antigravity"
+      },
+      {
+        "title": "Codex",
+        "id": "tool_codex"
+      }
+    ]
+  },
+  {
+    "id": "hiring",
+    "icon": "🧭",
+    "name": "ディレクター採用",
+    "count": 10,
+    "items": [
+      {
+        "title": "AI時代のディレクター評価基準",
+        "id": "ai_hiring_scorecard"
+      },
+      {
+        "title": "キャリア棚卸しデータに学ぶ採用と育成の勘所",
+        "id": "case_career_inventory_insights"
+      },
+      {
+        "title": "全般",
+        "id": "2bdd0f0a00268086b2e2e6b1445676fb"
+      },
+      {
+        "title": "求人票設計",
+        "id": "2bdd0f0a00268010821ac1d53b864b03"
+      },
+      {
+        "title": "母集団形成",
+        "id": "2bdd0f0a0026807eb615c24a833d0ac6"
+      },
+      {
+        "title": "選考フロー",
+        "id": "2bdd0f0a0026800da675c891789145fb"
+      },
+      {
+        "title": "書類選考",
+        "id": "2bdd0f0a0026802da12bd52e48b980bc"
+      },
+      {
+        "title": "面接設計",
+        "id": "2bdd0f0a002680a8956ef742c82c105e"
+      },
+      {
+        "title": "クロージング",
+        "id": "2bdd0f0a002680d4a03ad0d5b5f8e704"
+      },
+      {
+        "title": "業務委託",
+        "id": "2bdd0f0a002680e5a919df16d2e59490"
+      }
+    ]
+  },
+  {
+    "id": "failure_cases",
+    "icon": "🚨",
+    "name": "ディレクター失敗談",
+    "count": 1,
+    "items": [
+      {
+        "title": "悲しきデスマーチに学ぶ失敗パターン",
+        "id": "case_death_march_lesson"
+      }
+    ]
+  }
+]

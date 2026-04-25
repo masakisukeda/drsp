@@ -1,0 +1,32 @@
+name: dic-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: dic-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: JS Syntax Check
+        run: node --check app.js
+
+      - name: Regenerate Search Assets
+        run: node scripts/build-search-assets.js
+
+      - name: Ensure Generated Files Are Committed
+        run: git diff --exit-code -- robots.txt sitemap.xml llms.txt

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="theme-color" content="#0f1410">
+    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg?v=20260327b">
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png?v=20260327b">
+    <link rel="shortcut icon" href="./img/favicon-32x32.png?v=20260327b">
+    <link rel="icon" href="./img/favicon.ico?v=20260327b">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png?v=20260327b">
+    <title>Chat.app</title>
+    <link rel="stylesheet" href="./ui.css?v=20260403a">
+    <link rel="stylesheet" href="./index.page.css?v=20260406a">
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-row topbar-row-1">
+          <div class="topbar-left">
+            <div class="brand"><a id="brandHomeLink" href="#" aria-label="表示に戻る"><img id="brandLogo" src="./img/logo-chatapp-dark.svg" alt="Chat.app"></a></div>
+          </div>
+          <div class="topbar-right">
+            <div class="badge"><span class="dot"></span><strong id="sessionCode"></strong> <span id="modeLabel"></span></div>
+            <button class="ghost theme-toggle" id="themeToggle" aria-label="Toggle theme">☀︎</button>
+          </div>
+        </div>
+        <div class="topbar-row topbar-row-2">
+          <div class="topbar-left topbar-left-mobile-only">
+            <div class="view-switch view-switch-mobile">
+              <button class="view-tab" id="tabAudienceMobile" type="button">投稿</button>
+              <button class="view-tab" id="tabVoteMobile" type="button">ライブ投票</button>
+              <button class="view-tab" id="tabPollMobile" type="button">アンケート</button>
+              <button class="view-tab" id="tabScreenMobile" type="button" style="display:none">表示</button>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <details class="admin-menu" id="adminMenu">
+              <summary class="admin-summary">運営メニュー ▾</summary>
+              <div class="admin-menu-panel">
+                <div class="header-session-controls">
+                  <div class="admin-key-row">
+                    <input id="adminKeyInput" type="password" placeholder="運営者パスワード">
+                    <button class="ghost" id="saveAdminKeyBtn" type="button">保存</button>
+                    <button class="ghost" id="changeAdminKeyBtn" type="button">変更</button>
+                  </div>
+                  <select id="sessionSelect">
+                    <option value="webinar-2026">webinar-2026</option>
+                    <option value="webinar-2027">webinar-2027</option>
+                  </select>
+                  <div class="session-tools-grid">
+                    <div class="session-tools">
+                      <button class="ghost" id="addSessionBtn" type="button">新規</button>
+                      <button class="ghost" id="renameSessionBtn" type="button">改名</button>
+                      <button class="ghost" id="openSessionQrBtn" type="button">QR</button>
+                    </div>
+                    <div class="session-tools">
+                      <button class="ghost" id="surveyFormBtn" type="button">フォーム</button>
+                      <button class="ghost" id="downloadCsvBtn" type="button">CSV</button>
+                      <button class="ghost" id="openManualBtn" type="button">マニュアル</button>
+                      <button class="ghost is-hidden" id="tipBtn" type="button">投げ銭</button>
+                    </div>
+                    <div class="session-tools session-tools-delete">
+                      <button class="ghost" id="deleteSessionBtn" type="button">削除</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+            <button class="ghost" id="ftbToggle" type="button" aria-label="メニュー開閉">☰</button>
+            <input id="apiUrl" type="hidden">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="app"></div>
+    </div>
+
+    <div id="sessionQrModal" class="modal" onclick="onQrModalBackdrop(event)">
+      <div class="modal-card qr-modal-card" id="qrModalCard">
+        <div class="modal-head">
+          <h3>イベントURLのQRコード</h3>
+          <button class="ghost modal-close" type="button" onclick="closeSessionQr()">×</button>
+        </div>
+        <div class="qr-preview">
+          <div class="qr-image-wrap">
+            <img id="sessionQrImage" alt="session qr code" src=""/>
+          </div>
+          <div class="qr-url-text" id="sessionQrUrlText"></div>
+          <div class="qr-actions">
+            <button class="ghost" type="button" onclick="copySessionQrUrl()">URLコピー</button>
+            <button class="primary" type="button" id="qrZoomBtn" onclick="toggleQrZoom()">⤢ 拡大</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Tab Bar (PC only) -->
+    <nav class="floating-tab-bar" id="floatingTabBar">
+      <button class="ftb-tab" id="tabScreen" type="button" data-view="screen">
+        <span class="ftb-icon">☰</span><span class="ftb-label">表示</span>
+      </button>
+      <button class="ftb-tab" id="tabAudience" type="button" data-view="audience">
+        <span class="ftb-icon">✎</span><span class="ftb-label">投稿</span>
+      </button>
+      <button class="ftb-tab" id="tabVote" type="button" data-view="vote">
+        <span class="ftb-icon">🗳</span><span class="ftb-label">ライブ投票</span>
+      </button>
+      <button class="ftb-tab" id="tabPoll" type="button" data-view="poll">
+        <span class="ftb-icon">📊</span><span class="ftb-label">アンケート</span>
+      </button>
+    </nav>
+
+    <footer class="footer">&copy; 2026 <a href="https://drsp.cc/" target="_blank" rel="noopener noreferrer">一般社団法人ディレクションサポート協会</a></footer>
+
+    <script src="app.js?v=20260406a"></script>
+  </body>
+</html>

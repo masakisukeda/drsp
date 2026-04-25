@@ -1,0 +1,25 @@
+# OS / editor
+.DS_Store
+
+# Node
+node_modules/
+.npm-cache/
+
+# Local test outputs
+test-results/
+
+# Runtime DB / cache
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+data/*.sqlite
+data/*.sqlite-*
+api/data/*.sqlite
+api/data/*.sqlite-*
+
+# Secrets / local-only deploy config
+api/config.php
+scripts/deploy_safe_dic.sh
+
+# Local agent workspace
+.claude/

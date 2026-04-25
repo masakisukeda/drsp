@@ -1,0 +1,62 @@
+# Note.app
+
+> ディレクション実務の用語・進め方・ツール活用を引いて確認できる日本語ノートアプリです。
+
+## Site
+- Home: https://drsp.cc/app/note/
+- Glossary: https://drsp.cc/app/note/?view=glossary
+- Requests: https://drsp.cc/app/note/?view=requests
+- Sitemap: https://drsp.cc/app/note/sitemap.xml
+
+## Focus
+- ディレクション実務の基礎用語
+- 要件定義、進行管理、品質管理、情報設計
+- AI時代の制作・運用・評価基準
+- Web制作ツール、AIツール、共同編集ツール
+
+## High-value article URLs
+- キャリア棚卸しデータに学ぶ採用と育成の勘所: https://drsp.cc/app/note/?view=article&id=case_career_inventory_insights
+- 悲しきデスマーチに学ぶ失敗パターン: https://drsp.cc/app/note/?view=article&id=case_death_march_lesson
+- NotebookLM: https://drsp.cc/app/note/?view=article&id=tool_notebooklm
+- Stitch: https://drsp.cc/app/note/?view=article&id=tool_stitch
+- Windsurf: https://drsp.cc/app/note/?view=article&id=tool_windsurf
+- v0: https://drsp.cc/app/note/?view=article&id=tool_v0
+- Bolt.new: https://drsp.cc/app/note/?view=article&id=tool_bolt_new
+- Cursor: https://drsp.cc/app/note/?view=article&id=tool_cursor
+- Linear: https://drsp.cc/app/note/?view=article&id=tool_linear
+- Fireflies.ai: https://drsp.cc/app/note/?view=article&id=tool_fireflies
+- Descript: https://drsp.cc/app/note/?view=article&id=tool_descript
+- Lovable: https://drsp.cc/app/note/?view=article&id=tool_lovable
+- Gamma: https://drsp.cc/app/note/?view=article&id=tool_gamma
+- AI導入ロードマップ: https://drsp.cc/app/note/?view=article&id=ai_planning_roadmap
+- RAG向け情報設計: https://drsp.cc/app/note/?view=article&id=ai_rag_information_architecture
+- AI協業ディレクション: https://drsp.cc/app/note/?view=article&id=ai_collaboration_direction
+- AI運用ガバナンス: https://drsp.cc/app/note/?view=article&id=ai_operation_governance
+- AIクリエイティブ検証: https://drsp.cc/app/note/?view=article&id=ai_creative_testing
+- AI時代の編集ガイドライン: https://drsp.cc/app/note/?view=article&id=ai_editorial_guidelines
+- Perplexity: https://drsp.cc/app/note/?view=article&id=tool_perplexity
+- AI時代のディレクター評価基準: https://drsp.cc/app/note/?view=article&id=ai_hiring_scorecard
+- AI時代のディレクションについて: https://drsp.cc/app/note/?view=article&id=2c3d0f0a00268005a02bd61646318b64
+- Webサイト企画全般: https://drsp.cc/app/note/?view=article&id=2bdd0f0a00268065ae7adf0b06c4ac9c
+- 企画提案書: https://drsp.cc/app/note/?view=article&id=2bdd0f0a0026809db0bedf5b083e8458
+- アプリ企画: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680f38b59c1e7dafe4265
+- SNS連携企画: https://drsp.cc/app/note/?view=article&id=2bdd0f0a0026809f9634d50c5cf7483e
+- キャンペーンサイト企画: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680a5b288e7836ba00c30
+- 生成AI活用企画: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680f7a124d66524ea0c5d
+- 採用サイト企画: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680748ff8c0130ab92899
+- プレゼンテーション: https://drsp.cc/app/note/?view=article&id=2bdd0f0a00268049bd49f834c1a977c9
+- リサーチ全般: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680b8a0e3ea5e70f812f1
+- 競合調査分析: https://drsp.cc/app/note/?view=article&id=2bdd0f0a0026800f8530c3a1217141a7
+- 統計データ収集・解析: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680b58970dd901b65709a
+- SNS分析（ソーシャルリスニング）: https://drsp.cc/app/note/?view=article&id=2bdd0f0a00268067b7baf02f658260ea
+- 数値目標全般: https://drsp.cc/app/note/?view=article&id=2bdd0f0a0026801caa56de32432e01e3
+- KPI・KGI設定: https://drsp.cc/app/note/?view=article&id=2bdd0f0a00268063a17ccc6ba496b871
+- OKR策定: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680399d01f126a46bc12f
+- 予算計画（P/L・ROI）: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680c8b4f7cc1d769b6dea
+- 見積もり（金額・工数）: https://drsp.cc/app/note/?view=article&id=2bdd0f0a002680fa9450c9e341e7fe76
+- 工数見積り: https://drsp.cc/app/note/?view=article&id=2bdd0f0a0026803caef4c90b16ca8c90
+
+## Notes
+- 各記事は日本語で書かれています。
+- URLパラメータ `view=article&id=...` で個別記事に直接アクセスできます。
+- 用語集は https://drsp.cc/app/note/?view=glossary で一覧できます。

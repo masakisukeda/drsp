@@ -1,0 +1,63 @@
+name: dic-deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: dic-deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Collect Changed Asset Paths
+        id: changed-assets
+        run: |
+          changed_assets_file="$(mktemp)"
+          before_sha="${{ github.event.before }}"
+          if [[ -z "$before_sha" || "$before_sha" =~ ^0+$ ]]; then
+            echo "Initial push detected; uploading assets without diff filtering."
+            rm -f "$changed_assets_file"
+          else
+            git diff --name-only --diff-filter=ACMRT "$before_sha" "${{ github.sha }}" -- img data/articles > "$changed_assets_file" || true
+            echo "changed_assets_file=$changed_assets_file" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: JS Syntax Check
+        run: node --check app.js
+
+      - name: Validate Generated Assets
+        run: |
+          node scripts/build-search-assets.js
+          git diff --exit-code -- robots.txt sitemap.xml llms.txt
+
+      - name: Build CSS
+        run: bash scripts/build-css.sh
+
+      - name: Bump App Version
+        run: bash scripts/bump_app_version.sh
+
+      - name: Deploy via FTP
+        env:
+          SKIP_PREPARE: "1"
+          FTP_HOST: ${{ secrets.DIC_FTP_HOST }}
+          FTP_USER: ${{ secrets.DIC_FTP_USER }}
+          FTP_PASS: ${{ secrets.DIC_FTP_PASS }}
+          DEPLOY_CHANGED_FILES_FILE: ${{ steps.changed-assets.outputs.changed_assets_file }}
+        run: ./scripts/deploy_prod.sh

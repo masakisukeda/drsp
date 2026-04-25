@@ -1,0 +1,28 @@
+name: mng-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: mng-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure Core Files Exist
+        run: |
+          test -f index.html
+          test -f mng.html
+          test -f manual.html
+          test -f lp/index.html
+
+      - name: Redirect Sanity Check
+        run: grep -q "index.html" mng.html

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>ディレクションノートβ — Note.app</title>
+<meta name="description" content="キャリアチェンジ中のデザイナーも、現場で育っている新人ディレクターも。迷ったらすぐ開く——それだけでいいノートアプリです。">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="llms-summary" content="Note.appは、Webディレクション実務の用語・進め方・ツール活用を引いて確認できる日本語ノートアプリです。カテゴリ別記事、用語集、コメント、要望投稿、ノートくん検索を提供します。">
+<meta name="theme-color" content="#0f1410">
+<link rel="icon" type="image/svg+xml" href="./img/dictionary-kun.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Note.app">
+<meta property="og:title" content="Note.app — ディレクションのノート">
+<meta property="og:description" content="ディレクションの&quot;わからない&quot;を、なくそう。キャリアチェンジ中のデザイナーも、新人ディレクターも迷ったらすぐ開けるノートアプリ。">
+<meta property="og:url" content="https://drsp.cc/app/note/">
+<meta property="og:image" content="https://drsp.cc/app/note/img/ogp-1200x630.png?v=20260425">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Note.app — ディレクションのノート">
+<meta name="twitter:description" content="ディレクションの&quot;わからない&quot;を、なくそう。キャリアチェンジ中のデザイナーも、新人ディレクターも迷ったらすぐ開けるノートアプリ。">
+<meta name="twitter:image" content="https://drsp.cc/app/note/img/ogp-1200x630.png?v=20260425">
+<link rel="canonical" href="https://drsp.cc/app/note/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Note.app",
+  "url": "https://drsp.cc/app/note/",
+  "inLanguage": "ja",
+  "description": "Webディレクション実務の用語・進め方・ツール活用を引いて確認できる日本語ノートアプリ。",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://drsp.cc/app/note/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.min.css?v=cssmin20260404.0914">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo logo-clickable" onclick="showView('home')">
+    <img id="brandLogo" src="./img/logo-dictionaryapp.svg" alt="Note.app">
+  </div>
+  <div class="header-nav">
+    <div class="edit-badge" id="editBadge">
+      <div class="edit-dot"></div>
+      EDIT MODE
+    </div>
+    <button class="nav-btn ghost requests-btn header-btn-main header-route-btn" data-route="requests" type="button" onclick="goRequestsPage()">要望</button>
+    <button class="nav-btn ghost header-btn-sub header-route-btn" data-route="comments" type="button" onclick="goCommentsPage()">コメント一覧</button>
+    <button class="nav-btn ghost header-btn-sub editors-btn header-route-btn" data-route="editors" type="button" onclick="showEditorsView()">編集メンバー</button>
+    <div class="admin-nav-wrap" id="headerAdminMenu">
+      <button class="nav-btn ghost admin-login-btn" id="headerAdminMenuBtn" type="button" aria-expanded="false" onclick="toggleHeaderAdminMenu(event)">管理者キー</button>
+      <div class="header-admin-menu" id="headerAdminMenuPanel">
+        <button class="header-admin-menu-btn primary" type="button" onclick="openCreateArticleModal(); closeHeaderAdminMenu();">記事作成</button>
+        <button class="header-admin-menu-btn" type="button" onclick="showAdmin(); closeHeaderAdminMenu();">管理者キー</button>
+      </div>
+    </div>
+    <button class="nav-btn ghost mobile-search-btn" id="mobileSearchBtn" type="button" onclick="openMobileSidebar()">🔍 調べる</button>
+    <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替" onclick="toggleTheme()">☾</button>
+    <button class="mobile-menu-btn" type="button" aria-label="メニュー" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="mode-toggle is-hidden">
+        <button class="mode-btn active" data-mode="search" onclick="setMode('search', this)">🔍 引く</button>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="sidebarSearchInput" class="search-input" type="text" placeholder="キーワードで検索..." oninput="handleSearchInput(this)" autocomplete="off">
+        <button id="searchClearBtn" class="search-clear" type="button" aria-label="検索をクリア" onclick="clearSearchInput({focus:true})">×</button>
+      </div>
+      <div class="menu-tag-cloud" id="menuTagCloud"></div>
+    </div>
+
+    <div class="cat-list" id="catList">
+      <!-- Categories injected by JS -->
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HOME VIEW -->
+    <div class="home-view ui-view-stack" id="homeView">
+      <div class="home-hero home-hero-with-kun">
+        <div class="home-float-icons" aria-hidden="true">
+          <span class="float-icon" style="left: 2%; top: 14%; --delay: .2s;">📘</span>
+          <span class="float-icon" style="left: 10%; top: 62%; --delay: .9s;">✦</span>
+          <span class="float-icon" style="left: 36%; top: 76%; --delay: .4s;">✓</span>
+          <span class="float-icon" style="left: 70%; top: 20%; --delay: .7s;">⌕</span>
+          <span class="float-icon" style="left: 82%; top: 64%; --delay: 1.1s;">📝</span>
+        </div>
+
+        <div class="home-main">
+          <div class="home-eyebrow">ディレクションノートβ</div>
+          <h1 class="home-title">
+            <span class="title-line">ディレクションの</span><br>
+            <span class="title-line"><em>"わからない"</em>を、<span class="mobile-break-word">なくそう。</span></span>
+          </h1>
+          <p class="home-sub">
+            キャリアチェンジ中のデザイナーも、現場で育っている新人ディレクターも。<br>
+            迷ったらすぐ開く——それだけでいいノートアプリです。
+          </p>
+        </div>
+        <div class="home-hero-kun" aria-hidden="true">
+          <img src="img/dictionary-kun.svg" alt="" width="184" height="184" decoding="async">
+          <span class="home-hero-kun-tip">検索は画面右下のノートくんアイコン</span>
+        </div>
+      </div>
+
+      <div class="stats-unified">
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="articleCount">120</div>
+          <div class="stat-label">項目数</div>
+        </div>
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="homePvToday">0</div>
+          <div class="stat-label">累計PV</div>
+        </div>
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="homeUuToday">0</div>
+          <div class="stat-label">累計UU</div>
+        </div>
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="homeCommentTotal">0</div>
+          <div class="stat-label">コメント</div>
+        </div>
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="glossaryCount">0</div>
+          <div class="stat-label">用語</div>
+        </div>
+        <div class="stat-card stat-deco-card">
+          <div class="stat-num" id="homeRequestTotal">0</div>
+          <div class="stat-label">要望数</div>
+        </div>
+      </div>
+
+      <div class="category-jump-groups" id="homeCategoryNavList"></div>
+
+      <section class="home-curriculum-panel home-col-item home-col-full home-section-panel" aria-label="おすすめシリーズ">
+        <div class="home-section-panel-head">
+          <div class="home-section-panel-title">おすすめシリーズ</div>
+        </div>
+        <div class="home-track-grid" id="homeTrackGrid"></div>
+      </section>
+
+      <div class="home-columns">
+        <section class="home-col-item home-col-full home-section-panel">
+          <div class="home-section-panel-head section-label-row">
+            <span class="home-section-panel-title">最近の機能アップデート</span>
+            <button class="ui-x-post-btn ui-x-post-btn--compact" type="button" onclick="postHomeUpdatesOnX()">Xでポスト</button>
+          </div>
+          <div class="article-list" id="homeUpdateList">
+            <div class="article-row note-row is-placeholder">
+              <span class="article-title-row">アップデートを読み込み中...</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="home-col-item home-section-panel">
+          <div class="home-section-panel-head">
+            <div class="home-section-panel-title">最近更新された記事</div>
+          </div>
+          <div class="article-list" id="recentList">
+            <!-- injected -->
+          </div>
+        </section>
+
+        <section class="home-col-item home-section-panel">
+          <div class="home-section-panel-head">
+            <div class="home-section-panel-title">新着コメント</div>
+          </div>
+          <div class="article-list" id="latestCommentList">
+            <div class="article-row note-row is-placeholder">
+              <span class="article-title-row">まだコメントはありません</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="home-col-item home-col-full home-section-panel">
+          <div class="home-section-panel-head">
+            <div class="home-section-panel-title">最新のDiSAのnote</div>
+          </div>
+          <div class="article-list" id="noteList">
+            <div class="article-row note-row is-placeholder">
+              <span class="article-title-row">note記事を読み込み中...</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="category-view ui-view-stack" id="dictionaryTopView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>ノート</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">CATEGORY TOP</div>
+        <h2 class="cat-title">ノートトップ</h2>
+        <p class="cat-sub">ノートカテゴリの一覧から、カテゴリトップページへ移動できます。</p>
+      </div>
+
+      <div class="category-top-grid" id="dictionaryTopGrid">
+        <section class="category-top-col category-top-col-list ui-section-panel" aria-labelledby="dictionaryTopListHeading">
+          <div class="ui-section-panel-head">
+            <div class="ui-section-panel-title" id="dictionaryTopListHeading">カテゴリの項目一覧</div>
+          </div>
+          <div class="article-list" id="dictionaryTopCategoryList"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="category-view ui-view-stack" id="appendixTopView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>Appendix</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">APPENDIX TOP</div>
+        <h2 class="cat-title">Appendixトップ</h2>
+        <p class="cat-sub">Appendixカテゴリの一覧から、カテゴリトップページへ移動できます。</p>
+      </div>
+
+      <div class="category-top-grid" id="appendixTopGrid">
+        <section class="category-top-col category-top-col-list ui-section-panel" aria-labelledby="appendixTopListHeading">
+          <div class="ui-section-panel-head">
+            <div class="ui-section-panel-title" id="appendixTopListHeading">カテゴリの項目一覧</div>
+          </div>
+          <div class="article-list" id="appendixTopCategoryList"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- CATEGORY VIEW -->
+    <!-- TOOLS VIEW -->
+    <div class="tools-view ui-view-stack" id="toolsView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>ツール・タグで探す</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">TOOLS &amp; TAGS</div>
+        <h2 class="cat-title">ツール・タグで探す</h2>
+        <p class="cat-sub">使っているツールや関連タグから記事を絞り込めます。</p>
+      </div>
+
+      <div class="section-label">ツールで絞る</div>
+      <div class="filter-chip-group" id="toolFilterChips"></div>
+
+      <div id="toolsTagSection">
+        <div class="section-label">タグで絞る</div>
+        <div class="filter-chip-group" id="tagFilterChips"></div>
+      </div>
+
+      <div class="section-label" id="toolsResultLabel">記事一覧</div>
+      <div class="article-list" id="toolsArticleList"></div>
+    </div>
+
+    <div class="category-view ui-view-stack" id="requestsView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>ディレクションノートβへの要望</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">DICTIONARY REQUESTS</div>
+        <h2 class="cat-title">ディレクションノートβへの要望</h2>
+        <p class="cat-sub">ディレクションノートβへの要望を確認できます。改善の優先度整理に使ってください。</p>
+        <div class="category-stats">
+          <span class="category-pill" id="requestCountPill">0 件</span>
+          <button class="nav-btn ghost request-post-btn" id="requestPostBtn" type="button" onclick="openFeatureRequestModal()">要望を投稿</button>
+        </div>
+      </div>
+
+      <div class="article-list" id="featureRequestGrid"></div>
+    </div>
+
+    <div class="category-view ui-view-stack" id="commentsView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>コメント一覧</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">COMMENTS</div>
+        <h2 class="cat-title">コメント一覧</h2>
+        <p class="cat-sub">Note.app に投稿されたコメントを新着順で確認できます。</p>
+        <div class="category-stats">
+          <span class="category-pill" id="commentIndexCountPill">0 件</span>
+        </div>
+      </div>
+
+      <div class="article-list" id="commentIndexList"></div>
+    </div>
+
+
+    <div class="category-view ui-view-stack" id="glossaryView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-home-link" onclick="showAppendixTopView()">Appendix</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>用語集</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">CATEGORY / GLOSSARY</div>
+        <h2 class="cat-title">用語集</h2>
+        <p class="cat-sub">ディレクションノートβでよく使う用語をカテゴリページと同じ体裁で確認できます。</p>
+        <div class="category-stats">
+          <span class="category-pill" id="glossaryTermCount">0 件</span>
+          <button class="nav-btn ghost request-post-btn" type="button" onclick="openGlossaryTermModal()">用語を追加</button>
+        </div>
+      </div>
+
+      <div class="category-top-grid glossary-top-grid" id="glossaryTopGrid">
+        <section class="category-top-col category-top-col-list ui-section-panel" aria-label="用語一覧">
+          <div class="glossary-sort-row">
+            <span class="glossary-sort-label">並び順</span>
+            <button class="filter-chip active" type="button" data-glossary-sort="freq" onclick="setGlossarySort('freq')">頻出順</button>
+            <button class="filter-chip" type="button" data-glossary-sort="kana" onclick="setGlossarySort('kana')">五十音順</button>
+          </div>
+
+          <div class="article-list" id="glossaryArticleList"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="category-view editors-view ui-view-stack" id="editorsView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span>編集メンバー</span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker">EDITORS</div>
+        <h2 class="cat-title">編集メンバー</h2>
+        <p class="cat-sub">Xアカウントとプロフィールを登録して、編集メンバーを一覧表示できます。</p>
+        <div class="category-stats">
+          <span class="category-pill" id="editorCountPill">0 人</span>
+          <button class="nav-btn ghost request-post-btn" id="editorManageBtn" type="button" onclick="openEditorModal()">編集メンバーを追加</button>
+        </div>
+      </div>
+
+      <div class="editor-list" id="editorList"></div>
+    </div>
+
+    <div class="category-view ui-view-stack" id="categoryView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span id="categoryGroupCrumb"></span>
+        <span class="breadcrumb-sep" id="categoryGroupSep">›</span>
+        <span id="categoryNameCrumb"></span>
+      </div>
+
+      <div class="category-hero">
+        <div class="cat-kicker" id="categoryKicker">CATEGORY / GLOSSARY</div>
+        <h2 class="cat-title" id="categoryTitle"></h2>
+        <p class="cat-sub" id="categorySub">カテゴリの項目をまとめて確認できます。</p>
+        <div class="category-stats">
+          <span class="category-pill" id="categoryArticleCount">0 項目</span>
+        </div>
+        <div class="category-phase-guide" id="categoryPhaseBlock">
+          <div class="category-phase-head">
+            <div class="category-phase-label">このカテゴリの担当フェーズ</div>
+            <div class="category-phase-chips" id="categoryPhaseChips"></div>
+          </div>
+          <div class="category-phase-diagram" id="categoryPhaseDiagram" aria-label="カテゴリと工程の対応マップ">
+            <section class="phase-card">
+              <h3 class="phase-card-title">Waterfall</h3>
+              <div class="phase-card-body">
+                <div class="phase-table-row waterfall">
+                  <span class="phase-step is-major" data-phase-key="planning">企画</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="requirements">要件定義</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="design">設計</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="progress">進捗管理</span>
+                </div>
+                <div class="phase-table-row waterfall">
+                  <span class="phase-step" data-phase-key="implementation">実装</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="testing">テスト</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="operations">運用</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="growth">改善</span>
+                </div>
+              </div>
+            </section>
+            <section class="phase-card">
+              <h3 class="phase-card-title">Agile</h3>
+              <div class="phase-card-body">
+                <div class="phase-table-row agile">
+                  <span class="phase-step is-major" data-phase-key="planning">企画</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="requirements">要件定義 → 設計 → 実装 → テスト</span>
+                  <span class="phase-arrow">↻</span>
+                  <span class="phase-step" data-phase-key="growth">反復改善</span>
+                </div>
+                <div class="phase-table-row agile">
+                  <span class="phase-step" data-phase-key="operations">リリース/運用</span>
+                  <span class="phase-arrow">→</span>
+                  <span class="phase-step" data-phase-key="requirements">次スプリントの要件整理</span>
+                  <span class="phase-arrow">↻</span>
+                  <span class="phase-step" data-phase-key="growth">継続学習</span>
+                </div>
+              </div>
+            </section>
+          </div>
+          <p class="category-phase-note" id="categoryPhaseNote"></p>
+        </div>
+      </div>
+
+      <div class="category-top-grid" id="categoryTopGrid">
+        <section class="category-top-col category-top-col-list ui-section-panel" aria-labelledby="categoryListHeading">
+          <div class="ui-section-panel-head">
+            <div class="ui-section-panel-title" id="categoryListHeading">カテゴリの項目一覧</div>
+          </div>
+          <div class="glossary-sort-row" id="categoryToolsSortRow" hidden>
+            <span class="glossary-sort-label">並び順</span>
+            <button class="filter-chip" type="button" data-tools-sort="usage" onclick="setToolsSort('usage')">用途順</button>
+            <button class="filter-chip" type="button" data-tools-sort="kana" onclick="setToolsSort('kana')">五十音順</button>
+          </div>
+          <div class="article-list" id="categoryArticleList"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ARTICLE VIEW -->
+    <div class="article-view ui-view-stack" id="articleView">
+      <div class="article-breadcrumb">
+        <span class="breadcrumb-home-link" onclick="showView('home')">Note.app</span>
+        <span class="breadcrumb-sep">›</span>
+        <span id="articleGroup"></span>
+        <span class="breadcrumb-sep" id="articleGroupSep">›</span>
+        <span id="articleCat"></span>
+        <span class="breadcrumb-sep" id="articleCatSep">›</span>
+        <span id="articleName"></span>
+      </div>
+
+      <div class="article-content-card">
+        <div class="article-header">
+          <div class="article-eyebrow" id="articleEyebrow"></div>
+          <h1 class="article-title" id="articleTitle"></h1>
+          <div class="article-meta">
+            <div class="article-editor-meta" id="articleEditorMeta"></div>
+            <div class="article-updated" id="articleUpdatedAt"></div>
+            <div class="article-tags" id="articleTagsHeader"></div>
+            <div class="admin-article-actions" id="adminArticleActions">
+              <button class="admin-article-btn" onclick="openArticleEditor()">編集</button>
+              <button class="admin-article-btn danger" onclick="deleteCurrentArticle()">削除</button>
+            </div>
+            <button class="x-share-btn ui-x-post-btn ui-x-post-btn--article" onclick="shareArticleOnX()">Xでポスト</button>
+          </div>
+        </div>
+
+        <div class="tool-tabs" id="toolTabs"></div>
+
+        <div class="article-body" id="articleBody"></div>
+        <div class="article-sibling-nav" id="articleSiblingNav">
+          <button class="article-sibling-btn" id="articlePrevBtn" type="button" disabled>
+            <span class="article-sibling-dir">‹ 前の記事</span>
+            <span class="article-sibling-title">読み込み中...</span>
+          </button>
+          <button class="article-sibling-btn" id="articleNextBtn" type="button" disabled>
+            <span class="article-sibling-dir">次の記事 ›</span>
+            <span class="article-sibling-title">読み込み中...</span>
+          </button>
+        </div>
+      </div>
+
+
+      <section class="comment-panel" id="commentPanel">
+        <div class="comment-title">コメント</div>
+        <div class="comment-toolbar">
+          <button id="openCommentComposerBtn" class="comment-open-btn" type="button">コメントを投稿🐮</button>
+        </div>
+        <div class="comment-list" id="commentList"></div>
+      </section>
+
+      <div class="admin-modal" id="commentComposeModal">
+        <div class="comment-compose-modal">
+          <div class="comment-compose-head">
+            <div class="comment-compose-title">コメントを投稿🐮</div>
+            <button id="commentComposeCloseX" class="comment-compose-close" type="button" aria-label="閉じる">×</button>
+          </div>
+          <div class="comment-form comment-form-tight">
+            <label class="comment-title comment-title-inline">名前</label>
+            <input id="commentNameInput" class="comment-input" type="text" maxlength="40" placeholder="匿名">
+            <label class="comment-title comment-title-inline">質問</label>
+            <textarea id="commentBodyInput" class="comment-textarea" maxlength="500" placeholder="例）今回の機能で一番効果が高い使い方は？"></textarea>
+          </div>
+          <div class="comment-compose-actions">
+            <button id="submitCommentBtn" class="comment-submit" type="button">送信🐮</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </main>
+</div>
+
+<footer class="app-footer">
+  &copy; 2026 <a href="https://drsp.cc/" target="_blank" rel="noopener noreferrer">一般社団法人ディレクションサポート協会</a> / Note.app
+</footer>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu-panel" id="mobileMenuPanel" role="dialog" aria-label="モバイルメニュー">
+  <button class="mobile-menu-item" type="button" onclick="goRequestsPage(); closeMobileMenu();">要望</button>
+  <button class="mobile-menu-item" type="button" onclick="goCommentsPage(); closeMobileMenu();">コメント一覧</button>
+  <button class="mobile-menu-item" type="button" onclick="showEditorsView(); closeMobileMenu();">編集メンバー</button>
+  <button class="mobile-menu-item" type="button" id="mobileCreateArticleBtn" style="display:none;" onclick="openCreateArticleModal(); closeMobileMenu();">記事作成</button>
+</div>
+
+
+<!-- FEATURE REQUEST MODAL -->
+<div class="fr-modal" id="featureRequestModal">
+  <div class="fr-box">
+    <div class="fr-header">
+      <div class="fr-title">📝 要望を投稿</div>
+      <button class="fr-close" type="button" onclick="closeFeatureRequestModal()">×</button>
+    </div>
+    <div class="fr-body">
+      <p class="fr-meta">改善点や追加したい機能を投稿できます。</p>
+
+      <label class="fr-label" for="frName">名前（任意）</label>
+      <input class="fr-input" id="frName" type="text" maxlength="40" placeholder="匿名でもOK">
+
+      <label class="fr-label" for="frTitle">要望タイトル</label>
+      <input class="fr-input" id="frTitle" type="text" maxlength="120" placeholder="例）検索をもっと速くしたい">
+
+
+      <label class="fr-label" for="frBody">詳細</label>
+      <textarea class="fr-input fr-textarea" id="frBody" maxlength="2000" placeholder="背景、困っていること、理想の挙動など"></textarea>
+
+      <label class="fr-label" for="frLink">参考URL（任意）</label>
+      <input class="fr-input" id="frLink" type="url" maxlength="300" placeholder="https://...">
+
+      <input class="is-hidden" id="frHp" type="text" autocomplete="off" tabindex="-1" aria-hidden="true">
+
+      <div id="frNotice" class="fr-notice"></div>
+      <div class="fr-actions">
+        <button class="fr-btn-primary" id="frSubmitBtn" type="button" onclick="submitFeatureRequest()">送信🐮</button>
+        <button class="fr-btn" type="button" onclick="clearFeatureRequestForm()">クリア</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fr-modal" id="glossaryTermModal">
+  <div class="fr-box">
+    <div class="fr-header">
+      <div class="fr-title" id="glossaryTermModalTitle">📘 用語を追加</div>
+      <button class="fr-close" type="button" onclick="closeGlossaryTermModal()">×</button>
+    </div>
+
+    <div class="fr-fields">
+      <input id="gtEditId" type="hidden" value="">
+
+      <label class="fr-label" for="gtName">名前（任意）</label>
+      <input class="fr-input" id="gtName" maxlength="40" placeholder="匿名">
+
+      <label class="fr-label" for="gtTerm">用語</label>
+      <input class="fr-input" id="gtTerm" maxlength="80" placeholder="例）WBS">
+
+      <label class="fr-label" for="gtDesc">説明</label>
+      <textarea class="fr-input fr-textarea" id="gtDesc" placeholder="用語の説明を入力"></textarea>
+
+      <input class="is-hidden" id="gtHp" type="text" autocomplete="off" tabindex="-1" aria-hidden="true">
+
+      <div id="gtNotice" class="fr-notice"></div>
+      <div class="fr-actions">
+        <button class="fr-btn-primary" id="gtSubmitBtn" type="button" onclick="submitGlossaryTerm()">送信🐮</button>
+        <button class="fr-btn" type="button" onclick="clearGlossaryTermForm()">クリア</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fr-modal editor-modal" id="editorModal">
+  <div class="fr-box" onclick="event.stopPropagation()">
+    <div class="fr-header">
+      <div class="fr-title">👤 編集メンバーを追加</div>
+      <button class="fr-close" type="button" onclick="closeEditorModal()">×</button>
+    </div>
+
+    <div class="fr-fields">
+      <input id="epId" type="hidden" value="">
+
+      <label class="fr-label" for="epName">表示名</label>
+      <input class="fr-input" id="epName" type="text" inputmode="text" maxlength="60" placeholder="例）こーちゃん">
+
+      <label class="fr-label" for="epRole">役割</label>
+      <input class="fr-input" id="epRole" type="text" inputmode="text" maxlength="80" placeholder="例）プロダクトディレクター">
+
+      <label class="fr-label" for="epX">Xアカウント</label>
+      <input class="fr-input" id="epX" type="text" inputmode="text" maxlength="100" placeholder="@username または https://x.com/username">
+      <div class="fr-actions">
+        <button class="fr-btn" type="button" onclick="fillEditorProfileFromX()">Xから取得</button>
+      </div>
+
+      <label class="fr-label" for="epBio">プロフィール</label>
+      <textarea class="fr-input fr-textarea" id="epBio" maxlength="500" placeholder="プロフィール文を入力"></textarea>
+
+      <label class="fr-label" for="epAvatar">画像URL（任意）</label>
+      <input class="fr-input" id="epAvatar" type="url" inputmode="url" maxlength="300" placeholder="未入力ならXアカウントから自動表示">
+
+      <div id="epNotice" class="fr-notice"></div>
+      <div class="fr-actions">
+        <button class="fr-btn-primary" type="button" onclick="submitEditorProfile()">保存</button>
+        <button class="fr-btn" type="button" onclick="clearEditorForm()">クリア</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="admin-modal" id="adminModal">
+  <div class="admin-box" onclick="event.stopPropagation()">
+    <div class="admin-head">
+      <div class="admin-title">🔑 管理者</div>
+      <button class="admin-close" type="button" onclick="closeAdmin()" aria-label="閉じる">×</button>
+    </div>
+    <div class="admin-sub">管理者キーで編集機能を有効化できます。</div>
+    <div class="admin-status off" id="adminModeStatus">EDIT MODE OFF</div>
+    <div class="admin-input-wrap">
+      <input class="admin-input" type="password" id="adminKeyInput" placeholder="管理者キーを入力" onkeydown="if(event.key==='Enter')verifyAdmin()">
+    </div>
+    <div class="admin-error" id="adminError">パスワードが正しくありません</div>
+    <div class="admin-key-toggle-wrap" id="adminKeyToggleWrap" style="display:none;">
+      <button class="admin-btn cancel admin-btn-inline" type="button" id="adminKeyToggleBtn" onclick="toggleAdminKeyChangeBox()">管理者キーを変更</button>
+    </div>
+    <div class="admin-key-change" id="adminKeyChangeBox" style="display:none;">
+      <div class="admin-key-title">管理者キーを変更</div>
+      <div class="admin-key-grid">
+        <input class="admin-input" type="password" id="adminCurrentKeyInput" placeholder="現在の管理者キー（省略可）">
+        <input class="admin-input" type="password" id="adminNewKeyInput" placeholder="新しい管理者キー（4文字以上）">
+        <input class="admin-input" type="password" id="adminNewKeyConfirmInput" placeholder="新しい管理者キー（確認）">
+      </div>
+      <div class="admin-key-notice" id="adminKeyChangeNotice"></div>
+      <div class="admin-buttons">
+        <button class="admin-btn cancel" type="button" onclick="clearAdminKeyChangeForm()">クリア</button>
+        <button class="admin-btn primary" type="button" onclick="changeAdminKey()">キーを変更</button>
+      </div>
+    </div>
+    <div class="admin-buttons">
+      <button class="admin-btn cancel" type="button" onclick="closeAdmin()">キャンセル</button>
+      <button class="admin-btn" type="button" onclick="exitAdminMode()">解除</button>
+      <button class="admin-btn primary" type="button" onclick="verifyAdmin()">ログイン</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-modal" id="articleCreateModal">
+  <div class="admin-box" onclick="event.stopPropagation()">
+    <div class="admin-head">
+      <div class="admin-title">📝 記事作成</div>
+      <button class="admin-close" type="button" onclick="closeCreateArticleModal()" aria-label="閉じる">×</button>
+    </div>
+    <div class="article-edit-mode-tabs" style="margin:6px 0 10px;">
+      <button id="articleCreateModeSource" class="article-edit-mode-btn" type="button" onclick="setArticleCreateMode('source')">URLを読ませる</button>
+      <button id="articleCreateModeManual" class="article-edit-mode-btn" type="button" onclick="setArticleCreateMode('manual')">新規で書く</button>
+    </div>
+    <div class="admin-sub" id="articleCreateModeHint">まっさらな本文テンプレートを作成します。</div>
+    <div class="article-create-grid" id="articleCreateManualFields">
+      <input class="admin-input" type="text" id="articleCreateTitleInput" maxlength="120" placeholder="記事タイトル">
+      <input class="admin-input" type="text" id="articleCreateIdInput" maxlength="120" placeholder="記事ID（任意: 未入力なら自動生成）">
+      <select class="admin-input" id="articleCreateCategoryInput" aria-label="カテゴリ選択"></select>
+      <input class="admin-input" type="text" id="articleCreateEyebrowInput" maxlength="80" placeholder="上部ラベル（任意: 例 DICTIONARY BASICS）">
+      <input class="admin-input" type="text" id="articleCreateTagsInput" maxlength="180" placeholder="ハッシュタグ（例: #ux #要件定義）">
+    </div>
+    <div id="articleCreateSourceWrap" style="display:none; margin-top:8px;">
+      <input class="admin-input" type="url" id="articleCreateSourceUrlInput" maxlength="400" placeholder="参考URL（必須: https://...）">
+    </div>
+    <div class="admin-key-notice" id="articleCreateNotice"></div>
+    <div class="admin-buttons">
+      <button class="admin-btn cancel" type="button" onclick="closeCreateArticleModal()">キャンセル</button>
+      <button class="admin-btn primary" type="button" id="articleCreateSubmitBtn" onclick="submitCreateArticle()">作成して編集</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-modal article-edit-modal" id="articleEditModal">
+  <div class="admin-box article-edit-box" onclick="event.stopPropagation()">
+    <div class="admin-title">記事編集</div>
+    <div class="article-edit-tool" id="articleEditToolLabel"></div>
+    <label class="article-edit-tag-label" for="articleEditTitleInput">記事タイトル</label>
+    <input id="articleEditTitleInput" class="article-edit-tag-input" type="text" maxlength="160" placeholder="記事タイトルを入力">
+    <label class="article-edit-tag-label" for="articleEditCategorySelect">カテゴリ</label>
+    <select id="articleEditCategorySelect" class="article-edit-editor-select"></select>
+    <label class="article-edit-tag-label" for="articleEditTagsInput">ハッシュタグ（例: #ux #要件定義 #vibe）</label>
+    <input id="articleEditTagsInput" class="article-edit-tag-input" type="text" placeholder="#ux #wbs #進行管理">
+    <div class="article-edit-editor-wrap">
+      <label class="article-edit-tag-label" for="articleEditEditorSelect">担当編集メンバー（選択）</label>
+      <select id="articleEditEditorSelect" class="article-edit-editor-select" onchange="applySelectedEditorToArticleForm()">
+        <option value="">未設定</option>
+      </select>
+      <div class="article-edit-editor-grid">
+        <input id="articleEditEditorName" class="article-edit-tag-input" type="text" placeholder="表示名（例: すけさん）">
+        <input id="articleEditEditorRole" class="article-edit-tag-input" type="text" placeholder="肩書き（例: 編集責任者）">
+        <input id="articleEditEditorX" class="article-edit-tag-input" type="text" placeholder="Xハンドル（例: @disa_pr）">
+        <input id="articleEditEditorAvatar" class="article-edit-tag-input" type="text" placeholder="アイコンURL（任意）">
+        <input id="articleEditEditorBio" class="article-edit-tag-input is-full" type="text" placeholder="プロフィール（任意）">
+      </div>
+    </div>
+    <div class="article-edit-mode-tabs">
+      <button id="articleEditModeMarkdown" class="article-edit-mode-btn" type="button" onclick="setArticleEditorMode('markdown')">Markdown</button>
+      <button id="articleEditModeRich" class="article-edit-mode-btn" type="button" onclick="setArticleEditorMode('rich')">リッチ</button>
+    </div>
+    <div class="article-edit-toolbar">
+      <button class="article-edit-btn" type="button" onclick="editorFormat('h3')">見出し</button>
+      <button class="article-edit-btn" type="button" onclick="editorCommand('bold')">太字</button>
+      <button class="article-edit-btn" type="button" onclick="editorCommand('insertUnorderedList')">箇条書き</button>
+      <button class="article-edit-btn" type="button" onclick="editorInsertLink()">リンク</button>
+      <button class="article-edit-btn" type="button" onclick="editorInsertImage()">画像追加</button>
+      <button class="article-edit-btn" type="button" onclick="editorPickImageFromDevice()">PC画像追加</button>
+      <button class="article-edit-btn" type="button" onclick="removeSelectedEditorImage()">画像削除</button>
+      <button class="article-edit-btn" type="button" onclick="editorInsertHighlight()">ハイライト枠</button>
+      <button class="article-edit-btn" type="button" onclick="editorInsertYouTube()">YouTube埋め込み</button>
+    </div>
+    <input id="articleEditImageFileInput" type="file" accept="image/*" class="is-hidden">
+    <div class="article-edit-main">
+      <div id="articleEditContent" class="article-edit-wysiwyg" contenteditable="true" spellcheck="false" aria-label="記事本文エディター"></div>
+      <textarea id="articleEditMarkdown" class="article-edit-markdown" spellcheck="false" aria-label="記事本文Markdownエディター"></textarea>
+    </div>
+    <div class="admin-buttons admin-buttons-top">
+      <button class="admin-btn cancel" type="button" onclick="closeArticleEditor()">キャンセル</button>
+      <button class="admin-btn primary" type="button" onclick="saveArticleEdits()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="kun-fab-ring-wrap">
+  <svg class="kun-fab-ring-text" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <path id="kunFabRingPath" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path>
+    </defs>
+    <text>
+      <textPath href="#kunFabRingPath" startOffset="50%" text-anchor="middle">ノートくんに聞く・迷ったらサポート・</textPath>
+    </text>
+  </svg>
+  <span class="kun-fab-mobile-label" aria-hidden="true">＼検索／</span>
+  <svg class="kun-fab-mobile-arc" viewBox="0 0 100 50" aria-hidden="true">
+    <defs>
+      <path id="kunFabMobileArcPath" d="M10,45 A40,40 0 0,1 90,45"></path>
+    </defs>
+    <text>
+      <textPath href="#kunFabMobileArcPath" startOffset="50%" text-anchor="middle">＼検索／</textPath>
+    </text>
+  </svg>
+  <button class="kun-fab" type="button" onclick="openDictionaryKunChat()" aria-label="ノートくんに聞く">
+    <img src="./img/dictionary-kun.svg" alt="ノートくん">
+  </button>
+</div>
+
+<div class="admin-modal" id="dictKunModal">
+  <div class="dict-chat-modal">
+    <div class="dict-chat-head">
+      <div class="dict-chat-title"><img class="dict-chat-title-icon" src="./img/dictionary-kun.svg" alt="ノートくん">ノートくんに聞く</div>
+      <button class="dict-chat-close" type="button" onclick="closeDictionaryKunChat()" aria-label="閉じる">×</button>
+    </div>
+    <div class="dict-chat-log" id="dictKunLog"></div>
+    <div class="dict-chat-input">
+      <input id="dictKunInput" type="text" placeholder="例）要件定義ってどこから始める？" onkeydown="handleDictionaryKunKey(event)">
+      <button class="dict-chat-send" type="button" onclick="sendDictionaryKunQuestion()">送信</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-modal" id="homeUpdateDetailModal" onclick="if(event.target===this)closeHomeUpdateDetail()">
+  <div class="home-update-detail-card">
+    <div class="dict-chat-head">
+      <div class="dict-chat-title">最近の機能アップデート</div>
+      <button class="dict-chat-close" type="button" onclick="closeHomeUpdateDetail()" aria-label="閉じる">×</button>
+    </div>
+    <div class="home-update-detail-date" id="homeUpdateDetailDate"></div>
+    <div class="home-update-detail-body" id="homeUpdateDetailBody"></div>
+    <div class="home-update-detail-actions">
+      <button class="ui-x-post-btn ui-x-post-btn--compact" id="homeUpdateDetailShareBtn" type="button">Xでポスト</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-modal" id="hashtagModal" onclick="if(event.target===this)closeHashtagModal()">
+  <div class="hashtag-modal-card">
+    <div class="hashtag-modal-head">
+      <div class="hashtag-modal-title">
+        <div class="hashtag-modal-kicker">Hashtag Related</div>
+        <div class="hashtag-modal-name" id="hashtagModalTitle">#タグ</div>
+        <div class="hashtag-modal-sub" id="hashtagModalSub">関連記事を表示します</div>
+      </div>
+      <button class="dict-chat-close" type="button" onclick="closeHashtagModal()" aria-label="閉じる">×</button>
+    </div>
+    <div class="hashtag-related-list" id="hashtagModalList"></div>
+    <div class="hashtag-modal-actions">
+      <button class="btn-ghost" id="hashtagModalMoreBtn" type="button">このタグで一覧を見る</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-modal" id="glossaryInlineModal" onclick="if(event.target===this)closeGlossaryTermDetailModal()">
+  <div class="glossary-inline-modal-card">
+    <div class="glossary-inline-modal-head">
+      <div class="glossary-inline-modal-title">
+        <div class="glossary-inline-modal-kicker">Glossary</div>
+        <div class="glossary-inline-modal-name" id="glossaryInlineTitle">用語</div>
+      </div>
+      <button class="dict-chat-close" type="button" onclick="closeGlossaryTermDetailModal()" aria-label="閉じる">×</button>
+    </div>
+    <div class="glossary-inline-modal-desc" id="glossaryInlineDesc">用語の説明を表示します。</div>
+  </div>
+</div>
+
+<div class="admin-modal image-viewer-modal" id="articleImageModal" onclick="if(event.target===this)closeArticleImageModal()">
+  <div class="image-viewer-frame">
+    <button class="image-viewer-close" type="button" onclick="closeArticleImageModal()" aria-label="閉じる">×</button>
+    <img id="articleImageModalImg" class="image-viewer-img" src="" alt="記事画像">
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div id="glossaryTooltip" class="glossary-tooltip" role="tooltip" aria-hidden="true">
+  <div class="glossary-tooltip-term" id="glossaryTooltipTerm"></div>
+  <div class="glossary-tooltip-desc" id="glossaryTooltipDesc"></div>
+</div>
+
+
+
+<script src="./analytics.js?v=20260327a"></script>
+<script src="./app.js?v=20260425.1750" defer></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+name: mng-deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: mng-deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure Core Files Exist
+        run: |
+          test -f index.html
+          test -f mng.html
+          test -f manual.html
+          test -f lp/index.html
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Deploy via FTP
+        env:
+          FTP_HOST: ${{ secrets.MNG_FTP_HOST }}
+          FTP_USER: ${{ secrets.MNG_FTP_USER }}
+          FTP_PASS: ${{ secrets.MNG_FTP_PASS }}
+          FTP_BASE: ${{ secrets.MNG_FTP_BASE }}
+        run: |
+          FTP_HOST="${FTP_HOST:-s137.coreserver.jp}"
+
+          if [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ]; then
+            echo "MNG_FTP_USER / MNG_FTP_PASS が未設定です" >&2
+            exit 1
+          fi
+
+          PRIMARY_BASE="/public_html/drsp.cc/app/mng"
+          echo "deploy base: $PRIMARY_BASE"
+          if ! lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
+            set cmd:fail-exit yes;
+            set ftp:ssl-allow no;
+            mkdir -p $PRIMARY_BASE;
+            mkdir -p $PRIMARY_BASE/lp;
+            put -O $PRIMARY_BASE .htaccess;
+            put -O $PRIMARY_BASE index.html;
+            put -O $PRIMARY_BASE mng.html;
+            put -O $PRIMARY_BASE manual.html;
+            mirror -R --verbose --only-newer \
+              --exclude-glob '.DS_Store' \
+              ./lp $PRIMARY_BASE/lp;
+            bye
+          "; then
+            echo "deploy failed: $PRIMARY_BASE" >&2
+            exit 1
+          fi
+
+          echo "deploy succeeded: $PRIMARY_BASE"

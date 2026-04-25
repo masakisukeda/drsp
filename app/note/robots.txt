@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://drsp.cc/app/note/sitemap.xml

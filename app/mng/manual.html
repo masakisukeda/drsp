@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <title>運営マニュアル</title>
+  <meta name="theme-color" content="#121814">
+  <link rel="icon" type="image/svg+xml" href="./lp/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./lp/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./lp/apple-touch-icon.png">
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --brand: #c5ea1f;
+      --brand-dark: #90b900;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Avenir Next", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f7f8fa 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 16px 56px; }
+    .hero, .sec { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+    .hero { margin-bottom: 16px; }
+    .sec { margin-top: 14px; }
+    .manual-brand { display: inline-flex; align-items: center; margin-bottom: 10px; line-height: 1; }
+    .manual-brand img { display: block; height: 30px; width: auto; }
+    .hero h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.2; }
+    .hero p { margin: 0; color: var(--muted); }
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      transition: background-color .15s ease, border-color .15s ease;
+    }
+    .toc a:hover { background: #eef2f7; border-color: #b9c1cc; }
+    .toc a:focus-visible { outline: 2px solid var(--brand-dark); outline-offset: 2px; }
+    h2 { margin: 0 0 10px; font-size: 20px; color: #111827; border-left: 5px solid #e79530; padding-left: 10px; }
+    h3 { margin: 16px 0 8px; font-size: 16px; }
+    ul, ol { margin: 8px 0 0 20px; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+    .note {
+      background: #f7fce3;
+      border: 1px solid #d9ec8f;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .warn {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+    th, td { border: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; }
+    .template {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f9fafb;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+    .code-wrap { position: relative; margin-top: 8px; }
+    pre.code {
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      border: 1px solid #374151;
+      max-height: 300px;
+      margin: 0;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #1f2937;
+      color: #e5e7eb;
+      border: 1px solid #4b5563;
+      border-radius: 6px;
+      font-size: 11px;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    .footer { color: var(--muted); font-size: 12px; margin-top: 18px; text-align: center; }
+    .recent-updates {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f9fafb;
+    }
+    .recent-updates h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .recent-updates-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .recent-updates-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 8px 0;
+      border-top: 1px solid var(--line);
+    }
+    .recent-updates-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+    .recent-updates-main {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+    .recent-updates-head {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+      font-weight: 600;
+    }
+    .recent-updates-date {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .recent-updates-post {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      min-height: 28px;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--muted);
+      background: #ffffff;
+      white-space: nowrap;
+    }
+    .recent-updates-post:hover {
+      color: var(--text);
+      border-color: #b9c1cc;
+      background: #eef2f7;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="manual-brand"><img src="./lp/logo-yojitsu-light.svg" alt="予実.app"></div>
+      <h1>運営マニュアル</h1>
+      <p>運営者向けの運用ガイドです。初期設定から日次運用まで、必要な手順を順番にまとめています。</p>
+      <div class="note"><strong>最短4ステップ：</strong>1) GAS接続 → 2) マスタ設定 → 3) 目標/販管費 → 4) 案件入力</div>
+      <div class="warn"><strong>運用は必ずGoogle Workspaceで行ってください。</strong><br>閲覧権限・編集権限をユーザー単位で厳密に管理でき、誤共有や情報漏えいのリスクを大きく下げられるためです。</div>
+      <div class="note"><strong>補足：</strong>本アプリは全般的にAI機能を組み込んでいません。案件入力・集計・可視化をシンプルに運用する前提です。</div>
+      <div class="recent-updates">
+        <h3>最近のアップデート</h3>
+        <ul class="recent-updates-list">
+          <li class="recent-updates-item">
+            <div class="recent-updates-main">
+              <span class="recent-updates-head">● 主要KPI表示と比較表の文言を整理し、初見ユーザーの理解しやすさを改善しました。</span>
+              <span class="recent-updates-date">2026/03/30</span>
+            </div>
+            <a class="recent-updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E4%B8%BB%E8%A6%81KPI%E8%A1%A8%E7%A4%BA%E3%81%A8%E6%AF%94%E8%BC%83%E8%A1%A8%E3%81%AE%E6%96%87%E8%A8%80%E3%82%92%E6%95%B4%E7%90%86%E3%81%97%E3%80%81%E5%88%9D%E8%A6%8B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AE%E7%90%86%E8%A7%A3%E3%81%97%E3%82%84%E3%81%99%E3%81%95%E3%82%92%E6%94%B9%E5%96%84%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fapp%2Fmng%2Fmanual.html">Xでポスト</a>
+          </li>
+          <li class="recent-updates-item">
+            <div class="recent-updates-main">
+              <span class="recent-updates-head">● 初期セットアップ手順（GAS接続→保存→固定化）を見直し、運用開始までの手順をさらに分かりやすくしました。</span>
+              <span class="recent-updates-date">2026/03/29</span>
+            </div>
+            <a class="recent-updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E5%88%9D%E6%9C%9F%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E6%89%8B%E9%A0%86%EF%BC%88GAS%E6%8E%A5%E7%B6%9A%E2%86%92%E4%BF%9D%E5%AD%98%E2%86%92%E5%9B%BA%E5%AE%9A%E5%8C%96%EF%BC%89%E3%82%92%E8%A6%8B%E7%9B%B4%E3%81%97%E3%80%81%E9%81%8B%E7%94%A8%E9%96%8B%E5%A7%8B%E3%81%BE%E3%81%A7%E3%81%AE%E6%89%8B%E9%A0%86%E3%82%92%E3%81%95%E3%82%89%E3%81%AB%E5%88%86%E3%81%8B%E3%82%8A%E3%82%84%E3%81%99%E3%81%8F%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fapp%2Fmng%2Fmanual.html">Xでポスト</a>
+          </li>
+          <li class="recent-updates-item">
+            <div class="recent-updates-main">
+              <span class="recent-updates-head">● 導入手順（GAS接続→保存→固定化）を再確認し、運用開始までの迷いを減らす構成へ更新しました。</span>
+              <span class="recent-updates-date">2026/03/29</span>
+            </div>
+            <a class="recent-updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E5%B0%8E%E5%85%A5%E6%89%8B%E9%A0%86%EF%BC%88GAS%E6%8E%A5%E7%B6%9A%E2%86%92%E4%BF%9D%E5%AD%98%E2%86%92%E5%9B%BA%E5%AE%9A%E5%8C%96%EF%BC%89%E3%82%92%E5%86%8D%E7%A2%BA%E8%AA%8D%E3%81%97%E3%80%81%E9%81%8B%E7%94%A8%E9%96%8B%E5%A7%8B%E3%81%BE%E3%81%A7%E3%81%AE%E8%BF%B7%E3%81%84%E3%82%92%E6%B8%9B%E3%82%89%E3%81%99%E6%A7%8B%E6%88%90%E3%81%B8%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fapp%2Fmng%2Fmanual.html">Xでポスト</a>
+          </li>
+        </ul>
+      </div>
+      <nav class="toc" role="navigation" aria-label="目次">
+        <a href="#prep">1. 事前準備</a>
+        <a href="#gas">2. GAS接続</a>
+        <a href="#master">3. マスタ設定</a>
+        <a href="#targets">4. 目標と販管費</a>
+        <a href="#deals">5. 案件入力</a>
+        <a href="#kpi">6. 課題入力</a>
+        <a href="#errors">7. エラー対応</a>
+        <a href="#ops">8. 運用ルール</a>
+      </nav>
+    </section>
+
+    <section id="prep" class="sec">
+      <h2>1. 事前準備（3点）</h2>
+      <ul>
+        <li>Googleアカウント（GASデプロイ権限あり）</li>
+        <li>初期データ（スプレッドシート or CSV）</li>
+        <li>初期マスタ（カテゴリ / 担当 / ステータス / 期初・期末）</li>
+      </ul>
+    </section>
+
+    <section id="gas" class="sec">
+      <h2>2. GAS接続（最重要）</h2>
+      <div class="note">ここがつながれば運用準備の8割完了です。</div>
+      <ol>
+        <li>スプレッドシートを作成</li>
+        <li>GASの <code>Code.gs</code> に下記コードを貼り付け</li>
+        <li>Webアプリとしてデプロイ（アクセス権：全員）</li>
+        <li>発行URLをアプリ設定の <code>GAS URL</code> に貼り付け、<code>GAS URLを保存</code></li>
+        <li><code>このHTMLに固定</code> を押す</li>
+        <li><code>接続テスト</code> 実行後、右上 <code>↻</code> で同期確認</li>
+      </ol>
+      <div class="note">右上が「● 同期済み」になれば接続完了です。</div>
+
+      <h3>GAS (.gs) コピペ用</h3>
+      <div class="code-wrap">
+        <button class="copy-btn" data-copy-target="gasCode">コピー</button>
+        <pre id="gasCode" class="code">const DEALS_SHEET_NAME = 'Deals';
+const CONFIG_SHEET_NAME = 'Config';
+const DEAL_HEADERS = ['id', 'year', 'month', 'cat', 'st', 'tanto', 'name', 'uri', 'gen', 'note'];
+
+function initSheets() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss.getSheetByName(DEALS_SHEET_NAME)) {
+    const s = ss.insertSheet(DEALS_SHEET_NAME);
+    s.appendRow(DEAL_HEADERS);
+  }
+  if (!ss.getSheetByName(CONFIG_SHEET_NAME)) {
+    const s = ss.insertSheet(CONFIG_SHEET_NAME);
+    s.appendRow(['key', 'value']);
+  }
+}
+
+function doGet(e) {
+  initSheets();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const dealSheet = ss.getSheetByName(DEALS_SHEET_NAME);
+  const dealsData = dealSheet.getDataRange().getValues();
+  const headers = dealsData[0];
+  const deals = [];
+  for (let i = 1; i < dealsData.length; i++) {
+    let obj = {};
+    for (let j = 0; j < headers.length; j++) obj[headers[j]] = dealsData[i][j];
+    deals.push(obj);
+  }
+
+  const configSheet = ss.getSheetByName(CONFIG_SHEET_NAME);
+  const configData = configSheet.getDataRange().getValues();
+  let config = {};
+  for (let i = 1; i < configData.length; i++) {
+    try { config[configData[i][0]] = JSON.parse(configData[i][1]); } catch(err) {}
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, deals: deals, config: config }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  initSheets();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let data;
+  try {
+    data = JSON.parse(e.postData.contents);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({ok: false, error: 'Invalid JSON'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (data.action === 'update_config') {
+    const sheet = ss.getSheetByName(CONFIG_SHEET_NAME);
+    const rows = sheet.getDataRange().getValues();
+    let found = false;
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === data.key) {
+        sheet.getRange(i + 1, 2).setValue(JSON.stringify(data.value));
+        found = true;
+        break;
+      }
+    }
+    if (!found) sheet.appendRow([data.key, JSON.stringify(data.value)]);
+    return ContentService.createTextOutput(JSON.stringify({ok: true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const dealSheet = ss.getSheetByName(DEALS_SHEET_NAME);
+  if (data.action === 'create') {
+    let d = data.deal;
+    dealSheet.appendRow([d.id, d.year, d.month, d.cat, d.st, d.tanto, d.name, d.uri, d.gen, d.note]);
+  } else if (data.action === 'update') {
+    let d = data.deal;
+    let rows = dealSheet.getDataRange().getValues();
+    for(let i = 1; i < rows.length; i++) {
+      if(rows[i][0] == d.id) {
+        dealSheet.getRange(i + 1, 1, 1, DEAL_HEADERS.length)
+          .setValues([[d.id, d.year, d.month, d.cat, d.st, d.tanto, d.name, d.uri, d.gen, d.note]]);
+        break;
+      }
+    }
+  } else if (data.action === 'delete') {
+    let id = data.id;
+    let rows = dealSheet.getDataRange().getValues();
+    for(let i = 1; i < rows.length; i++) {
+      if(rows[i][0] == id) {
+        dealSheet.deleteRow(i + 1);
+        break;
+      }
+    }
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({ok: true}))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+      </div>
+    </section>
+
+    <section id="master" class="sec">
+      <h2>3. マスタ設定</h2>
+      <div class="note">最初に整えると、後の入力ミスを大きく減らせます。</div>
+      <ul>
+        <li>会社名</li>
+        <li>カテゴリ（事業セグメント）</li>
+        <li>担当者</li>
+        <li>ステータス（完了/進行中/見積中/検討中/失注 など）</li>
+        <li>期初・期末（YYYY-MM）</li>
+      </ul>
+      <div class="warn">カテゴリ/ステータス名を変更すると既存案件の移行が必要な場合があります。</div>
+    </section>
+
+    <section id="targets" class="sec">
+      <h2>4. 目標と販管費</h2>
+      <div class="note">まずはざっくりでOK。運用しながら精度を上げます。</div>
+      <ul>
+        <li>カテゴリ別で売上目標・粗利目標を入力</li>
+        <li>販管費を月別で入力</li>
+      </ul>
+      <div class="note">営業利益は「粗利 - 販管費」で計算されます。</div>
+    </section>
+
+    <section id="deals" class="sec">
+      <h2>5. 案件入力（日次運用）</h2>
+      <ol>
+        <li><code>＋ 案件追加</code> をクリック</li>
+        <li>案件名・カテゴリ・担当・ステータス・計上月を入力</li>
+        <li>売上・原価・備考を入力して保存</li>
+      </ol>
+      <div class="note">保存後、ダッシュボードへ即時反映されます。</div>
+    </section>
+
+    <section id="kpi" class="sec">
+      <h2>6. 課題入力</h2>
+      <ul>
+        <li>改行つきテキスト入力に対応</li>
+        <li>テキスト選択 → <code>🔗</code> でリンク付与</li>
+      </ul>
+    </section>
+
+    <section id="errors" class="sec">
+      <h2>7. よくあるエラー</h2>
+      <div class="note">困ったら「URL」「権限」「同期」の3点を先に確認してください。</div>
+      <table>
+        <thead><tr><th>症状</th><th>原因</th><th>対応</th></tr></thead>
+        <tbody>
+          <tr><td>ローカルモードのまま</td><td>GAS URL未設定 / 権限不足</td><td>URLとデプロイ権限を確認</td></tr>
+          <tr><td>同期エラー</td><td>GAS停止 / CORS / タイムアウト</td><td>GAS再デプロイ・URL再確認</td></tr>
+          <tr><td>Access denied</td><td>許可条件（メール/APIキー）不一致</td><td>Code.gsとHTML設定を合わせる</td></tr>
+          <tr><td>数字不一致</td><td>計上月/ステータス混在</td><td>フィルタ条件を確認</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ops" class="sec">
+      <h2>8. 運用ルール（推奨）</h2>
+      <ul>
+        <li>基準ファイルで確認後、企業別HTMLへ横展開</li>
+        <li>テンプレート運用は廃止（一本化）</li>
+      </ul>
+      <div class="template">運用前チェック
+- 右上が「● 同期済み」
+- 会社名 / カテゴリ / 担当が正しい
+- 案件入力がダッシュボードに反映される
+- 目標・販管費が入力済み</div>
+    </section>
+
+    <p class="footer">© 2026 一般社団法人ディレクションサポート協会 / 予実.app</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.getAttribute('data-copy-target');
+        var el = id ? document.getElementById(id) : null;
+        if (!el) return;
+        navigator.clipboard.writeText(el.textContent).then(function(){
+          var prev = btn.textContent;
+          btn.textContent = 'コピー完了';
+          setTimeout(function(){ btn.textContent = prev; }, 1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

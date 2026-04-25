@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja" data-app="mng">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>予実.app — 0からの予実管理</title>
+<meta name="description" content="スプシ/Excelだけで完結してた収支管理を、案件管理・月次損益推移・予実進捗・3ヶ月着地で可視化。定期更新で意思決定を速くする予実.app。">
+<link rel="canonical" href="https://drsp.cc/app/mng/lp/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#111315">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="予実.app">
+<meta property="og:title" content="予実.app — 0からの予実管理">
+<meta property="og:description" content="案件管理から月次損益・予実進捗・3ヶ月着地まで可視化。粗利から営業利益まで一気通貫で追える予実管理アプリ。">
+<meta property="og:url" content="https://drsp.cc/app/mng/lp/">
+<meta property="og:image" content="https://drsp.cc/app/mng/lp/ogp-1200x630.png">
+<meta property="og:image:secure_url" content="https://drsp.cc/app/mng/lp/ogp-1200x630.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://drsp.cc/app/mng/lp/">
+<meta name="twitter:title" content="予実.app — 0からの予実管理">
+<meta name="twitter:description" content="案件管理から月次損益・予実進捗・3ヶ月着地まで可視化。粗利から営業利益まで一気通貫で追える予実管理アプリ。">
+<meta name="twitter:image" content="https://drsp.cc/app/mng/lp/ogp-1200x630.png">
+<meta name="llms-summary" content="予実.appは、案件管理から月次損益推移、予実進捗、3ヶ月着地までを可視化するWebアプリ。粗利から営業利益まで一気通貫で確認できます。">
+<link rel="alternate" type="text/plain" href="/app/mng/lp/llms.txt" title="LLMs Summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "予実.app",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://drsp.cc/app/mng/lp/",
+      "description": "案件管理、月次損益推移、予実進捗、3ヶ月着地を可視化し、意思決定を高速化する予実管理アプリ。",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "導入準備は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "最小構成はスプレッドシート1枚、GAS（Code.gs）、HTML1ファイルです。シート作成、GAS貼り付け、WebアプリURL設定で開始できます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "入力データはどのくらい保持されますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "削除しない限り保持されます。必要に応じてスプレッドシート側で履歴管理やバックアップ運用も可能です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "最小運用人数は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "目安は3名です。目標入力、実績入力、意思決定（アクション化）の役割を分けると運用が安定します。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+/* inlined from ./index.page.css?v=20260329a */
+*{box-sizing:border-box;margin:0;padding:0}:root{--dk:#0f1316;--dk2:#151a1f;--dk3:#1e252d;--dk4:#28313a;--ac:#f2a33b;--ac2:#db8624;--ac3:#ffe8cc;--ac4:rgba(242,163,59,.14);--tx:#eef4fb;--tx2:#aab6c3;--tx3:#6f7d8c;--bdr:rgba(242,163,59,.18);--bdr2:rgba(242,163,59,.34);--good:#39ba84;--bad:#de5f5f;--sp:#39ba84;--app:var(--ac);--shadow:0 14px 34px rgba(0,0,0,.28);--fs-s:12px;--fs-m:14px;--fs-l:16px}body[data-theme=light]{--dk:#f4f7fb;--dk2:#ffffff;--dk3:#eef3f8;--dk4:#e3eaf2;--ac:#e79530;--ac2:#c57618;--ac3:#fff2df;--ac4:rgba(231,149,48,.12);--tx:#121821;--tx2:#5d6a79;--tx3:#7f8c9a;--bdr:rgba(18,24,33,.12);--bdr2:rgba(18,24,33,.22);--shadow:0 10px 28px rgba(17,24,39,.10)}body,html{overflow-x:hidden}body{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;background:radial-gradient(1200px 520px at 96% -10%,rgba(242,163,59,.1),transparent 52%),radial-gradient(900px 420px at -10% 10%,rgba(242,163,59,.07),transparent 56%),var(--dk);color:var(--tx);line-height:1.65;-webkit-text-size-adjust:100%}canvas,img,svg,video{max-width:100%;height:auto}a{color:inherit;text-decoration:none}.w{max-width:1200px;margin:0 auto;padding:0 20px 100px}.hero-stack{margin-top:32px;display:grid;gap:10px}.hero-stack>.hero,.hero-stack>.topbar{width:100%}.actions,.card,.compare-scroll,.cta,.faq-list,.grid,.hero,.hero-stack,.topbar-session,.topbar,.w{min-width:0}.topbar{background:var(--dk2);box-shadow:var(--shadow);border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(6px)}.topbar-logo{display:flex;align-items:center;color:var(--tx)}.topbar-logo img{display:block;height:24px;width:auto}.topbar-session{margin-left:6px;min-width:0;background:var(--ac4);border:1px solid var(--bdr2);border-radius:999px;padding:6px 14px;font-size:var(--fs-s);color:var(--tx);display:flex;align-items:center;gap:8px;height:30px;flex:0 0 min(520px,56vw);max-width:min(520px,56vw)}.topbar-session-dot{width:7px;height:7px;border-radius:50%;background:var(--ac);flex-shrink:0}.topbar-session-name{display:inline-block;max-width:0;overflow:hidden;white-space:nowrap;border-right:1px solid rgba(242,163,59,.85);animation:eventTyping 6.4s steps(24,end) infinite,caretBlink .8s step-end infinite;font-weight:700}@keyframes eventTyping{0%,12%{max-width:0}42%,72%{max-width:100%}100%{max-width:0}}@keyframes caretBlink{50%{border-color:transparent}}@keyframes heroEyebrowMarquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}.theme-toggle{margin-left:auto;border:1px solid var(--bdr2);background:var(--dk3);color:var(--tx);width:36px;height:36px;border-radius:10px;cursor:pointer;transition:.18s}.theme-toggle:hover{transform:translateY(-1px);border-color:var(--ac2)}.hero{background:linear-gradient(180deg,rgba(242,163,59,.06),transparent 28%),var(--dk2);border:1px solid var(--bdr);border-radius:14px;padding:52px 44px;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero:after{content:'';position:absolute;right:-90px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(242,163,59,.16),transparent 68%)}.hero:before{content:'';position:absolute;left:-120px;bottom:-160px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(242,163,59,.08),transparent 72%)}.beta{position:absolute;right:24px;top:24px;background:var(--dk3);border:1px solid var(--bdr);border-radius:12px;padding:10px 12px;text-align:center;z-index:2}.beta b{display:block;font-size:32px;color:var(--ac);line-height:1}.beta span{font-size:var(--fs-s);color:var(--tx3);letter-spacing:.08em;text-transform:uppercase}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--ac4);border:1px solid var(--bdr2);border-radius:999px;padding:5px 14px;margin-bottom:24px;position:relative;z-index:2;font-size:var(--fs-s);font-weight:700;letter-spacing:.1em;text-transform:uppercase}.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--ac)}.eyebrow-main{display:inline-block;min-width:0;font-size:var(--fs-s);font-weight:700;letter-spacing:.08em;color:var(--ac);text-transform:uppercase}.eyebrow-meta{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding-left:8px;border-left:1px solid var(--bdr2);font-size:var(--fs-s);letter-spacing:.04em;text-transform:none;color:var(--tx2)}.hero-eyebrow-meta-marquee{display:inline-block;white-space:nowrap}h1{font-size:clamp(30px,5.4vw,52px);line-height:1.14;letter-spacing:-.02em;position:relative;z-index:2}h1 em{font-style:normal;color:var(--ac)}.hero-sub{position:relative;z-index:2;margin-top:14px;color:var(--tx2);font-size:var(--fs-l);max-width:760px}.card p,.faq-a,.hero-sub,.sec-sub,.sec-title,td{overflow-wrap:anywhere;word-break:break-word}.actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:2}.btn-icon{width:16px;height:16px;display:inline-block;object-fit:contain;vertical-align:-2px;margin-right:6px}.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ac);color:#1b1b1b;font-family:inherit;font-weight:700;font-size:var(--fs-m);border:none;border-radius:999px;padding:14px 30px;min-height:42px;letter-spacing:.02em;cursor:pointer;box-shadow:0 10px 20px rgba(231,149,48,.24);transition:.18s}.btn-primary:hover{transform:translateY(-1px);background:#ef9a2f}.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--bdr2);color:var(--tx2);font-family:inherit;font-size:var(--fs-s);font-weight:700;border-radius:999px;padding:13px 24px;min-height:42px;background:linear-gradient(180deg,var(--dk3),var(--dk2));transition:.18s}.btn-ghost:hover{color:var(--tx);border-color:var(--ac2)}.sec{margin-top:62px}.sec-label{font-size:var(--fs-s);font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--ac2);margin-bottom:9px}.sec-title{font-size:clamp(22px,3.8vw,32px);font-weight:700;line-height:1.2}.sec-sub{margin-top:8px;color:var(--tx2);font-size:var(--fs-m)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}.card{background:var(--dk2);border:1px solid var(--bdr);border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:.2s}.card:hover{transform:translateY(-2px);border-color:var(--bdr2)}.card h3{font-size:var(--fs-m);margin-bottom:6px;display:flex;align-items:center;gap:8px}.icon-b{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:rgba(242,163,59,.14);border:1px solid var(--bdr2);line-height:1;flex-shrink:0}.icon-b svg{width:16px;height:16px;fill:var(--ac)}.card li,.card p{font-size:var(--fs-m);color:var(--tx2)}.card ul{padding-left:18px}.compare-scroll{overflow-x:auto;border-radius:14px;border:1px solid var(--bdr);margin-top:26px}table{width:100%;border-collapse:collapse;min-width:500px;font-size:var(--fs-m);background:var(--dk2)}thead tr{background:var(--dk3)}thead th{padding:13px 16px;text-align:left;font-size:var(--fs-s);font-weight:700;letter-spacing:.07em;text-transform:none;color:var(--tx2);border-top:none}thead th:first-child{border-radius:12px 0 0 0}thead th:last-child{border-radius:0 12px 0 0}tbody tr{border-top:1px solid var(--bdr)}tbody tr:hover{background:rgba(242,163,59,.05)}td{padding:11px 16px;vertical-align:middle;text-align:left}td:first-child{font-size:var(--fs-s);font-weight:700;color:var(--tx2)}.th-sp{color:var(--tx)!important;font-weight:800}.th-mix{color:var(--tx)!important;font-weight:800}.th-app{color:var(--app)!important;font-weight:800}.ok{color:var(--good);font-weight:800}.ng{color:var(--bad);font-weight:800}.matrix-table{min-width:620px}.func-table,.matrix-table{table-layout:fixed;min-width:720px}.func-table th,.matrix-table th{text-align:center}.func-table td,.matrix-table td{text-align:left}.func-table td:first-child,.func-table th:first-child,.matrix-table td:first-child,.matrix-table th:first-child{width:26%}.func-table td:nth-child(2),.func-table th:nth-child(2),.matrix-table td:nth-child(2),.matrix-table th:nth-child(2){width:37%}.func-table td:nth-child(3),.func-table th:nth-child(3),.matrix-table td:nth-child(3),.matrix-table th:nth-child(3){width:37%}.func-table thead tr{background:0 0}.func-table tbody tr:hover{background:0 0}.matrix-table thead tr{background:linear-gradient(90deg,rgba(131,167,24,.18),rgba(131,167,24,.08))}.matrix-table td{padding:10px 14px}.matrix-table td:first-child{font-weight:700;color:var(--tx)}.matrix-table th:nth-child(n+2){text-align:center}.matrix-chip{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:34px;padding:4px 12px;border-radius:999px;font-size:var(--fs-s);font-weight:700;line-height:1.35;border:1px solid transparent;text-align:center;white-space:normal}.mc-sp{background:rgba(121,150,42,.16);border-color:rgba(147,184,52,.35);color:#b9d37e}.mc-mix{background:rgba(104,122,145,.14);border-color:rgba(130,152,178,.28);color:#b9c7d7}.mc-app{background:rgba(242,163,59,.14);border-color:rgba(242,163,59,.42);color:var(--ac3)}.mc-warn{background:rgba(222,95,95,.14);border-color:rgba(222,95,95,.38);color:#ffb8b8}body[data-theme=light] .compare-scroll{border-color:rgba(18,24,33,.22)}body[data-theme=light] .matrix-table thead tr{background:linear-gradient(90deg,rgba(197,149,48,.24),rgba(197,149,48,.1))}body[data-theme=light] thead th{color:#364354}body[data-theme=light] tbody tr{border-top:1px solid rgba(18,24,33,.14)}body[data-theme=light] tbody tr:hover{background:rgba(231,149,48,.1)}body[data-theme=light] .mc-sp{background:#e6f3dc;border-color:#9fbe86;color:#2f5a30}body[data-theme=light] .mc-mix{background:#e8edf5;border-color:#aebbd0;color:#3c4b64}body[data-theme=light] .mc-app{background:#fff0de;border-color:#e2a764;color:#8a4b07}body[data-theme=light] .mc-warn{background:#fde7e7;border-color:#e0a1a1;color:#8c2f2f}.faq-list{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}.faq-item{background:var(--dk2);border:1px solid var(--bdr);border-radius:14px;overflow:hidden}.faq-cat{padding:11px 14px 10px;font-size:var(--fs-s);font-weight:700;color:var(--ac2);letter-spacing:.04em;background:rgba(242,163,59,.08);border-bottom:1px solid var(--bdr);text-align:center}.faq-row{padding:11px 14px 12px;border-top:1px solid var(--bdr)}.faq-row:first-of-type{border-top:none}.faq-q{font-size:var(--fs-m);font-weight:700;color:var(--tx);line-height:1.5}.faq-a{margin-top:5px;font-size:var(--fs-m);color:var(--tx2);line-height:1.6}.cta{margin-top:64px;background:linear-gradient(180deg,rgba(242,163,59,.08),transparent 34%),var(--dk2);border:1px solid var(--bdr2);border-radius:14px;padding:44px;text-align:center;box-shadow:var(--shadow)}.cta h2{font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1.18;position:relative}.cta p{margin-top:14px;font-size:var(--fs-m);color:var(--tx2);position:relative}.cta .actions{justify-content:center;margin-top:22px}.footer{margin-top:36px;padding-top:20px;border-top:1px solid var(--bdr);text-align:center;font-size:var(--fs-s);color:var(--tx3)}@media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.w{padding:8px 14px 84px}.hero{padding:34px 18px}.topbar{padding:8px 10px;gap:8px;align-items:center;display:flex;flex-wrap:nowrap}.topbar-logo{flex:0 0 auto}.topbar-logo img{height:22px}.topbar-session{margin-left:0;flex:1;min-width:0;max-width:none;padding:6px 10px;height:28px}.topbar-session-name{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:none;animation:none;font-size:var(--fs-s);font-weight:700}.theme-toggle{flex:0 0 auto;margin-left:0}.eyebrow{padding:6px 10px;gap:6px;flex-wrap:nowrap;margin-bottom:14px;max-width:100%;overflow:hidden}.eyebrow-main{flex:0 0 auto;max-width:none;font-size:var(--fs-s);letter-spacing:.03em;white-space:nowrap;overflow:visible;text-overflow:clip}.eyebrow-meta{flex:1 1 auto;min-width:0;margin-left:6px;padding-left:6px;border-left:1px solid var(--bdr2);font-size:var(--fs-s);white-space:nowrap;overflow:hidden;text-overflow:clip}.hero-eyebrow-meta-marquee{padding-left:100%;animation:heroEyebrowMarquee 12s linear infinite}.grid{grid-template-columns:1fr}.faq-list{grid-template-columns:1fr}.beta{display:none}}@media(max-width:430px){.topbar-session{min-width:0}.topbar{justify-content:space-between}}@media(max-width:390px){.w{padding:8px 12px 72px}.hero{padding:24px 16px}h1{font-size:clamp(24px,7vw,32px);line-height:1.2}.hero-sub{font-size:var(--fs-m);line-height:1.55}.btn-ghost,.btn-primary{padding:10px 16px}.card{padding:16px}.sec{margin-top:52px}}
+
+</style>
+<style>
+.theme-toggle{
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Segoe UI Symbol",sans-serif;
+  font-size:18px;
+  font-weight:700;
+  line-height:1;
+  color:var(--tx);
+  text-shadow:0 0 0 currentColor;
+}
+@media(max-width:760px){
+  .theme-toggle{
+    width:34px;
+    height:34px;
+    font-size:19px;
+  }
+}
+</style>
+<style>
+.updates-box{margin-top:62px}
+.updates-list{margin-top:18px;display:grid;gap:10px}
+.updates-item{background:var(--dk2);border:1px solid var(--bdr);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.updates-main{min-width:0;display:grid;gap:4px}
+.updates-text{font-size:var(--fs-m);font-weight:700;line-height:1.55;color:var(--tx)}
+.updates-date{font-size:var(--fs-s);color:var(--tx3)}
+.updates-post{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 12px;border-radius:999px;border:1px solid var(--bdr2);background:linear-gradient(180deg,var(--dk3),var(--dk2));font-size:var(--fs-s);font-weight:700;color:var(--tx2);white-space:nowrap}
+.updates-post:hover{color:var(--tx);border-color:var(--ac2);background:var(--ac4)}
+@media(max-width:760px){.updates-item{grid-template-columns:1fr}.updates-post{justify-self:flex-end}}
+</style>
+<style>
+.topbar-logo img{height:22px}
+@media(max-width:760px){.topbar-logo img{height:20px}}
+</style>
+<link rel="stylesheet" href="/app/lp-common.css?v=20260403a">
+</head>
+<body>
+<div class="w">
+  <div class="hero-stack">
+    <div class="topbar">
+      <div class="topbar-logo"><img id="brandLogo" src="./logo-yojitsu-dark.svg" alt="予実.app"></div>
+      <div class="topbar-session"><span class="topbar-session-dot"></span><span class="topbar-session-name">Google Workspaceで運用 / 粗利から営業利益まで追える</span></div>
+      <button id="themeToggle" class="theme-toggle" aria-label="テーマ切替">☾</button>
+    </div>
+
+    <section class="hero">
+    <div class="beta"><b>Beta</b><span>Simple Ops</span></div>
+    <div class="eyebrow"><span class="eyebrow-dot"></span><span class="eyebrow-main">企業経営者向け</span><span class="eyebrow-meta"><span class="hero-eyebrow-meta-marquee">すべては、経営者にミスリードさせないために</span></span></div>
+    <h1>定点観測で事業を加速！<br><em>予実管理アプリ</em></h1>
+    <p class="hero-sub">スプシ/Excelだけで完結してた収支管理を、案件入力〜月次損益推移〜予実差異〜3ヶ月着地まで一気通貫で可視化。粗利を見ながら営業利益まで追えるので、ミスリードのない意思決定につながります。</p>
+    <div class="actions">
+      <a class="btn-primary" href="https://drsp.cc/app/mng/index.html" target="_blank" rel="noopener noreferrer"><img class="btn-icon" src="./favicon.svg" alt="">デモを見る →</a>
+      <a class="btn-ghost" href="https://drsp.cc/app/mng/manual.html" target="_blank" rel="noopener noreferrer">マニュアル</a>
+    </div>
+    </section>
+  </div>
+
+  <section class="sec">
+    <div class="sec-label">Target</div>
+    <div class="sec-title">こんな会社・チーム向け</div>
+    <div class="sec-sub">スプシ/Excelで収支管理をしている、売上1億円以下目安のコンパクトなサイズの会社・部署・チーム。</div>
+    <div class="grid">
+      <article class="card"><h3><span class="icon-b">🏢</span>対象</h3><ul><li>スプシ/Excel運用を継続したい</li><li>重いシステム導入はまだ早い</li><li>数字の見える化を急ぎたい</li></ul></article>
+      <article class="card"><h3><span class="icon-b">🚀</span>目的</h3><ul><li>意思決定の正確性アップ</li><li>意思決定スピードアップ</li><li>定点観測で議論の質向上</li></ul></article>
+      <article class="card"><h3><span class="icon-b">👥</span>運用（最小3名）</h3><ul><li>目標を入力する人</li><li>実績を入力する人</li><li>施策に落とす人</li></ul></article>
+    </div>
+  </section>
+
+
+
+  <section class="sec">
+    <div class="sec-label">Functions</div>
+    <div class="sec-title">できること</div>
+    <div class="sec-sub">売上・原価・粗利・販管費・営業利益までを、毎月同じ粒度で観測。</div>
+    <div class="grid">
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M2 4h5l1.4 1.6H16a1 1 0 0 1 1 1v6.8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/></svg></span>案件管理</h3><p>案件情報を1画面で登録・検索・絞り込み。売上と原価の合計まで即時に確認できます。</p></article>
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M4 2h1.5v2H4V2zm8.5 0H14v2h-1.5V2zM3 5h12a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm2 4h3v3H5V9z"/></svg></span>月次損益推移</h3><p>月次・四半期・通期の推移を同じ軸で表示。粗利から営業利益までブレを追えます。</p></article>
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M2 14h14v2H2v-2zm2-1V8h2v5H4zm4 0V5h2v8H8zm4 0V3h2v10h-2z"/></svg></span>予実進捗</h3><p>目標値と実績値、達成率と差異を同時表示。遅れや過達を早い段階で把握できます。</p></article>
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M7 2l2.4 2.4L8 5.8 5.6 3.4 7 2zm3.6 3.6L14 9l-1.4 1.4-3.4-3.4 1.4-1.4zM4 10.5l3.5-3.5 4.9 4.9-3.5 3.5H4v-4.9z"/></svg></span>3ヶ月着地</h3><p>見積案件と進行中案件を反映して試算。3ヶ月先の着地見込みを先回りで確認できます。</p></article>
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M3 2h9l3 3v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm2 5h8v1.6H5V7zm0 3h8v1.6H5V10zm0 3h6v1.6H5V13z"/></svg></span>課題管理</h3><p>課題・原因・対応案を1行で整理し共有。改行とリンク対応で会議前後の参照もスムーズ。</p></article>
+      <article class="card"><h3><span class="icon-b"><svg viewBox="0 0 18 18"><path d="M10.1 1.8l.3 1.8a5.9 5.9 0 0 1 1.4.8l1.7-.7 1.3 2.2-1.4 1.1c.1.5.1 1 0 1.5l1.4 1.1-1.3 2.2-1.7-.7c-.4.3-.9.6-1.4.8l-.3 1.8H7.9l-.3-1.8a5.9 5.9 0 0 1-1.4-.8l-1.7.7-1.3-2.2 1.4-1.1a4.4 4.4 0 0 1 0-1.5L3.2 5.9 4.5 3.7l1.7.7c.4-.3.9-.6 1.4-.8l.3-1.8h2.2zM9 6.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8z"/></svg></span>シンプル構成</h3><p>スプシ + GAS + HTML の最小構成で運用。既存環境を活かし、低コストで始められます。</p></article>
+    </div>
+  </section>
+
+
+
+
+
+  <section class="sec">
+    <div class="sec-label">Weekly Impact</div>
+    <div class="sec-title">定期更新で起こる変化</div>
+    <div class="sec-sub">これまで予実管理をあまり回してこなかったチームでも、定期更新（週次/隔週）だけで意思決定の土台が変わります。</div>
+    <div class="grid">
+      <article class="card"><h3><span class="icon-b">🧭</span>議論が早くなる</h3><p>数字を集める時間が減り、会議冒頭から課題と打ち手の議論に入れます。</p></article>
+      <article class="card"><h3><span class="icon-b">⚠️</span>手遅れが減る</h3><p>売上未達や粗利悪化を月末ではなく週次で検知し、早めに修正できます。</p></article>
+      <article class="card"><h3><span class="icon-b">🤝</span>属人化が減る</h3><p>担当者の頭の中にある数字ではなく、同じ画面を見てチームで判断できます。</p></article>
+      <article class="card"><h3><span class="icon-b">🔁</span>改善が回り始める</h3><p>毎週の定例で「確認→判断→実行」を回すことで、改善サイクルが習慣化します。</p></article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">Feature List</div>
+    <div class="sec-title">主な機能一覧</div>
+    <div class="compare-scroll">
+      <table class="func-table">
+        <thead><tr><th>機能</th><th>内容</th><th>使う場面</th></tr></thead>
+        <tbody>
+          <tr><td>案件管理</td><td>売上/原価/担当/ステータスを入力・検索・集計</td><td>日次の更新運用</td></tr>
+          <tr><td>月次損益推移</td><td>売上・原価・粗利・販管費・営業利益を可視化</td><td>月次会議・振り返り</td></tr>
+          <tr><td>予実進捗</td><td>目標に対する達成率と差異を表示</td><td>遅れの早期発見</td></tr>
+          <tr><td>3ヶ月着地</td><td>進行中/見積案件から着地見込みを試算</td><td>先回りの意思決定</td></tr>
+          <tr><td>課題管理</td><td>改行・リンク付きで論点を一元管理</td><td>アクション議論の起点</td></tr>
+          <tr><td>Google連携</td><td>スプシ + GAS + HTMLのシンプル構成</td><td>低コスト導入</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">Compare</div>
+    <div class="sec-title">比較表</div>
+    <div class="sec-sub">スプシ単体 と 予実.app を1つの表で比較しています。</div>
+    <div class="compare-scroll">
+      <table class="matrix-table">
+        <thead><tr><th>比較項目</th><th class="th-sp">スプシ単体</th><th class="th-app">予実.app</th></tr></thead>
+        <tbody>
+          <tr><td>課題抽出</td><td><span class="matrix-chip mc-sp">都度集計で属人化しやすい</span></td><td><span class="matrix-chip mc-app">定点観測から即議論へ</span></td></tr>
+          <tr><td>数値チェック</td><td><span class="matrix-chip mc-sp">関数・参照崩れ確認が重い</span></td><td><span class="matrix-chip mc-app">入力時に自動集計・確認工数圧縮</span></td></tr>
+          <tr><td>データ更新</td><td><span class="matrix-chip mc-sp">シート分散で更新が散在</span></td><td><span class="matrix-chip mc-app">案件入力が集計に直結</span></td></tr>
+          <tr><td>見込み管理</td><td><span class="matrix-chip mc-sp">見込み管理が別シート化</span></td><td><span class="matrix-chip mc-app">同画面で3ヶ月着地確認</span></td></tr>
+          <tr><td>運用負荷</td><td><span class="matrix-chip mc-warn">担当者依存で引き継ぎ負荷</span></td><td><span class="matrix-chip mc-app">役割分担で継続しやすい</span></td></tr>
+          <tr><td>向いている用途</td><td><span class="matrix-chip mc-sp">小規模の単純集計</span></td><td><span class="matrix-chip mc-app">収支運用と意思決定高速化</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">FAQ</div>
+    <div class="sec-title">よくある質問</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-cat">操作・設定</div>
+        <div class="faq-row">
+          <div class="faq-q">導入準備は？</div>
+          <div class="faq-a">最小構成は「スプレッドシート1枚 / GAS（Code.gs） / HTML1ファイル」です。シート作成→GAS貼り付け→WebアプリURL設定で開始できます。</div>
+        </div>
+        <div class="faq-row">
+          <div class="faq-q">既存運用は残せる？</div>
+          <div class="faq-a">そのまま流用は難しいケースが多く、列構成や入力ルールの整形・移行が前提です。初期整備後は継続運用しやすくなります。</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-cat">データ</div>
+        <div class="faq-row">
+          <div class="faq-q">入力データはどのくらい保持されますか？</div>
+          <div class="faq-a">削除しない限り保持されます。必要に応じてスプレッドシート側で履歴管理やバックアップ運用も可能です。</div>
+        </div>
+        <div class="faq-row">
+          <div class="faq-q">数値の整合性はどう担保しますか？</div>
+          <div class="faq-a">案件入力を基点に集計へ反映する設計です。定期的な確認ルールを決めることで、関数崩れ確認の負荷を下げられます。</div>
+        </div>
+        <div class="faq-row">
+          <div class="faq-q">AI機能は入っていますか？</div>
+          <div class="faq-a">いいえ。本アプリは全般的にAI機能を組み込んでいません。入力・集計・可視化を安定して回すことを優先しています。</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-cat">運営</div>
+        <div class="faq-row">
+          <div class="faq-q">最小運用人数は？</div>
+          <div class="faq-a">目安は3名です。目標入力、実績入力、意思決定（アクション化）の役割を分けると運用が安定します。</div>
+        </div>
+        <div class="faq-row">
+          <div class="faq-q">セキュリティは？</div>
+          <div class="faq-a">Google Workspaceの共有権限を基盤に運用します。必要ならGAS側でAPIキーや許可メール制御を追加できます。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec updates-box">
+    <div class="sec-label">Updates</div>
+    <div class="sec-title">最近の機能アップデート</div>
+    <div class="updates-list">
+      <div class="updates-item">
+        <div class="updates-main">
+          <div class="updates-text">● 主要KPI表示と比較表の文言を整理し、初見ユーザーの理解しやすさを改善しました。</div>
+          <div class="updates-date">2026/03/30</div>
+        </div>
+        <a class="updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E4%B8%BB%E8%A6%81KPI%E8%A1%A8%E7%A4%BA%E3%81%A8%E6%AF%94%E8%BC%83%E8%A1%A8%E3%81%AE%E6%96%87%E8%A8%80%E3%82%92%E6%95%B4%E7%90%86%E3%81%97%E3%80%81%E5%88%9D%E8%A6%8B%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AE%E7%90%86%E8%A7%A3%E3%81%97%E3%82%84%E3%81%99%E3%81%95%E3%82%92%E6%94%B9%E5%96%84%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fmng%2Flp%2F">Xでポスト</a>
+      </div>
+      <div class="updates-item">
+        <div class="updates-main">
+          <div class="updates-text">● 初期セットアップ手順（GAS接続→保存→固定化）を見直し、運用開始までの手順をさらに分かりやすくしました。</div>
+          <div class="updates-date">2026/03/29</div>
+        </div>
+        <a class="updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E5%88%9D%E6%9C%9F%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E6%89%8B%E9%A0%86%EF%BC%88GAS%E6%8E%A5%E7%B6%9A%E2%86%92%E4%BF%9D%E5%AD%98%E2%86%92%E5%9B%BA%E5%AE%9A%E5%8C%96%EF%BC%89%E3%82%92%E8%A6%8B%E7%9B%B4%E3%81%97%E3%80%81%E9%81%8B%E7%94%A8%E9%96%8B%E5%A7%8B%E3%81%BE%E3%81%A7%E3%81%AE%E6%89%8B%E9%A0%86%E3%82%92%E3%81%95%E3%82%89%E3%81%AB%E5%88%86%E3%81%8B%E3%82%8A%E3%82%84%E3%81%99%E3%81%8F%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fmng%2Flp%2F">Xでポスト</a>
+      </div>
+      <div class="updates-item">
+        <div class="updates-main">
+          <div class="updates-text">● 導入手順（GAS接続→保存→固定化）を再確認し、運用開始までの迷いを減らす構成へ更新しました。</div>
+          <div class="updates-date">2026/03/29</div>
+        </div>
+        <a class="updates-post" target="_blank" rel="noopener noreferrer" href="https://x.com/intent/tweet?text=%E2%97%8F%20%E5%B0%8E%E5%85%A5%E6%89%8B%E9%A0%86%EF%BC%88GAS%E6%8E%A5%E7%B6%9A%E2%86%92%E4%BF%9D%E5%AD%98%E2%86%92%E5%9B%BA%E5%AE%9A%E5%8C%96%EF%BC%89%E3%82%92%E5%86%8D%E7%A2%BA%E8%AA%8D%E3%81%97%E3%80%81%E9%81%8B%E7%94%A8%E9%96%8B%E5%A7%8B%E3%81%BE%E3%81%A7%E3%81%AE%E8%BF%B7%E3%81%84%E3%82%92%E6%B8%9B%E3%82%89%E3%81%99%E6%A7%8B%E6%88%90%E3%81%B8%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82&url=https%3A%2F%2Fdrsp.cc%2Fmng%2Flp%2F">Xでポスト</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="cta">
+    <h2>まずはデモを触ってみてください。</h2>
+    <p>データ追加、削除、修正など自由に行ってください</p>
+    <div class="actions"><a class="btn-primary" href="https://drsp.cc/app/mng/index.html" target="_blank" rel="noopener noreferrer"><img class="btn-icon" src="./favicon.svg" alt="">デモを見る →</a></div>
+  </section>
+
+  <footer class="footer">© 2026 <a href="https://drsp.cc/" target="_blank" rel="noopener noreferrer">一般社団法人ディレクションサポート協会</a> / 予実.app</footer>
+</div>
+<script>
+(function(){
+  const KEY='yojitsu-lp-theme';
+  const btn=document.getElementById('themeToggle');
+  const logo=document.getElementById('brandLogo');
+  const saved=localStorage.getItem(KEY);
+  const init=saved || (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  function apply(theme){document.body.setAttribute('data-theme',theme);if(btn)btn.textContent=theme==='light'?'☀️':'🌙';if(logo)logo.src=theme==='dark'?'./logo-yojitsu-dark.svg':'./logo-yojitsu-light.svg';}
+  apply(init);
+  if(btn){btn.addEventListener('click',()=>{const next=document.body.getAttribute('data-theme')==='light'?'dark':'light';localStorage.setItem(KEY,next);apply(next);});}
+})();
+</script>
+</body>
+</html>
