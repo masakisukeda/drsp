@@ -7,6 +7,8 @@
   <meta name="application-name" content="PJサンプル" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="shortcut icon" href="./favicon.svg" />
   <link rel="canonical" href="https://drsp.cc/app/pj/" />
   <link rel="alternate" type="text/plain" href="https://drsp.cc/app/pj/llms.txt" />
   <meta property="og:locale" content="ja_JP" />
@@ -88,6 +90,19 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+    }
+    .brandmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #0f172a, #1d4ed8 60%, #0f766e);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
     }
     h1 {
       margin: 16px 0 10px;
@@ -283,6 +298,7 @@
 
     <section class="hero">
       <div class="card hero-main">
+        <div class="brandmark" aria-hidden="true">PJ</div>
         <span class="eyebrow">dummy data / static html only</span>
         <h1>PJサンプルの<br />プロジェクト管理</h1>
         <p class="lead">これは公開確認用のダミーページです。進捗、タスク、メンバー、資料をひと目で見られる体裁だけを残し、実データは含めていません。</p>
