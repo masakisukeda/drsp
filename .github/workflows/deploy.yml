@@ -194,7 +194,6 @@ jobs:
           CH_MEMBERSHIP: ${{ steps.changes.outputs.membership }}
           CH_SLIDE: ${{ steps.changes.outputs.slide }}
           CH_DPLUS: ${{ steps.changes.outputs.dplus }}
-          CH_APP_PJ: ${{ steps.changes.outputs.app_pj }}
         run: |
           {
             echo "set ssl:verify-certificate no"
@@ -247,9 +246,7 @@ jobs:
             if [ "$CH_DPLUS" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms dplus dplus"
             fi
-            if [ "$CH_APP_PJ" = "true" ]; then
-              echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms app/pj app/pj"
-            fi
+            echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms app/pj app/pj"
             echo "bye"
           } > /tmp/upload.lftp
 
