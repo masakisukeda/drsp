@@ -107,6 +107,34 @@
       flex-wrap: wrap;
       margin-top: 22px;
     }
+    .page-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 16px;
+      margin: 0 0 20px;
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+    .page-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+    .page-nav a:hover {
+      background: #dfe8f5;
+      transform: translateY(-1px);
+    }
     .pill {
       display: inline-flex;
       align-items: center;
@@ -220,6 +248,7 @@
 
     .log { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .log-item { border-left: 4px solid var(--accent); }
+    section[id] { scroll-margin-top: 108px; }
 
     footer {
       margin-top: 22px;
@@ -243,6 +272,15 @@
 </head>
 <body>
   <div class="wrap">
+    <nav class="card page-nav" aria-label="ページ遷移">
+      <a href="#overview">概要</a>
+      <a href="#milestones">マイルストーン</a>
+      <a href="#tasks">タスク一覧</a>
+      <a href="#members">メンバー</a>
+      <a href="#documents">資料一覧</a>
+      <a href="#log">更新ログ</a>
+    </nav>
+
     <section class="hero">
       <div class="card hero-main">
         <span class="eyebrow">dummy data / static html only</span>
@@ -273,7 +311,7 @@
       </div>
     </section>
 
-    <section class="grid-4">
+    <section id="overview" class="grid-4">
       <div class="summary">
         <h2>タスク数</h2>
         <p>8件のサンプルタスク</p>
@@ -292,7 +330,7 @@
       </div>
     </section>
 
-    <section class="card section">
+    <section id="milestones" class="card section">
       <div class="section-head">
         <div>
           <h2>マイルストーン</h2>
@@ -318,7 +356,7 @@
       </div>
     </section>
 
-    <section class="card section">
+    <section id="tasks" class="card section">
       <div class="section-head">
         <div>
           <h2>タスク一覧</h2>
@@ -353,7 +391,7 @@
       </div>
     </section>
 
-    <section class="card section">
+    <section id="members" class="card section">
       <div class="section-head">
         <div>
           <h2>メンバー</h2>
@@ -394,7 +432,7 @@
       </div>
     </section>
 
-    <section class="card section">
+    <section id="documents" class="card section">
       <div class="section-head">
         <div>
           <h2>資料一覧</h2>
@@ -433,7 +471,7 @@
       </div>
     </section>
 
-    <section class="card section">
+    <section id="log" class="card section">
       <div class="section-head">
         <div>
           <h2>更新ログ</h2>
