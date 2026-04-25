@@ -50,8 +50,8 @@ jobs:
               - 'slide/**'
             dplus:
               - 'dplus/**'
-            app_pj:
-              - 'app/pj/**'
+            app:
+              - 'app/**'
             any:
               - '.github/workflows/deploy.yml'
               - '.htaccess'
@@ -73,7 +73,7 @@ jobs:
               - 'membership/**'
               - 'slide/**'
               - 'dplus/**'
-              - 'app/pj/**'
+              - 'app/**'
 
       - name: Update sitemap lastmod from git history
         if: steps.changes.outputs.any == 'true'
@@ -246,7 +246,7 @@ jobs:
             if [ "$CH_DPLUS" = "true" ]; then
               echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms dplus dplus"
             fi
-            echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms app/pj app/pj"
+            echo "mirror -R --delete --verbose=1 --parallel=4 --only-newer --no-perms app app"
             echo "bye"
           } > /tmp/upload.lftp
 
