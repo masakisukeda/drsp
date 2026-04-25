@@ -1,516 +1,1676 @@
+<!-- 
+    プロジェクト DASHBOARD DESIGN RULES:
+    - Accent: Slate-900 (Gray), Progress: Solid Red
+    - Calendar: Sun=Red, Sat=Blue, Past months=Collapsed
+    - Script: showSubtask (lowercase t), .subtask-btn class
+    Ref: dashboard_guidelines.md
+-->
 <!DOCTYPE html>
-<html lang="ja">
+<html class="light" lang="ja">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PJサンプルの静的ダッシュボード。進捗、タスク、メンバー、資料をひと目で確認できるダミーページです。" />
-  <meta name="application-name" content="PJサンプル" />
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-  <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-  <link rel="shortcut icon" href="./favicon.svg" />
-  <link rel="canonical" href="https://drsp.cc/app/pj/" />
-  <link rel="alternate" type="text/plain" href="https://drsp.cc/app/pj/llms.txt" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="PJサンプル" />
-  <meta property="og:title" content="PJサンプル | プロジェクト管理" />
-  <meta property="og:description" content="PJサンプルの静的ダッシュボード。進捗、タスク、メンバー、資料をひと目で確認できるダミーページです。" />
-  <meta property="og:url" content="https://drsp.cc/app/pj/" />
-  <meta property="og:image" content="https://drsp.cc/app/pj/ogp.svg" />
-  <meta property="og:image:type" content="image/svg+xml" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PJサンプル | プロジェクト管理" />
-  <meta name="twitter:description" content="PJサンプルの静的ダッシュボード。進捗、タスク、メンバー、資料をひと目で確認できるダミーページです。" />
-  <meta name="twitter:image" content="https://drsp.cc/app/pj/ogp.svg" />
-  <title>PJサンプル | プロジェクト管理</title>
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --panel: #ffffff;
-      --panel-soft: #eef2f7;
-      --text: #0f172a;
-      --muted: #64748b;
-      --line: #dbe3ee;
-      --accent: #1d4ed8;
-      --accent-strong: #0f172a;
-      --good: #0f766e;
-      --warn: #b45309;
-      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-      --radius: 24px;
-    }
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>デモ | プロジェクト管理</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="shortcut icon" href="./favicon.svg" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(29, 78, 216, 0.12), transparent 28%),
-        radial-gradient(circle at top right, rgba(15, 118, 110, 0.10), transparent 24%),
-        var(--bg);
-      line-height: 1.6;
-    }
+        html {
+            font-size: 14px;
+        }
 
-    a { color: inherit; text-decoration: none; }
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 64px; }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 20px;
-      align-items: stretch;
-      margin-bottom: 20px;
-    }
-    .card {
-      background: var(--panel);
-      border: 1px solid rgba(219, 227, 238, 0.8);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .hero-main { padding: 32px; position: relative; overflow: hidden; }
-    .hero-main::after {
-      content: "";
-      position: absolute;
-      inset: auto -64px -64px auto;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: rgba(29, 78, 216, 0.08);
-    }
-    .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(29, 78, 216, 0.08);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .brandmark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      background: linear-gradient(145deg, #0f172a, #1d4ed8 60%, #0f766e);
-      color: #fff;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
-    }
-    h1 {
-      margin: 16px 0 10px;
-      font-size: clamp(2rem, 5vw, 3.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 56ch;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-    .page-nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      padding: 16px;
-      margin: 0 0 20px;
-      position: sticky;
-      top: 14px;
-      z-index: 20;
-      backdrop-filter: blur(12px);
-    }
-    .page-nav a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--panel-soft);
-      color: var(--accent-strong);
-      font-size: 13px;
-      font-weight: 800;
-      transition: transform 0.18s ease, background 0.18s ease;
-    }
-    .page-nav a:hover {
-      background: #dfe8f5;
-      transform: translateY(-1px);
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      background: var(--panel-soft);
-      color: var(--accent-strong);
-    }
-    .hero-side {
-      padding: 24px;
-      display: grid;
-      gap: 14px;
-    }
-    .metric {
-      padding: 18px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, #fff, #f8fbff);
-      border: 1px solid var(--line);
-    }
-    .metric-label { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
-    .metric-value { font-size: 28px; font-weight: 900; margin-top: 8px; letter-spacing: -0.04em; }
-    .metric-sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f8f9ff;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 20px 0; }
-    .summary {
-      padding: 18px;
-      border-radius: 18px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-    }
-    .summary h2 { margin: 0 0 6px; font-size: 14px; }
-    .summary p { margin: 0; color: var(--muted); font-size: 13px; }
+        .tab-content {
+            display: none;
+        }
 
-    .section { margin-top: 20px; padding: 24px; }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: end;
-      margin-bottom: 18px;
-    }
-    .section-head h2 { margin: 0; font-size: 24px; letter-spacing: -0.03em; }
-    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
-    .timeline, .tasks, .docs, .members, .log { display: grid; gap: 12px; }
-    .timeline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .tile, .task, .doc, .member, .log-item {
-      padding: 18px;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--line);
-    }
-    .tile .date, .task .meta, .doc .meta, .log-item .date { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
-    .tile h3, .task h3, .doc h3, .member h3, .log-item h3 { margin: 6px 0 6px; font-size: 16px; }
-    .tile p, .task p, .doc p, .member p, .log-item p { margin: 0; color: var(--muted); font-size: 13px; }
+        .tab-content.active {
+            display: block;
+        }
 
-    .tasks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .task strong { color: var(--accent-strong); }
-    .task .bar {
-      margin-top: 14px;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .task .bar span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #1d4ed8, #0f172a);
-    }
+        .tab-btn.active {
+            border-color: #334155;
+            color: #1e293b;
+        }
 
-    .members { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .member-top {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      color: white;
-      background: linear-gradient(135deg, #1d4ed8, #0f172a);
-      flex: 0 0 auto;
-    }
+        .sidebar-link.active {
+            background-color: #0f172a;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
 
-    .docs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .doc {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .doc .icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #eef2ff;
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-      font-weight: 900;
-      flex: 0 0 auto;
-    }
+        .sidebar-link.active:hover {
+            background-color: #0f172a !important;
+            color: white !important;
+        }
 
-    .log { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .log-item { border-left: 4px solid var(--accent); }
-    section[id] { scroll-margin-top: 108px; }
+        .sidebar-link.active .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
 
-    footer {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
+        .subtask-content {
+            display: none;
+        }
 
-    @media (max-width: 960px) {
-      .hero, .grid-4, .timeline, .tasks, .members, .docs, .log { grid-template-columns: 1fr 1fr; }
-      .hero { grid-template-columns: 1fr; }
-    }
+        .subtask-content.active {
+            display: block;
+        }
 
-    @media (max-width: 720px) {
-      .wrap { padding: 20px 14px 48px; }
-      .hero, .grid-4, .timeline, .tasks, .members, .docs, .log { grid-template-columns: 1fr; }
-      .hero-main, .hero-side, .section { padding: 20px; }
-      .section-head { align-items: start; flex-direction: column; }
-    }
-  </style>
+        .brandmark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #0f172a, #1d4ed8 60%, #0f766e);
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.18);
+            flex-shrink: 0;
+        }
+
+        /* Dark mode */
+        .dark body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .dark aside,
+        .dark header,
+        .dark .bg-white {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+            color: #f8fafc;
+        }
+
+        .dark .text-slate-900,
+        .dark .text-slate-800,
+        .dark .text-slate-700,
+        .dark .text-slate-600 {
+            color: #f1f5f9 !important;
+        }
+
+        .dark .text-slate-500,
+        .dark .text-slate-400 {
+            color: #cbd5e1 !important;
+        }
+
+        .dark .bg-slate-50,
+        .dark .bg-slate-100,
+        .dark .bg-primary-container {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .dark .bg-red-50 {
+            background-color: rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .dark .bg-emerald-50 {
+            background-color: rgba(16, 185, 129, 0.1) !important;
+        }
+
+        .dark .bg-amber-50 {
+            background-color: rgba(245, 158, 11, 0.1) !important;
+        }
+
+        .dark .bg-purple-50 {
+            background-color: rgba(139, 92, 246, 0.1) !important;
+        }
+
+        .dark .bg-orange-50 {
+            background-color: rgba(249, 115, 22, 0.1) !important;
+        }
+
+        .dark .bg-surface-container-low {
+            background-color: #334155 !important;
+        }
+
+        .dark .border-slate-50,
+        .dark .border-slate-100,
+        .dark .border-slate-200 {
+            border-color: #334155 !important;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#334155",
+                        "primary-container": "#f1f5f9",
+                        "on-surface": "#0f172a",
+                        "surface-container-low": "#f1f5f9",
+                        "error": "#ba1a1a",
+                        "tertiary": "#475569",
+                        "tertiary-fixed": "#cbd5e1",
+                    },
+                    "spacing": { "card-gap": "20px", "container-padding": "24px" }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-  <div class="wrap">
-    <nav class="card page-nav" aria-label="ページ遷移">
-      <a href="#overview">概要</a>
-      <a href="#milestones">マイルストーン</a>
-      <a href="#tasks">タスク一覧</a>
-      <a href="#members">メンバー</a>
-      <a href="#documents">資料一覧</a>
-      <a href="#log">更新ログ</a>
-    </nav>
 
-    <section class="hero">
-      <div class="card hero-main">
-        <div class="brandmark" aria-hidden="true">PJ</div>
-        <span class="eyebrow">dummy data / static html only</span>
-        <h1>PJサンプルの<br />プロジェクト管理</h1>
-        <p class="lead">これは公開確認用のダミーページです。進捗、タスク、メンバー、資料をひと目で見られる体裁だけを残し、実データは含めていません。</p>
-        <div class="hero-actions">
-          <span class="pill">公開URL: /app/pj/</span>
-          <span class="pill">HTML only</span>
-          <span class="pill">no script</span>
-        </div>
-      </div>
-      <div class="card hero-side">
-        <div class="metric">
-          <div class="metric-label">進捗</div>
-          <div class="metric-value">64%</div>
-          <div class="metric-sub">ダミー進捗の表示です</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">次回確認</div>
-          <div class="metric-value" style="font-size: 22px;">2026.05.08 14:00</div>
-          <div class="metric-sub">仮の定例チェック</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">公開状態</div>
-          <div class="metric-value" style="font-size: 22px;">サンプル</div>
-          <div class="metric-sub">検索向けの説明もダミーです</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="overview" class="grid-4">
-      <div class="summary">
-        <h2>タスク数</h2>
-        <p>8件のサンプルタスク</p>
-      </div>
-      <div class="summary">
-        <h2>メンバー</h2>
-        <p>4名のダミーチーム</p>
-      </div>
-      <div class="summary">
-        <h2>資料</h2>
-        <p>4本のサンプル資料</p>
-      </div>
-      <div class="summary">
-        <h2>ログ</h2>
-        <p>最新更新 2026.04.25</p>
-      </div>
-    </section>
-
-    <section id="milestones" class="card section">
-      <div class="section-head">
-        <div>
-          <h2>マイルストーン</h2>
-          <p>公開確認用のダミースケジュール</p>
-        </div>
-      </div>
-      <div class="timeline">
-        <div class="tile">
-          <div class="date">2026.04.30</div>
-          <h3>要件の仮まとめ</h3>
-          <p>公開用のひな形を整えるフェーズです。</p>
-        </div>
-        <div class="tile">
-          <div class="date">2026.05.08</div>
-          <h3>サンプル確認</h3>
-          <p>見た目と導線を軽くチェックする想定です。</p>
-        </div>
-        <div class="tile">
-          <div class="date">2026.05.15</div>
-          <h3>公開継続の判断</h3>
-          <p>必要に応じて内容を差し替える想定です。</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="tasks" class="card section">
-      <div class="section-head">
-        <div>
-          <h2>タスク一覧</h2>
-          <p>実運用の内容は含めないサンプルです</p>
-        </div>
-      </div>
-      <div class="tasks">
-        <div class="task">
-          <div class="meta">Task 01</div>
-          <h3>サンプル要件の整理</h3>
-          <p><strong>担当:</strong> メンバーA</p>
-          <div class="bar"><span style="width: 72%;"></span></div>
-        </div>
-        <div class="task">
-          <div class="meta">Task 02</div>
-          <h3>レイアウトの確認</h3>
-          <p><strong>担当:</strong> メンバーB</p>
-          <div class="bar"><span style="width: 54%;"></span></div>
-        </div>
-        <div class="task">
-          <div class="meta">Task 03</div>
-          <h3>ダミー文言の調整</h3>
-          <p><strong>担当:</strong> メンバーC</p>
-          <div class="bar"><span style="width: 38%;"></span></div>
-        </div>
-        <div class="task">
-          <div class="meta">Task 04</div>
-          <h3>公開後チェック</h3>
-          <p><strong>担当:</strong> 外部パートナー</p>
-          <div class="bar"><span style="width: 22%;"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="members" class="card section">
-      <div class="section-head">
-        <div>
-          <h2>メンバー</h2>
-          <p>すべてサンプル名です</p>
-        </div>
-      </div>
-      <div class="members">
-        <div class="member">
-          <div class="member-top">
-            <div class="avatar">A</div>
-            <div>
-              <h3>メンバーA</h3>
-              <p>進行管理のダミー担当</p>
+<body class="bg-[#f8f9ff] text-slate-900">
+    <!-- SideNavBar -->
+    <aside class="fixed left-0 top-0 bottom-0 w-64 border-r border-slate-100 bg-white z-50 flex flex-col p-4">
+        <div class="mb-8 px-2">
+            <div class="flex items-center gap-3">
+                <div class="brandmark" aria-hidden="true">PJ</div>
+                <span class="text-xl font-black text-slate-900 tracking-tighter">デモ</span>
             </div>
-          </div>
-          <p>概要の整理やチェックリストの確認を担当する想定です。</p>
+            <p class="text-xs font-medium text-slate-400 mt-1 uppercase tracking-widest"><strong>プロジェクトダッシュボード</strong>
+            </p>
         </div>
-        <div class="member">
-          <div class="member-top">
-            <div class="avatar">B</div>
-            <div>
-              <h3>メンバーB</h3>
-              <p>資料整備のダミー担当</p>
+        <nav class="flex-1 space-y-1">
+            <button
+                class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('overview', this)">
+                <span class="material-symbols-outlined text-[22px]">home</span>
+                <span class="text-sm">ホーム</span>
+            </button>
+            <button
+                class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('management', this)">
+                <span class="material-symbols-outlined text-[22px]">calendar_today</span>
+                <span class="text-sm">カレンダー</span>
+            </button>
+            <button
+                class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('tasks', this)">
+                <span class="material-symbols-outlined text-[22px]">checklist</span>
+                <span class="text-sm">タスク一覧</span>
+            </button>
+            <button
+                class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('resources', this)">
+                <span class="material-symbols-outlined text-[22px]">folder_open</span>
+                <span class="text-sm">関連資料</span>
+            </button>
+            <button
+                class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('members', this)">
+                <span class="material-symbols-outlined text-[22px]">group</span>
+                <span class="text-sm">メンバー</span>
+            </button>
+            <button
+                class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 font-black hover:bg-slate-100 hover:text-slate-900 group-[.active]:hover:bg-slate-900 group-[.active]:hover:text-white transition-all mb-1"
+                onclick="showTab('meetings', this)">
+                <span class="material-symbols-outlined text-[22px]">history</span>
+                <span class="text-sm">活動ログ</span>
+            </button>
+        </nav>
+        <div class="mt-auto border-t border-slate-50 pt-4 text-center">
+            <div style="font-size: 0.6rem; color: #94a3b8; margin-bottom: 8px;">最終更新: 2026.04.25 14:45</div>
+            <button onclick="toggleTheme()"
+                class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                <span class="material-symbols-outlined">contrast</span>
+                <span class="text-sm font-medium">テーマ切替</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- TopNavBar -->
+    <header
+        class="fixed top-0 right-0 left-64 h-14 bg-white/80 backdrop-blur-md border-b border-slate-100 z-40 flex justify-between items-center px-8 shadow-sm">
+        <div class="flex items-center gap-4">
+            <h1 class="text-xl font-black text-slate-900 flex items-center gap-2" id="current-tab-title">
+                <span class="material-symbols-outlined text-primary font-black">home</span> ホーム
+            </h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- SYNC:next-meeting:START -->
+            <div
+                class="flex items-center gap-3 px-4 py-1.5 bg-surface-container-low rounded-full border border-slate-100">
+                <span class="material-symbols-outlined text-slate-600 text-[20px] font-black">event_upcoming</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-400 text-[10px] font-black uppercase tracking-wider">次回ミーティング</span>
+                    <span class="text-slate-900 text-sm font-black">05.05 (火) 14:00〜 @Zoom</span>
+                </div>
             </div>
-          </div>
-          <p>リンクや文言の差し替えを扱う想定の役割です。</p>
+            <!-- SYNC:next-meeting:END -->
+            <button class="p-2 text-slate-500" onclick="window.location.reload()"><span
+                    class="material-symbols-outlined">refresh</span></button>
         </div>
-        <div class="member">
-          <div class="member-top">
-            <div class="avatar">C</div>
-            <div>
-              <h3>メンバーC</h3>
-              <p>レビューのダミー担当</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="ml-64 mt-14 px-8 py-6 min-h-screen">
+        <div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active space-y-6">
+                <!-- Project Progress Tracker -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden group">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full -mr-32 -mt-32 transition-transform group-hover:scale-110 duration-700">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100/60">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-primary font-black bg-slate-50 p-2 rounded-xl">auto_graph</span>
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">プロジェクト現在地</h3>
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mt-0.5">Phase
+                                        1: Foundation & Community</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-2xl font-black text-slate-900 italic">25日目</span>
+                                <span class="text-xs font-bold text-slate-400 block">プロジェクト開始から</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini Timeline -->
+                        <div class="relative pt-2 pb-6">
+                            <div class="absolute top-5 left-0 right-0 h-1 bg-slate-100 rounded-full"></div>
+                            <div
+                                class="absolute top-5 left-0 w-[45%] h-1 bg-primary rounded-full shadow-[0_0_10px_rgba(15,23,42,0.2)]">
+                            </div>
+
+                            <div class="flex justify-between relative z-10">
+                                <!-- SYNC:compact-roadmap:START -->
+
+                                <div class="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                                    <div class="w-3 h-3 rounded-full bg-primary mb-2 relative">
+                                        <div class="absolute -inset-1 bg-primary/20 rounded-full animate-ping"></div>
+                                    </div>
+                                    <span class="text-[10px] text-primary font-bold whitespace-nowrap">フェーズ1完了</span>
+                                </div>
+
+                                <div class="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                                    <div class="w-3 h-3 rounded-full bg-primary mb-2 relative">
+                                        <div class="absolute -inset-1 bg-primary/20 rounded-full animate-ping"></div>
+                                    </div>
+                                    <span class="text-[10px] text-primary font-bold whitespace-nowrap">コンテンツ公開</span>
+                                </div>
+
+                                <div class="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                                    <div class="w-3 h-3 rounded-full bg-primary mb-2 relative">
+                                        <div class="absolute -inset-1 bg-primary/20 rounded-full animate-ping"></div>
+                                    </div>
+                                    <span class="text-[10px] text-primary font-bold whitespace-nowrap">ステップ1実施</span>
+                                </div>
+
+                                <div class="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                                    <div class="w-3 h-3 rounded-full bg-slate-300 mb-2 relative">
+
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 whitespace-nowrap">ステップ2実施</span>
+                                </div>
+
+                                <div class="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                                    <div class="w-3 h-3 rounded-full bg-slate-300 mb-2 relative">
+
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 whitespace-nowrap">マイルストーン確認</span>
+                                </div>
+                                <!-- SYNC:compact-roadmap:END -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                    <!-- Hero Focus Card -->
+                    <div
+                        class="md:col-span-2 bg-slate-900 rounded-2xl p-8 shadow-2xl relative overflow-hidden flex items-center group">
+                        <div
+                            class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent)] pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+
+                        <div class="relative z-10 w-full">
+                            <div class="flex flex-col gap-6">
+                                <div>
+                                    <span
+                                        class="px-3 py-1 bg-white/10 text-[10px] text-white font-black uppercase tracking-[0.2em] rounded-full border border-white/10 backdrop-blur-sm">現在の戦略的注力項目</span>
+                                    <h2 class="text-4xl font-black text-white leading-tight mt-6 tracking-tight">
+                                        <!-- SYNC:focus:START -->
+                                        プロジェクト基盤の構築と初期フェーズの完遂
+                                        <!-- SYNC:focus:END -->
+                                    </h2>
+                                </div>
+                                <div class="flex items-center gap-4 mt-4">
+                                    <button onclick="showTab('tasks')"
+                                        class="px-8 py-3.5 bg-white text-slate-900 rounded-xl font-black hover:bg-slate-100 hover:scale-105 transition-all shadow-xl shadow-white/5 flex items-center gap-2">
+                                        タスク詳細へ <span
+                                            class="material-symbols-outlined text-sm font-black">arrow_forward</span>
+                                    </button>
+                                    <div class="flex -space-x-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-900 flex items-center justify-center text-[10px] font-black text-white">
+                                            A</div>
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-slate-600 border-2 border-slate-900 flex items-center justify-center text-[10px] font-black text-white">
+                                            B</div>
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-slate-500 border-2 border-slate-900 flex items-center justify-center text-[10px] font-black text-white">
+                                            C</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Card -->
+                    <a href="https://drsp.cc/dplus/" target="_blank"
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 flex flex-col justify-between hover:border-primary hover:shadow-xl transition-all cursor-pointer group/card relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 p-4 opacity-5 group-hover/card:opacity-10 transition-opacity">
+                            <span class="material-symbols-outlined text-9xl font-black">groups</span>
+                        </div>
+
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-6">
+                                <span
+                                    class="material-symbols-outlined font-black bg-slate-100 p-3 rounded-2xl text-slate-900 group-hover/card:bg-slate-900 group-hover/card:text-white transition-all">groups</span>
+                                <div class="text-right">
+                                    <span
+                                        class="text-[10px] font-black bg-slate-50 text-slate-400 px-2 py-1 rounded inline-block uppercase tracking-widest mb-1">最終目標</span>
+                                    <span class="text-sm font-black text-slate-900 block tracking-tight">
+                                        <!-- SYNC:kpi-goal:START -->
+                                        コミュニティ参加者 1,000名
+                                        <!-- SYNC:kpi-goal:END -->
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="text-xs font-black uppercase tracking-[0.1em] text-slate-400">現在の参加者数
+                                    </h3>
+                                    <span
+                                        class="material-symbols-outlined text-slate-300 text-sm group-hover/card:text-primary transition-colors">open_in_new</span>
+                                </div>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-5xl font-black text-slate-900 tracking-tighter">
+                                        <!-- SYNC:kpi-current:START -->
+                                        450
+                                        <!-- SYNC:kpi-current:END -->
+                                    </span>
+                                    <span class="text-slate-400 text-lg font-bold">/
+                                        <!-- SYNC:kpi-goal-num:START -->
+                                        1,000
+                                        <!-- SYNC:kpi-goal-num:END -->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 mt-10 relative z-10">
+                            <div class="flex justify-between text-[10px] font-black uppercase">
+                                <span class="text-slate-400">現在の進捗</span>
+                                <span class="text-primary">
+                                    <!-- SYNC:kpi-ratio:START -->
+                                    45.0%
+                                    <!-- SYNC:kpi-ratio:END -->
+                                </span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
+                                <!-- SYNC:kpi-bar:START -->
+                                <div class="h-full bg-slate-900 rounded-full w-[45.0%] transition-all duration-1000">
+                                </div>
+                                <!-- SYNC:kpi-bar:END -->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-card-gap items-stretch">
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-100 flex flex-col">
+                        <h3 class="text-xl font-black flex items-center gap-2 mb-4 pb-2 border-b border-slate-50">
+                            <span
+                                class="material-symbols-outlined text-primary font-black bg-slate-50 p-1.5 rounded-lg">campaign</span>
+                            最新のアップデート
+                        </h3>
+                        <div class="space-y-1 flex-1">
+                            <!-- SYNC:updates-list:START -->
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-slate-100 hover:bg-slate-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-primary bg-slate-50 p-1.5 rounded-lg group-hover:bg-white transition-colors text-[20px]">campaign</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-bold text-slate-700 leading-snug">ダミーアップデート:
+                                        プロジェクトの基本設計フェーズが完了しました。</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-emerald-100 hover:bg-slate-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-emerald-600 bg-emerald-50 p-1.5 rounded-lg group-hover:bg-white transition-colors text-[20px]">trending_up</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-bold text-slate-700 leading-snug">進捗報告:
+                                        主要なマイルストーンの達成率が70%を超えました。</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-purple-100 hover:bg-slate-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-purple-600 bg-purple-50 p-1.5 rounded-lg group-hover:bg-white transition-colors text-[20px]">forum</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-bold text-slate-700 leading-snug">お知らせ:
+                                        次回の全体定例MTGのアジェンダが公開されました。</p>
+                                </div>
+                            </div>
+                            <!-- SYNC:updates-list:END -->
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-100 flex flex-col">
+                        <h3
+                            class="text-xl font-black text-error flex items-center gap-2 mb-4 pb-2 border-b border-error/5">
+                            <span
+                                class="material-symbols-outlined font-black bg-red-50 p-1.5 rounded-lg">priority_high</span>
+                            直近要確認タスク
+                        </h3>
+                        <div class="space-y-1 flex-1">
+                            <!-- SYNC:alert-tasks:START -->
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-red-100 hover:bg-red-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-error p-1.5 bg-red-50 rounded-lg group-hover:bg-white transition-colors text-[20px]">emergency</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-black text-slate-900 leading-snug"><strong>担当者A:</strong>
+                                        デザイン案の最終確認</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-red-100 hover:bg-red-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-error p-1.5 bg-red-50 rounded-lg group-hover:bg-white transition-colors text-[20px]">emergency</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-black text-slate-900 leading-snug"><strong>担当者B:</strong>
+                                        サーバー設定のバリデーション</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="group flex items-start gap-3 py-2 px-3 rounded-xl border border-transparent hover:border-red-100 hover:bg-red-50/20 transition-all">
+                                <span
+                                    class="material-symbols-outlined font-black text-error p-1.5 bg-red-50 rounded-lg group-hover:bg-white transition-colors text-[20px]">emergency</span>
+                                <div class="flex-1 pt-1">
+                                    <p class="text-sm font-black text-slate-900 leading-snug"><strong>担当者C:</strong>
+                                        デモ用ドキュメントの作成</p>
+                                </div>
+                            </div>
+                            <!-- SYNC:alert-tasks:END -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <p>見た目と文言の確認を行うサンプル役です。</p>
-        </div>
-      </div>
-    </section>
 
-    <section id="documents" class="card section">
-      <div class="section-head">
-        <div>
-          <h2>資料一覧</h2>
-          <p>実ファイルへのリンクは置かず、構成だけ残しています</p>
-        </div>
-      </div>
-      <div class="docs">
-        <div class="doc">
-          <div class="icon">A</div>
-          <div>
-            <h3>overview.md</h3>
-            <p>ダッシュボード概要のサンプル文書</p>
-          </div>
-        </div>
-        <div class="doc">
-          <div class="icon">B</div>
-          <div>
-            <h3>schedule.md</h3>
-            <p>ダミーの進行スケジュール</p>
-          </div>
-        </div>
-        <div class="doc">
-          <div class="icon">C</div>
-          <div>
-            <h3>tasks.md</h3>
-            <p>確認用のタスク一覧サンプル</p>
-          </div>
-        </div>
-        <div class="doc">
-          <div class="icon">D</div>
-          <div>
-            <h3>members.md</h3>
-            <p>メンバー紹介のダミーカード</p>
-          </div>
-        </div>
-      </div>
-    </section>
+            <!-- Calendar (Management) Tab -->
+            <div id="management" class="tab-content space-y-card-gap">
+                <div class="bg-white rounded-xl p-container-padding shadow-sm border border-slate-50">
+                    <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100/60">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-primary font-black bg-slate-50 p-2 rounded-xl">calendar_month</span>
+                            <div>
+                                <h3 class="text-xl font-black text-slate-900">ロードマップ & カレンダー</h3>
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest mt-0.5">
+                                    Project Roadmap & Schedule</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative py-12 border-b mb-12">
+                        <div class="absolute top-[68px] left-0 right-0 h-0.5 bg-slate-100"></div>
+                        <div class="flex justify-between relative z-10">
+                            <!-- SYNC:roadmap:START -->
 
-    <section id="log" class="card section">
-      <div class="section-head">
-        <div>
-          <h2>更新ログ</h2>
-          <p>サンプルの履歴だけを並べています</p>
-        </div>
-      </div>
-      <div class="log">
-        <div class="log-item">
-          <div class="date">2026.04.25</div>
-          <h3>公開用のダミーデータに差し替え</h3>
-          <p>実データを避け、静的HTMLだけに整理しました。</p>
-        </div>
-        <div class="log-item">
-          <div class="date">2026.04.24</div>
-          <h3>構成のひな形を調整</h3>
-          <p>見出しとカードレイアウトをサンプル化しました。</p>
-        </div>
-      </div>
-    </section>
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-4 rounded-full bg-primary ring-4 ring-slate-50 mb-4"></div><span
+                                    class="text-xs font-black">4/21</span><span
+                                    class="text-xs font-black">フェーズ1完了</span>
+                            </div>
 
-    <footer>
-      PJサンプル / static HTML only / dummy data
-    </footer>
-  </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-4 rounded-full bg-primary ring-4 ring-slate-50 mb-4"></div><span
+                                    class="text-xs font-black">5/1</span><span class="text-xs font-black">コンテンツ公開</span>
+                            </div>
+
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-4 rounded-full bg-primary ring-4 ring-slate-50 mb-4"></div><span
+                                    class="text-xs font-black">5/11</span><span
+                                    class="text-xs font-black">ステップ1実施</span>
+                            </div>
+
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-4 rounded-full bg-slate-200 mb-4"></div><span
+                                    class="text-xs font-bold text-slate-400">6月中旬</span><span
+                                    class="text-xs font-bold text-slate-400">ステップ2実施</span>
+                            </div>
+
+                            <div class="flex flex-col items-center">
+                                <div class="w-4 h-4 rounded-full bg-slate-200 mb-4"></div><span
+                                    class="text-xs font-bold text-slate-400">6月下旬</span><span
+                                    class="text-xs font-bold text-slate-400">マイルストーン確認</span>
+                            </div>
+                            <!-- SYNC:roadmap:END -->
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-12">
+                        <!-- March (Past) -->
+                        <details class="group">
+                            <summary class="list-none cursor-pointer">
+                                <div
+                                    class="flex items-center justify-between py-2 hover:bg-slate-50 rounded-lg transition-all pr-4">
+                                    <h3
+                                        class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-slate-200"></span> 2026年 3月（過去）
+                                    </h3>
+                                    <span
+                                        class="material-symbols-outlined text-slate-300 group-open:rotate-180 transition-transform">expand_more</span>
+                                </div>
+                            </summary>
+                            <div class="mt-4 space-y-4">
+                                <div
+                                    class="grid grid-cols-7 gap-px bg-slate-100 rounded-lg overflow-hidden border border-slate-100">
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-error">日
+                                    </div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black">月</div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black">火</div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black">水</div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black">木</div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black">金</div>
+                                    <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-blue-600">土
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">1</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">2</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">3</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">4</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">5</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">6</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">7
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">8</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">9</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">10</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">11</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">12</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">13</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">14
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">15
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">16</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">17</div>
+                                    <div
+                                        class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-primary/20 ring-inset">
+                                        <span class="font-black text-primary">18</span>
+                                        <div
+                                            class="mt-1 p-1 bg-slate-100 text-primary text-[8px] font-black rounded leading-tight">
+                                            キックオフ</div>
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">19</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">20</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">21
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">22
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">23</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">24</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">25</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">26</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">27</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">28
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">29
+                                    </div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">30</div>
+                                    <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">31</div>
+                                    <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                    <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                    <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                    <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                </div>
+                            </div>
+                        </details>
+                        <!-- April -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                <span
+                                    class="w-2 h-2 rounded-full bg-slate-500 shadow-[0_0_8px_rgba(71,85,105,0.5)]"></span>
+                                2026年 4月
+                            </h3>
+                            <div
+                                class="grid grid-cols-7 gap-px bg-slate-100 rounded-lg overflow-hidden border border-slate-100">
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-error">日</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">月</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">火</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">水</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">木</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">金</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-blue-600">土
+                                </div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">1</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">2</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">3</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">4</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">5</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">6</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-primary/20">
+                                    <span class="font-black text-primary">7</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-100 text-primary text-[8px] font-black rounded leading-tight">
+                                        定例会 #2</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">8</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">9</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">10</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">11</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">12</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">13</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">14</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">15</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">16</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">17</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">18</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">19</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">20</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-primary/20">
+                                    <span class="font-black text-primary">21</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-100 text-primary text-[8px] font-black rounded leading-tight">
+                                        定例会 #3</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">22</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">23</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">24</div>
+                                <div
+                                    class="bg-slate-50/50 min-h-[60px] p-2 text-[10px] border-2 border-slate-500 ring-2 ring-slate-100 z-10 relative">
+                                    <span class="font-black text-blue-600">25</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-500 text-white text-[8px] font-black rounded text-center">
+                                        準備日</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">26</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">27</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">28</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">29</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">30</div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                            </div>
+                        </div>
+                        <!-- May -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                <span
+                                    class="w-2 h-2 rounded-full bg-slate-500 shadow-[0_0_8px_rgba(71,85,105,0.5)]"></span>
+                                2026年 5月
+                            </h3>
+                            <div
+                                class="grid grid-cols-7 gap-px bg-slate-100 rounded-lg overflow-hidden border border-slate-100">
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-error">日</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">月</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">火</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">水</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">木</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-blue-600">土
+                                </div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div
+                                    class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-slate-200 ring-2 ring-slate-50">
+                                    <span class="font-black text-slate-600">1</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-50 text-slate-600 text-[8px] font-black rounded leading-tight">
+                                        コンテンツ公開会</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">2</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">3</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">4</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">5</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">6</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">7</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">8</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">9</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">10</div>
+                                <div
+                                    class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-slate-200 ring-2 ring-slate-50">
+                                    <span class="font-black text-primary">11</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-100 text-primary text-[8px] font-black rounded leading-tight">
+                                        実施 #1</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">12</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">13</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">14</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">15</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">16</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">17</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">18</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">19</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">20</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">21</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">22</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">23</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">24</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">25</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">26</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">27</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">28</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">29</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">30</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">31</div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                            </div>
+                        </div>
+                        <!-- June -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                <span
+                                    class="w-2 h-2 rounded-full bg-slate-500 shadow-[0_0_8px_rgba(71,85,105,0.5)]"></span>
+                                2026年 6月
+                            </h3>
+                            <div
+                                class="grid grid-cols-7 gap-px bg-slate-100 rounded-lg overflow-hidden border border-slate-100">
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-error">日</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">月</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">火</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">水</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">木</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black">金</div>
+                                <div class="bg-slate-50 py-2 text-center text-[10px] font-black text-blue-600">土
+                                </div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">1</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">2</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">3</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">4</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">5</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">6</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">7</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">8</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">9</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">10</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">11</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">12</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">13</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">14</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-slate-200">
+                                    <span class="font-black text-slate-600">15</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-50 text-slate-600 text-[8px] font-black rounded leading-tight">
+                                        実施 #2</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">16</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">17</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">18</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">19</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">20</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">21</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">22</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">23</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">24</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] border-2 border-slate-200">
+                                    <span class="font-black text-slate-600">25</span>
+                                    <div
+                                        class="mt-1 p-1 bg-slate-50 text-slate-600 text-[8px] font-black rounded leading-tight">
+                                        最終確認会</div>
+                                </div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">26</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-blue-600">27</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black text-error">28</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">29</div>
+                                <div class="bg-white min-h-[60px] p-2 text-[10px] font-black">30</div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                                <div class="bg-slate-50/30 min-h-[60px] p-2 text-[10px] opacity-20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tasks" class="tab-content space-y-card-gap">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <button onclick="showSubtask('task-1', this)"
+                        class="subtask-btn active w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border hover:border-primary group-[.active]:border-primary transition-all text-left group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-slate-300 group-[.active]:text-slate-900">radio_button_checked</span>
+                            <div>
+                                <span class="text-xs font-black block">フェーズ1: 企画・要件定義</span>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="text-xs font-bold text-slate-400">マイルストーン確認</span>
+                                    <!-- SYNC:task-1:PERCENT:START -->
+                                    <span
+                                        class="text-[10px] font-black px-2 py-0.5 bg-slate-100 rounded-full">22%</span>
+                                    <!-- SYNC:task-1:PERCENT:END -->
+                                </div>
+                                <!-- SYNC:task-1:BAR:START -->
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-primary h-full transition-all duration-500" style="width: 22%">
+                                    </div>
+                                </div>
+                                <!-- SYNC:task-1:BAR:END -->
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 text-sm">arrow_forward_ios</span>
+                    </button>
+                    <button onclick="showSubtask('task-2', this)"
+                        class="subtask-btn w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border hover:border-primary group-[.active]:border-primary transition-all text-left group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-slate-300 group-[.active]:text-slate-900">radio_button_checked</span>
+                            <div>
+                                <span class="text-xs font-black block">フェーズ2: デザイン・実装</span>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="text-xs font-bold text-slate-400">UI/UXプロトタイプ</span>
+                                    <!-- SYNC:task-2:PERCENT:START -->
+                                    <span
+                                        class="text-[10px] font-black px-2 py-0.5 bg-slate-100 rounded-full">18%</span>
+                                    <!-- SYNC:task-2:PERCENT:END -->
+                                </div>
+                                <!-- SYNC:task-2:BAR:START -->
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-primary h-full transition-all duration-500" style="width: 18%">
+                                    </div>
+                                </div>
+                                <!-- SYNC:task-2:BAR:END -->
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 text-sm">arrow_forward_ios</span>
+                    </button>
+                    <button onclick="showSubtask('task-3', this)"
+                        class="subtask-btn w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border hover:border-primary group-[.active]:border-primary transition-all text-left group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-slate-300 group-[.active]:text-slate-900">radio_button_checked</span>
+                            <div>
+                                <span class="text-xs font-black block">フェーズ3: テスト・デプロイ</span>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="text-xs font-bold text-slate-400">最終クオリティチェック</span>
+                                    <!-- SYNC:task-3:PERCENT:START -->
+                                    <span
+                                        class="text-[10px] font-black px-2 py-0.5 bg-slate-100 rounded-full">12%</span>
+                                    <!-- SYNC:task-3:PERCENT:END -->
+                                </div>
+                                <!-- SYNC:task-3:BAR:START -->
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-primary h-full transition-all duration-500" style="width: 12%">
+                                    </div>
+                                </div>
+                                <!-- SYNC:task-3:BAR:END -->
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 text-sm">arrow_forward_ios</span>
+                    </button>
+                    <button onclick="showSubtask('task-4', this)"
+                        class="subtask-btn w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border hover:border-primary group-[.active]:border-primary transition-all text-left group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-slate-300 group-[.active]:text-slate-900">radio_button_checked</span>
+                            <div>
+                                <span class="text-xs font-black block">フェーズ4: 運用・保守</span>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="text-xs font-bold text-slate-400">インフラ監視・改善</span>
+                                    <!-- SYNC:task-4:PERCENT:START -->
+                                    <span
+                                        class="text-[10px] font-black px-2 py-0.5 bg-slate-100 rounded-full">28%</span>
+                                    <!-- SYNC:task-4:PERCENT:END -->
+                                </div>
+                                <!-- SYNC:task-4:BAR:START -->
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-primary h-full transition-all duration-500" style="width: 28%">
+                                    </div>
+                                </div>
+                                <!-- SYNC:task-4:BAR:END -->
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 text-sm">arrow_forward_ios</span>
+                    </button>
+                </div>
+
+                <!-- 担当者フィルター -->
+                <div class="flex justify-end mt-2 mb-2">
+                    <div
+                        class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm hover:border-primary transition-colors">
+                        <span class="material-symbols-outlined text-[16px] text-slate-400">filter_list</span>
+                        <select id="taskPersonFilter" onchange="filterTasksByPerson(this.value)"
+                            class="text-xs font-bold text-slate-700 bg-transparent border-none outline-none cursor-pointer">
+                            <option value="all">すべての担当者</option>
+                            <option value="担当者A">担当者A</option>
+                            <option value="担当者B">担当者B</option>
+                            <option value="担当者C">担当者C</option>
+                            <option value="担当者D">担当者D</option>
+                            <option value="担当者E">担当者E</option>
+                            <option value="全員">全員</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="task-details" class="bg-white rounded-xl p-container-padding shadow-sm border border-slate-50">
+                    <div id="task-1" class="subtask-content active">
+                        <div class="flex flex-wrap gap-2 mb-4 justify-end">
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-primary hover:border-primary transition-all">
+                                <span class="material-symbols-outlined text-[14px]">folder</span>
+                                セッションフォルダ
+                            </a>
+                        </div>
+                        <!-- SYNC:task-1:START -->
+
+                        <h2 class="text-xl font-black mb-6">フェーズ1: 企画・要件定義 詳細</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">完了・決定済み</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者A:</strong> 初期キックオフの実施と議事録の共有
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者A:</strong> 外部プラットフォームとの連携方針決定
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">進行中のタスク</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> 参加
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> 参加
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者C:</strong> 参加
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者D:</strong> 参加
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> オンラインミーティング用URLの発行と周知
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> 配信プラットフォームの接続テスト完了
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>全員:</strong> SNSプロモーションの第一弾開始
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- SYNC:task-1:END -->
+                    </div>
+                    <div id="task-2" class="subtask-content">
+                        <div class="flex flex-wrap gap-2 mb-4 justify-end">
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-amber-600 hover:border-amber-600 transition-all">
+                                <span class="material-symbols-outlined text-[14px] text-amber-500">edit_note</span>
+                                アウトライン.md
+                            </a>
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-orange-600 hover:border-orange-600 transition-all">
+                                <span
+                                    class="material-symbols-outlined text-[14px] text-orange-500">confirmation_number</span>
+                                Platform.md
+                            </a>
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-blue-600 hover:border-blue-600 transition-all">
+                                <span class="material-symbols-outlined text-[14px] text-blue-500">schedule</span>
+                                タイムテーブル.md
+                            </a>
+                        </div>
+                        <!-- SYNC:task-2:START -->
+
+                        <h2 class="text-xl font-black mb-6">フェーズ2: デザイン・実装 詳細</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">完了・決定済み</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者A:</strong> 外部パートナーへの協力依頼および快諾
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者A:</strong> ダッシュボードUIのプロトタイプ構築
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">進行中のタスク</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> ワークショップ用配信インフラのセットアップ
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> 配信エンコーダーの設定最適化
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> 事後アンケートの作成
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> コミュニティに告知
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者C:</strong> タイムスケジュール・詳細構成の最終化
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者C:</strong> 出演メンバー打ち合わせ
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者D:</strong> 登壇に向けたトーク内容検討
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者E:</strong> 登壇に向けたトーク内容検討
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>全員:</strong> SNS/コミュニティへの集客告知（参加案内）
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- SYNC:task-2:END -->
+                    </div>
+                    <div id="task-3" class="subtask-content">
+                        <div class="flex flex-wrap gap-2 mb-4 justify-end">
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-primary hover:border-primary transition-all">
+                                <span class="material-symbols-outlined text-[14px]">folder</span>
+                                ワークショップフォルダ一覧
+                            </a>
+                        </div>
+                        <!-- SYNC:task-3:START -->
+
+                        <h2 class="text-xl font-black mb-6">フェーズ3: テスト・デプロイ 詳細</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">完了・決定済み</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者B:</strong> ステアリングコミッティによるフェーズ移行承認
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">進行中のタスク</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>全員:</strong> 日時確定しないと
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> 事業会社所属のディレクターへのゲスト交渉・調整
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> コミュニティに告知
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者B:</strong> タイムスケジュール・詳細構成の最終化
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> 候補日の確定と、出演者情報のSlack共有
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者C:</strong> 第2回イベントのメインテーマ案出し・構成作成
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者D:</strong> 登壇に向けたネタ出し
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- SYNC:task-3:END -->
+                    </div>
+                    <div id="task-4" class="subtask-content">
+                        <div class="flex flex-wrap gap-2 mb-4 justify-end">
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-primary hover:border-primary transition-all">
+                                <span class="material-symbols-outlined text-[14px] text-primary">info</span>
+                                基本情報.md
+                            </a>
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-red-600 hover:border-red-600 transition-all">
+                                <span class="material-symbols-outlined text-[14px] text-red-500">live_tv</span>
+                                STREAM.md
+                            </a>
+                            <a href="https://drsp.cc/dplus/" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-100 hover:text-emerald-600 hover:border-emerald-600 transition-all">
+                                <span class="material-symbols-outlined text-[14px] text-emerald-600">language</span>
+                                プロジェクト 公式サイト
+                            </a>
+                        </div>
+                        <!-- SYNC:task-4:START -->
+
+                        <h2 class="text-xl font-black mb-6">フェーズ4: 運用・保守 詳細</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">完了・決定済み</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-bold">
+                                        <span
+                                            class="material-symbols-outlined text-slate-900 font-black">check_circle</span>
+                                        <strong>担当者A:</strong> メインシステムの基本モジュール実装完了
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-400 text-xs uppercase mb-4">進行中のタスク</h3>
+                                <ul class="space-y-3">
+
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> 独自ドメイン取得方針決め
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> プロジェクト 公式LINE等の集客・告知施策のプランニング
+                                    </li>
+                                    <li class="flex gap-2 text-sm font-black">
+                                        <span class="material-symbols-outlined text-slate-300">circle</span>
+                                        <strong>担当者A:</strong> ウェビナー登壇者・講師リストの拡充 ＆ 打診継続
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- SYNC:task-4:END -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources" class="tab-content space-y-card-gap">
+
+                <!-- 外部ツール・サービス -->
+                <div>
+                    <h4
+                        class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>外部ツール・サービス
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-5 bg-white rounded-xl shadow-sm border hover:border-primary transition-all group">
+                            <div class="flex items-start justify-between mb-3">
+                                <span
+                                    class="material-symbols-outlined text-2xl text-emerald-600 font-black">language</span>
+                                <span
+                                    class="text-[10px] font-black bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded">公開</span>
+                            </div>
+                            <span class="text-sm font-black text-slate-900">プロジェクト 公式サイト</span>
+                            <p class="text-xs font-bold text-slate-400 mt-1.5">ランディングページ。企画内容を一般公開。</p>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-5 bg-white rounded-xl shadow-sm border hover:border-primary transition-all group">
+                            <div class="flex items-start justify-between mb-3">
+                                <span
+                                    class="material-symbols-outlined text-2xl text-orange-500 font-black">confirmation_number</span>
+                                <span
+                                    class="text-[10px] font-black bg-orange-50 text-orange-500 px-2 py-0.5 rounded">管理者用</span>
+                            </div>
+                            <span class="text-sm font-black text-slate-900">コミュニティ 管理画面</span>
+                            <p class="text-xs font-bold text-slate-400 mt-1.5">集客・チケット管理。メンバー推移の確認。</p>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank" target="_blank"
+                            class="p-5 bg-white rounded-xl shadow-sm border hover:border-primary transition-all group">
+                            <div class="flex items-start justify-between mb-3">
+                                <span class="material-symbols-outlined text-2xl text-slate-600 font-black">folder</span>
+                                <span
+                                    class="text-[10px] font-black bg-slate-100 text-slate-600 px-2 py-0.5 rounded">共有</span>
+                            </div>
+                            <span class="text-sm font-black text-slate-900">Google Drive</span>
+                            <p class="text-xs font-bold text-slate-400 mt-1.5">ロゴ素材、スライド、議事録の原本を格納。</p>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-5 bg-white rounded-xl shadow-sm border hover:border-primary transition-all group">
+                            <div class="flex items-start justify-between mb-3">
+                                <span
+                                    class="material-symbols-outlined text-2xl text-[#4A154B] font-black">chat_bubble</span>
+                                <span
+                                    class="text-[10px] font-black bg-purple-50 text-[#4A154B] px-2 py-0.5 rounded">チャット</span>
+                            </div>
+                            <span class="text-sm font-black text-slate-900">Slack (#channel)</span>
+                            <p class="text-xs font-bold text-slate-400 mt-1.5">運営メンバーのメイン連絡先。意思決定と進捗共有。</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- プロジェクト管理ドキュメント -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>プロジェクト管理ドキュメント
+                        </h4>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="text-[10px] font-black text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary/20 transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">folder_open</span>ルートフォルダ
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span
+                                class="material-symbols-outlined text-xl text-primary font-black bg-slate-50 p-2 rounded-lg">description</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">プロジェクト管理.md</span>
+                                <p class="text-xs font-bold text-slate-400">タスク・ロードマップ・KPI</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span
+                                class="material-symbols-outlined text-xl text-primary font-black bg-slate-50 p-2 rounded-lg">info</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">基本情報.md</span>
+                                <p class="text-xs font-bold text-slate-400">概要・メンバー・運用ルール</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span
+                                class="material-symbols-outlined text-xl text-red-500 font-black bg-red-50 p-2 rounded-lg">live_tv</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">STREAM.md</span>
+                                <p class="text-xs font-bold text-slate-400">配信手順（Zoom + Restream）</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span
+                                class="material-symbols-outlined text-xl text-slate-500 font-black bg-slate-50 p-2 rounded-lg">rule</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">ガイドライン.md</span>
+                                <p class="text-xs font-bold text-slate-400">デザイン・実装ルール</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5/11 第1回ウェビナー資料 -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>5/11 第1回ウェビナー資料
+                        </h4>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="text-[10px] font-black text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary/20 transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">folder_open</span>フォルダを開く
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-amber-500 font-black">edit_note</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">アウトライン.md</span>
+                                <p class="text-xs font-bold text-slate-400">企画構成・テーマ</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span
+                                class="material-symbols-outlined text-xl text-orange-500 font-black">confirmation_number</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">Platform.md</span>
+                                <p class="text-xs font-bold text-slate-400">告知ページ原稿</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-blue-500 font-black">schedule</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">タイムテーブル.md</span>
+                                <p class="text-xs font-bold text-slate-400">当日の進行スケジュール</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-slate-500 font-black">mail</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">メールテンプレート</span>
+                                <p class="text-xs font-bold text-slate-400">1週間前・前日・サンクス</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 議事録 -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>議事録・ミーティングメモ
+                        </h4>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="text-[10px] font-black text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary/20 transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">folder_open</span>フォルダを開く
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-slate-500 font-black">description</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">定例 MTG #3</span>
+                                <p class="text-xs font-bold text-slate-400">2026.04.21 / リスケ・座談会決定</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-slate-500 font-black">description</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">定例 MTG #2</span>
+                                <p class="text-xs font-bold text-slate-400">2026.04.07 / プロジェクト正式決定</p>
+                            </div>
+                        </a>
+                        <a href="https://drsp.cc/dplus/" target="_blank"
+                            class="p-4 bg-white rounded-xl shadow-sm border flex items-center gap-3 hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-xl text-slate-500 font-black">description</span>
+                            <div>
+                                <span class="text-sm font-black text-slate-900">キックオフ MTG</span>
+                                <p class="text-xs font-bold text-slate-400">2026.03.18 / プロジェクト発足</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log Tab -->
+            <div id="meetings" class="tab-content space-y-card-gap">
+                <div class="space-y-4">
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-sm border border-slate-50 flex justify-between items-center group hover:border-primary transition-all">
+                        <div class="flex items-center gap-6">
+                            <span class="text-xs font-black text-slate-400">2026.04.21</span>
+                            <div>
+                                <h3 class="font-black text-slate-900 group-hover:text-primary transition-colors">
+                                    定例ミーティング: プロジェクト進捗確認</h3>
+                                <p class="text-xs text-slate-500 mt-1">ダミーテキスト: 今週の進捗状況と次フェーズのマイルストーンについて協議しました。</p>
+                                <a href="https://drsp.cc/dplus/" target="_blank"
+                                    class="inline-flex items-center gap-1 text-[10px] font-black text-primary mt-2 hover:underline">
+                                    <span class="material-symbols-outlined text-xs">description</span> 議事録原本を表示
+                                </a>
+                            </div>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-surface-container-low text-primary text-[10px] font-black rounded-full uppercase tracking-wider">Update</span>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-sm border border-slate-50 flex justify-between items-center group hover:border-primary transition-all">
+                        <div class="flex items-center gap-6">
+                            <span class="text-xs font-black text-slate-400">2026.04.07</span>
+                            <div>
+                                <h3 class="font-black text-slate-900 group-hover:text-primary transition-colors">
+                                    デザインレビュー: UI/UXの改善案承認</h3>
+                                <p class="text-xs text-slate-500 mt-1">ダミーテキスト: モバイル対応を含む新しいデザインガイドラインの最終案が承認されました。</p>
+                                <a href="https://drsp.cc/dplus/" target="_blank"
+                                    class="inline-flex items-center gap-1 text-[10px] font-black text-primary mt-2 hover:underline">
+                                    <span class="material-symbols-outlined text-xs">description</span> 議事録原本を表示
+                                </a>
+                            </div>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-surface-container-low text-primary text-[10px] font-black rounded-full uppercase tracking-wider">Design</span>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-sm border border-slate-50 flex justify-between items-center group hover:border-primary transition-all">
+                        <div class="flex items-center gap-6">
+                            <span class="text-xs font-black text-slate-400">2026.03.18</span>
+                            <div>
+                                <h3 class="font-black text-slate-900 group-hover:text-primary transition-colors">
+                                    プロジェクト・キックオフ</h3>
+                                <p class="text-xs text-slate-500 mt-1">ダミーテキスト: プロジェクトの目的、スコープ、および初期メンバーの役割分担を確定しました。
+                                </p>
+                                <a href="https://drsp.cc/dplus/" target="_blank"
+                                    class="inline-flex items-center gap-1 text-[10px] font-black text-primary mt-2 hover:underline">
+                                    <span class="material-symbols-outlined text-xs">description</span> 議事録原本を表示
+                                </a>
+                            </div>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-surface-container-low text-primary text-[10px] font-black rounded-full uppercase tracking-wider">Kickoff</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members Tab -->
+            <div id="members" class="tab-content space-y-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Leader -->
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:border-slate-900 transition-all">
+                        <div
+                            class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-110 duration-700">
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="https://drsp.cc/dplus/assets/sukeda.webp" alt="担当者A"
+                                    class="w-16 h-16 rounded-2xl object-cover shadow-xl">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">担当者A</h3>
+                                    <span
+                                        class="text-xs font-black bg-slate-100 text-slate-500 px-2 py-1 rounded inline-block mt-1">プロジェクト責任者</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">
+                                プロジェクトの全体統括と意思決定を担当。長年の業界経験を活かし、チームの進捗管理とクオリティ向上をリードします。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Members -->
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:border-slate-400 transition-all">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="https://drsp.cc/dplus/assets/take.webp" alt="担当者B"
+                                    class="w-16 h-16 rounded-2xl object-cover">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">担当者B</h3>
+                                    <span
+                                        class="text-xs font-black bg-slate-50 text-slate-400 px-2 py-1 rounded inline-block mt-1">企画・ディレクション</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">
+                                コンテンツの企画構成と外部パートナーとの調整を担当。クリエイティブな視点からプロジェクトに新しい価値を吹き込みます。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:border-slate-400 transition-all">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="https://drsp.cc/dplus/assets/uno.webp" alt="担当者C"
+                                    class="w-16 h-16 rounded-2xl object-cover">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">担当者C</h3>
+                                    <span
+                                        class="text-xs font-black bg-slate-50 text-slate-400 px-2 py-1 rounded inline-block mt-1">デザイン・UX</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">
+                                UI/UXデザインと情報設計を担当。ユーザー体験を第一に考えた、直感的で使い勝手の良いデザインシステムを構築します。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:border-slate-400 transition-all">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="https://drsp.cc/dplus/assets/nasho.webp" alt="担当者D"
+                                    class="w-16 h-16 rounded-2xl object-cover">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">担当者D</h3>
+                                    <span
+                                        class="text-xs font-black bg-slate-50 text-slate-400 px-2 py-1 rounded inline-block mt-1">開発・エンジニアリング</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">
+                                システム開発とインフラ構築を担当。最新のテクノロジーを活用し、安定稼働とスケーラビリティを兼ね備えた基盤を実現します。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:border-slate-400 transition-all">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="https://drsp.cc/dplus/assets/kamata.webp" alt="担当者E"
+                                    class="w-16 h-16 rounded-2xl object-cover">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900">担当者E</h3>
+                                    <span
+                                        class="text-xs font-black bg-slate-50 text-slate-400 px-2 py-1 rounded inline-block mt-1">広報・コミュニティ</span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600 leading-relaxed">
+                                広報戦略とコミュニティ運営を担当。プロジェクトの認知拡大とユーザーとのエンゲージメント強化を推進します。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showTab(tabId, btn, isHistory = false) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            const target = document.getElementById(tabId);
+            if (!target) return;
+            target.classList.add('active');
+
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            let sBtn = btn || document.querySelector(`button[onclick*="'${tabId}'"]`);
+            if (sBtn) sBtn.classList.add('active');
+
+            const info = {
+                'overview': { text: 'ホーム', icon: 'home' },
+                'management': { text: 'カレンダー', icon: 'calendar_today' },
+                'tasks': { text: 'タスク一覧', icon: 'checklist' },
+                'members': { text: 'メンバー', icon: 'group' },
+                'resources': { text: '関連資料', icon: 'folder_open' },
+                'meetings': { text: '活動ログ', icon: 'history' }
+            };
+            const current = info[tabId];
+            if (current) {
+                document.getElementById('current-tab-title').innerHTML = `<span class="material-symbols-outlined text-primary font-black">${current.icon}</span> ${current.text}`;
+            }
+
+            if (!isHistory) history.pushState({ tabId }, "", `#${tabId}`);
+            localStorage.setItem('dplus_tab', tabId);
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        window.onpopstate = e => showTab(e.state?.tabId || location.hash.slice(1) || 'overview', null, true);
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('dplus_theme', isDark ? 'dark' : 'light');
+        }
+
+        function showSubtask(id, btn) {
+            document.querySelectorAll('.subtask-content').forEach(c => c.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('.subtask-btn').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        }
+
+        // 担当者ごとのタスク絞り込み機能
+        window.filterTasksByPerson = function (person) {
+            document.querySelectorAll('.subtask-content li').forEach(li => {
+                const strong = li.querySelector('strong');
+                if (!strong) {
+                    li.style.display = '';
+                    return;
+                }
+                const text = strong.textContent.trim();
+                const taskPerson = text.replace(':', '').trim();
+                if (person === 'all') {
+                    li.style.display = '';
+                } else {
+                    li.style.display = taskPerson === person ? '' : 'none';
+                }
+            });
+        };
+
+        (function () {
+            if (localStorage.getItem('dplus_theme') === 'dark') document.documentElement.classList.add('dark');
+            const tab = location.hash.slice(1) || localStorage.getItem('dplus_tab') || 'overview';
+            setTimeout(() => showTab(tab, null, true), 10);
+        })();
+    </script>
 </body>
+
 </html>
