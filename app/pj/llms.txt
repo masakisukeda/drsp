@@ -1,0 +1,26 @@
+# D+ プロジェクト管理
+
+> D+ のプロジェクト管理ダッシュボード。タスク、カレンダー、関連資料、メンバー情報をひとつにまとめて確認できます。
+
+## Site
+- Home: https://drsp.cc/app/pj/
+- Sitemap: https://drsp.cc/app/pj/sitemap.xml
+- Robots: https://drsp.cc/app/pj/robots.txt
+
+## Focus
+- プロジェクト進行の見える化
+- タスク管理と期限管理
+- 関連資料の整理
+- メンバー・活動ログの確認
+
+## High-value sections
+- ホーム
+- カレンダー
+- タスク一覧
+- 関連資料
+- メンバー
+- 活動ログ
+
+## Notes
+- 日本語の運用ダッシュボードです。
+- 正規URLは `https://drsp.cc/app/pj/` です。

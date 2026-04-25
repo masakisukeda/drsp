@@ -10,6 +10,15 @@ RedirectMatch 301 ^/eiri/membership/kiyaku/?$ /membership/kiyaku/
 RedirectMatch 301 ^/eiri/1on1/?$ /eiri/
 RedirectMatch 301 ^/eiri/redesign/?$ /eiri/
 
+# Legacy app paths
+RedirectMatch 301 ^/chat(/.*)?$ /app/chat$1
+RedirectMatch 301 ^/dic(/.*)?$ /app/dic$1
+RedirectMatch 301 ^/mng(/.*)?$ /app/mng$1
+RedirectMatch 301 ^/note(/.*)?$ /app/note$1
+RedirectMatch 301 ^/app/pj$ /app/pj/
+RedirectMatch 301 ^/pj$ /app/pj/
+RedirectMatch 301 ^/pj/(.*)$ /app/pj/$1
+
 # Legacy WordPress endpoints & system paths (Batch)
 RedirectMatch 301 ^/index\.php$ /
 RedirectMatch 301 ^/xmlrpc\.php$ /
