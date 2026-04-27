@@ -535,12 +535,18 @@ for (const el of targets) {
   if (!list) return;
 
   const fallbackHTML = list.innerHTML;
-  const DATA_URL = '/assets/data/x-posts.json';
+  const NOTE_RSS_URL = 'https://note.com/disa_pr/rss';
+  const DATA_URLS = [
+    '/assets/data/x-posts.json',
+    './assets/data/x-posts.json',
+    '../assets/data/x-posts.json',
+    '../../assets/data/x-posts.json'
+  ];
 
   list.classList.add('note-rss-list');
   list.setAttribute('aria-busy', 'true');
 
-  const escapeHtml = (value) => value
+  const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
@@ -572,12 +578,84 @@ for (const el of targets) {
       .join('');
   };
 
-  fetch(DATA_URL, { cache: 'no-store' })
-    .then((response) => {
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
+  const fetchText = async (url) => {
+    const response = await fetch(url, {
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/rss+xml, application/xml, text/xml, text/plain, */*'
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.text();
+  };
+
+  const parseNoteRss = (xmlText) => {
+    const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
+    if (xml.querySelector('parsererror')) throw new Error('Invalid RSS XML');
+    return Array.from(xml.querySelectorAll('item'))
+      .map((item) => ({
+        url: (item.querySelector('link')?.textContent || '').trim(),
+        text: (item.querySelector('title')?.textContent || '').trim(),
+        date: formatDateLabel((item.querySelector('pubDate')?.textContent || '').trim())
+      }))
+      .filter((item) => item.url && item.text)
+      .slice(0, 3);
+  };
+
+  const fetchLatestNoteFromRss = async () => {
+    const readers = [
+      async () => parseNoteRss(await fetchText(NOTE_RSS_URL)),
+      async () => parseNoteRss(await fetchText(`https://api.allorigins.win/raw?url=${encodeURIComponent(NOTE_RSS_URL)}`)),
+      async () => {
+        const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NOTE_RSS_URL)}&api_key=&count=3`;
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const json = await response.json();
+        if (json.status !== 'ok') throw new Error('rss2json failed');
+        return (json.items || [])
+          .map((item) => ({
+            url: item.link || '',
+            text: item.title || '',
+            date: formatDateLabel(item.pubDate || '')
+          }))
+          .filter((item) => item.url && item.text)
+          .slice(0, 3);
+      }
+    ];
+
+    for (const reader of readers) {
+      try {
+        const items = await reader();
+        if (items.length) return items;
+      } catch (_) {
+        // Try next RSS reader.
+      }
+    }
+
+    throw new Error('note rss not reachable');
+  };
+
+  const fetchJsonWithFallback = async () => {
+    for (const url of DATA_URLS) {
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) continue;
+        return await response.json();
+      } catch (_) {
+        // Try next candidate URL.
+      }
+    }
+    throw new Error('x-posts.json not reachable');
+  };
+
+  fetchLatestNoteFromRss()
+    .then((latest) => {
+      if (!latest.length) throw new Error('no note posts from rss');
+      renderItems(latest);
     })
+    .catch(() => fetchJsonWithFallback())
     .then((json) => {
+      if (!json) return;
       const posts = Array.isArray(json?.posts) ? json.posts : [];
       const latest = posts
         .filter((post) => post && post.source === 'note' && post.url && post.text)

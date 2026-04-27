@@ -2478,7 +2478,7 @@ a.concept-card {
 }
 
 .page-about .page-main h2.about-support-title {
-  font-size: clamp(18px, 1.6vw, 26px) !important;
+  font-size: var(--fs-2);
 }
 
 .page-about .support-card p {
