@@ -812,6 +812,10 @@ h2 {
     right: 0;
   }
 
+  .nav-open .masthead {
+    z-index: 1001;
+  }
+
   .nav-container {
     display: flex;
     flex-direction: column;
@@ -836,6 +840,17 @@ h2 {
 
   .nav-open .nav-toggle span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-open .nav-toggle {
+    position: fixed;
+    top: calc(16px + env(safe-area-inset-top));
+    right: calc(16px + env(safe-area-inset-right));
+    z-index: 1002;
+  }
+
+  .nav-open .nav-toggle span {
+    background-color: var(--text-white);
   }
 
   body.nav-open {
