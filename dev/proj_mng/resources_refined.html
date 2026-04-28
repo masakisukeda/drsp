@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary-container": "#fffbff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-tint": "#005ac2",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#40484f",
+                        "on-secondary-container": "#5e656d",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-primary-fixed": "#001a42",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c6d6",
+                        "surface-container-low": "#eff4ff",
+                        "outline": "#727785",
+                        "on-surface-variant": "#424754",
+                        "secondary-fixed-dim": "#c0c7d0",
+                        "on-background": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f8f9ff",
+                        "secondary": "#585f67",
+                        "secondary-fixed": "#dce3ec",
+                        "secondary-container": "#dce3ec",
+                        "inverse-primary": "#adc6ff",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-container": "#a36700",
+                        "tertiary": "#825100",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-surface": "#213145",
+                        "background": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "primary": "#0058be",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#2170e4",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "surface": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#151c23"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-gap": "20px",
+                        "grid-gutter": "16px",
+                        "element-margin": "12px",
+                        "section-margin": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-base": ["Inter"],
+                        "body-bold": ["Inter"],
+                        "caption": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "caption": ["11px", {"lineHeight": "14px", "fontWeight": "400"}],
+                        "headline-md": ["18px", {"lineHeight": "26px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-64 border-r border-slate-100 bg-white dark:bg-slate-950 flex flex-col h-full p-4 z-50">
+<div class="mb-10 px-4">
+<span class="text-2xl font-black text-blue-600 dark:text-blue-500 tracking-tighter">D+</span>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all duration-200 ease-in-out active:scale-[0.98] font-['Inter'] text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined">home</span>
+                Home
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all duration-200 ease-in-out active:scale-[0.98] font-['Inter'] text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                Calendar
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all duration-200 ease-in-out active:scale-[0.98] font-['Inter'] text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined">checklist</span>
+                Task List
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-[12px] shadow-sm font-['Inter'] text-sm font-medium tracking-tight transition-all duration-200 ease-in-out active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+                Resources
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all duration-200 ease-in-out active:scale-[0.98] font-['Inter'] text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined">history</span>
+                Activity Log
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-50 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-[12px] font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">contrast</span>
+                Theme Toggle
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-[12px] font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<div class="mt-6 flex items-center gap-3 px-4 py-2">
+<img alt="Director Profile" class="w-8 h-8 rounded-full bg-surface-container" data-alt="close up professional portrait of a project director in corporate attire with soft office lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClApr4rhFj_kjzM8pUZuqQAHKm2lZI7g1UjdMo-Yp9ZcyKhzwhhL2u6ZQPboy6NbhXbsFR3zLynq180d_w902rKU7ZxVVKXah8IzBLKB5TSP5Cv5s2lnEFA5wXmdacs62myzhDlYUPa37ntDG_yuexisV2ac3WRrgjCjZibDQfwa3fM4yF6w1sMh68gsxMvU8LH5TSIr9aRrlj96x95P9nEPfA_iPsqf-H6TJvT1oZBURbnhx0qh34JJJ_BSrzq3aXKDt_u_qAe7a-"/>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-900">D+</span>
+<span class="text-[10px] text-slate-500">Project Director</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 border-b border-slate-100 bg-white/80 backdrop-blur-md z-40 flex justify-between items-center px-8 w-full shadow-[0px_4px_20px_rgba(0,0,0,0.02)]">
+<div class="flex items-center gap-4">
+<h1 class="text-xl font-bold text-slate-900">Resources</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center bg-surface-container-low px-4 py-1.5 rounded-full border border-slate-100">
+<span class="material-symbols-outlined text-slate-400 text-lg mr-2">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 p-0 w-64 text-slate-600" placeholder="Search resources..." type="text"/>
+</div>
+<div class="flex items-center gap-4 border-l border-slate-100 pl-6">
+<span class="text-[11px] text-slate-400 font-medium">Last updated: 2 mins ago</span>
+<button class="relative text-slate-500 hover:text-blue-600 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="text-slate-500 hover:text-blue-600 transition-colors">
+<span class="material-symbols-outlined">event_upcoming</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-100 cursor-pointer">
+<img alt="User Profile" data-alt="professional male profile avatar with friendly expression and modern glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFLDLSBYj05VWwXynfA-1B3hdC_gdFhpxfjIBQYfN7BJDfSacoAnLd2DwOl3T7J9D6_Db6rOHz7dVPuL7AA7G0i5wtGfD_c0GiStn6IzS_Mhh7iT5hW2lHu8xCf81_oqWWMTZ60oseXWaWMMH3RacJf0V-9XIxA-PnayRaeSkphGKPgdrrr6N0eKFN-QC2VBtQxbGkKxDlbYDj57JvCf69vLUxqakLlxm98K4XEIAzaHQtqLhm2eEMOlIV3sigf50wo-O7BoxFYzJr"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-24 p-container-padding min-h-screen">
+<!-- Hero Header -->
+<div class="max-w-6xl mx-auto mb-section-margin">
+<div class="relative overflow-hidden rounded-3xl bg-primary-container p-12 text-white shadow-xl shadow-blue-100">
+<div class="relative z-10 max-w-2xl">
+<h2 class="font-headline-lg text-[32px] leading-tight mb-4">Project Asset Repository</h2>
+<p class="font-body-base opacity-90 text-lg mb-8">Access all project documentation, creative brand assets, and communication channels in one centralized hub for the D+ Project team.</p>
+<div class="flex gap-3">
+<button class="bg-white text-primary px-6 py-2.5 rounded-xl font-body-bold hover:bg-blue-50 transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+                            Upload New
+                        </button>
+<button class="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-6 py-2.5 rounded-xl font-body-bold hover:bg-white/30 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">share</span>
+                            Share Portal
+                        </button>
+</div>
+</div>
+<!-- Abstract visual element -->
+<div class="absolute -right-10 -bottom-20 w-80 h-80 rounded-full bg-blue-400/20 blur-3xl"></div>
+<div class="absolute right-20 top-0 w-64 h-64 rounded-full bg-blue-300/10 blur-2xl"></div>
+<span class="material-symbols-outlined absolute right-12 top-1/2 -translate-y-1/2 text-[180px] opacity-10 select-none">folder_special</span>
+</div>
+</div>
+<!-- Bento Grid Sections -->
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-card-gap">
+<!-- Basic Information -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all">
+<div class="w-12 h-12 bg-surface-container-high rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-2xl" data-weight="fill">info</span>
+</div>
+<h3 class="font-headline-md text-on-background mb-2">Basic Information</h3>
+<p class="font-body-base text-on-surface-variant mb-6 flex-1">Project foundation details including background context, core goals, and official member roster.</p>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span class="material-symbols-outlined text-sm">description</span>
+                        Background_v2.pdf
+                    </div>
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span class="material-symbols-outlined text-sm">groups</span>
+                        Member_List_2024.xlsx
+                    </div>
+</div>
+<a class="mt-auto inline-flex items-center gap-2 text-primary font-body-bold hover:gap-3 transition-all" href="#">
+                    Open Folder
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<!-- Project Management -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all md:col-span-1">
+<div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">tactic</span>
+</div>
+<h3 class="font-headline-md text-on-background mb-2">Project Management</h3>
+<p class="font-body-base text-on-surface-variant mb-6 flex-1">Strategic roadmap, comprehensive task lists, and weekly progress reports for tracking.</p>
+<div class="bg-surface-container-low rounded-xl p-4 mb-6">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Overall Completion</span>
+<span class="text-[10px] font-bold text-primary">68%</span>
+</div>
+<div class="w-full bg-slate-200 h-1.5 rounded-full">
+<div class="bg-primary h-1.5 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+<a class="mt-auto inline-flex items-center gap-2 text-primary font-body-bold hover:gap-3 transition-all" href="#">
+                    Open Folder
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<!-- Webinar Resources -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all">
+<div class="w-12 h-12 bg-tertiary-fixed-dim rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary text-2xl">slideshow</span>
+</div>
+<h3 class="font-headline-md text-on-background mb-2">Webinar Resources</h3>
+<p class="font-body-base text-on-surface-variant mb-6 flex-1">Presentation slides, session recordings, and distributed materials for project webinars.</p>
+<div class="flex -space-x-2 mb-6">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center text-[10px] font-bold">PDF</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-red-100 text-red-600 flex items-center justify-center text-[10px] font-bold">PPT</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold">MP4</div>
+</div>
+<a class="mt-auto inline-flex items-center gap-2 text-primary font-body-bold hover:gap-3 transition-all" href="#">
+                    Open Folder
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<!-- Creative Assets -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col md:col-span-2 hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all">
+<div class="flex items-start justify-between mb-6">
+<div class="w-12 h-12 bg-surface-container-highest rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl">palette</span>
+</div>
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Updated Yesterday</span>
+</div>
+<h3 class="font-headline-md text-on-background mb-2">Creative Assets</h3>
+<p class="font-body-base text-on-surface-variant mb-6">Brand identity toolkit including vector logos, web banners, and SNS-ready images for social promotion.</p>
+<div class="grid grid-cols-4 gap-3 mb-6">
+<div class="aspect-square rounded-lg bg-slate-100 overflow-hidden relative group">
+<img alt="Logo Variant" class="w-full h-full object-cover" data-alt="minimalist modern vector logo design variations on a clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ2Fp-Il8bI1yklC1IcTO7VOU1tBS9R77HTgnsAhTqFoHHDHTD_JdR9PUQxa6O7X3h6sW2-oHDwr7hzTh2fIvCcFnzfBZLlyqtHQEcjwvR6gBnM72oTaRVAFRYSktqW77rz0loiSnrwlXKVv6Pd_ERhpPYjUXqJVJmhWBXoqVHCrtyqQCgajKSRLEv5WcxYvFN948ukBCt0DadJFNgHBzM-jVoSOiN1rVjdKMlzhZ8sICj7_LOAkiL7X5KBmYh2vRAEWLSEl0cgXPE"/>
+<div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white">download</span>
+</div>
+</div>
+<div class="aspect-square rounded-lg bg-slate-100 overflow-hidden relative group">
+<img alt="Brand Colors" class="w-full h-full object-cover" data-alt="abstract geometric composition showing brand color palette with vibrant blue and slate gray tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM6l5-a8hiXEaVjSBOlD7WOll7kAf9-PZTdAYMWQcJYc9Q5NxJ2rIXW00oPxVu2rSWppBsG8IIlO_ZLaqeaZaG-UARyqMW290ulQY2YoC7Z9IAWCCIQypMo_MKQEdVoo_g7nYjd_O-5ZBsd-8_IUWIHHuMwrr1T6C9QxtggCCagQFCas9qK9fM97skuhAcO8_0RD33Y_fulaH9Kw5YT1nt0epT2fr6RIAOnVp8lTKNsE4OcU4_6bbsPXhop3UANop3pkAimGruj6EJ"/>
+<div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white">download</span>
+</div>
+</div>
+<div class="aspect-square rounded-lg bg-slate-100 overflow-hidden relative group">
+<img alt="SNS Image" class="w-full h-full object-cover" data-alt="modern social media post template with clean typography and blue accent background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_UlJEQye0yc6nffthEIShMwWPl2lzav0I_nsqm4ydZuQCplK7EOo4eliYEdOaPBcB6KChduzS63WSdGoUaYBpIXOaaWK76Lv3yTAdDG628MHOu_wJpCLj_QrVYLXx34ZeRWaBEqYkp2y-8RUvAeiRqVyVxHFpFaxG9w4g1Hmvz_HxIiNh2YN1ANdHNWWrDWcS_csTRv0l-owAJJddoJ4ba9b9lCDng7MDHkFirAqQWSwj5LFzcRNqsA7cTWct_N6GukpdluhH4WFc"/>
+<div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white">download</span>
+</div>
+</div>
+<div class="aspect-square rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-400 hover:border-primary hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<a class="mt-auto inline-flex items-center gap-2 text-primary font-body-bold hover:gap-3 transition-all" href="#">
+                    Open Folder
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<!-- External Links (Official Site & Slack) -->
+<div class="space-y-card-gap">
+<!-- Official Site -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">language</span>
+</div>
+<h3 class="font-headline-md text-sm">Official Site</h3>
+</div>
+<p class="text-xs text-on-surface-variant mb-4">Link to the landing page and public presence.</p>
+<a class="inline-flex items-center gap-2 text-primary font-body-bold text-xs hover:underline" href="#">
+                        Visit LP
+                        <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<!-- Slack Channel -->
+<div class="glass-card p-6 rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] transition-all">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 bg-[#4A154B] rounded-xl flex items-center justify-center">
+<svg class="w-6 h-6 fill-white" viewbox="0 0 24 24">
+<path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.527 2.527 0 0 1 2.521 2.522v2.52h-2.521zM8.834 6.313a2.527 2.527 0 0 1 2.521 2.521 2.527 2.527 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.958 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.527 2.527 0 0 1-2.52 2.521h-2.522v-2.521zM17.687 8.834a2.527 2.527 0 0 1-2.521 2.521 2.527 2.527 0 0 1-2.521-2.521V2.522A2.528 2.528 0 0 1 15.166 0a2.528 2.528 0 0 1 2.521 2.522v6.312zM15.166 18.958a2.528 2.528 0 0 1 2.521 2.522A2.528 2.528 0 0 1 15.166 24a2.527 2.527 0 0 1-2.521-2.522v-2.52h2.521zM15.166 17.687a2.527 2.527 0 0 1-2.521-2.521 2.527 2.527 0 0 1 2.521-2.521h6.312a2.528 2.528 0 0 1 2.522 2.521 2.528 2.528 0 0 1-2.522 2.521h-6.312z"></path>
+</svg>
+</div>
+<h3 class="font-headline-md text-sm">Slack Channel</h3>
+</div>
+<p class="text-xs text-on-surface-variant mb-4">Internal team communication and real-time updates.</p>
+<a class="inline-flex items-center gap-2 text-primary font-body-bold text-xs hover:underline" href="#">
+                        Join Discussion
+                        <span class="material-symbols-outlined text-sm">rocket_launch</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="max-w-6xl mx-auto mt-section-margin">
+<h4 class="font-headline-md mb-6">Recent Document Activity</h4>
+<div class="glass-card rounded-2xl overflow-hidden shadow-[0px_4px_20px_rgba(0,0,0,0.02)]">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-slate-100 bg-surface-container-low/50">
+<th class="px-6 py-4 font-body-bold text-xs text-slate-500 uppercase tracking-wider">File Name</th>
+<th class="px-6 py-4 font-body-bold text-xs text-slate-500 uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 font-body-bold text-xs text-slate-500 uppercase tracking-wider">Edited By</th>
+<th class="px-6 py-4 font-body-bold text-xs text-slate-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-600">article</span>
+<span class="font-body-bold text-sm">Roadmap_Q4_Final.pdf</span>
+</td>
+<td class="px-6 py-4">
+<span class="bg-surface-container text-primary px-2.5 py-0.5 rounded-full text-[10px] font-bold">MGMT</span>
+</td>
+<td class="px-6 py-4 flex items-center gap-2 text-sm text-slate-600">
+<div class="w-6 h-6 rounded-full bg-slate-200"></div>
+                                Sarah Jenkins
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500">Oct 12, 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-orange-600">image</span>
+<span class="font-body-bold text-sm">Header_Visual_v2.png</span>
+</td>
+<td class="px-6 py-4">
+<span class="bg-violet-100 text-violet-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold">ASSETS</span>
+</td>
+<td class="px-6 py-4 flex items-center gap-2 text-sm text-slate-600">
+<div class="w-6 h-6 rounded-full bg-slate-200"></div>
+                                David Chen
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500">Oct 11, 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-lg shadow-blue-200 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+</body></html>

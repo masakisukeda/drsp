@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-container-high": "#dce9ff",
+                        "on-tertiary-container": "#fffbff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-tint": "#005ac2",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#40484f",
+                        "on-secondary-container": "#5e656d",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-primary-fixed": "#001a42",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c6d6",
+                        "surface-container-low": "#eff4ff",
+                        "outline": "#727785",
+                        "on-surface-variant": "#424754",
+                        "secondary-fixed-dim": "#c0c7d0",
+                        "on-background": "#0b1c30",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f8f9ff",
+                        "secondary": "#585f67",
+                        "secondary-fixed": "#dce3ec",
+                        "secondary-container": "#dce3ec",
+                        "inverse-primary": "#adc6ff",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-container": "#a36700",
+                        "tertiary": "#825100",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-surface": "#213145",
+                        "background": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "primary": "#0058be",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#2170e4",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "surface": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#151c23"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-gap": "20px",
+                        "grid-gutter": "16px",
+                        "element-margin": "12px",
+                        "section-margin": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "caption": ["11px", {"lineHeight": "14px", "fontWeight": "400"}],
+                        "headline-md": ["18px", {"lineHeight": "26px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 bottom-0 w-64 border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex flex-col h-full p-4 z-50">
+<div class="mb-8 px-4">
+<span class="text-2xl font-black text-blue-600 dark:text-blue-500 tracking-tighter">D+</span>
+<p class="text-xs text-slate-400 font-medium tracking-wide mt-1 uppercase">Project Director</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-[12px] shadow-sm transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Task List</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Resources</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Activity Log</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 pt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Theme Toggle</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-[12px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Settings</span>
+</a>
+<div class="mt-4 px-4 py-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a professional male project director with a focused expression in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd1r4HPAMUlHf27n8RZyhTNcjKLUljDfIfq5asoJxBMa4PbbHK6dKBK6Bfu9fb_yBExP6jB9hCGWDVEh3C4Q8HZwSUSbUq9fkrVWxPEz4b9XYHsk-0hiYcKe_I-ueZ8JIdwtiYTUK802iq09o2GXQsTAHQHwoZ9NDuvtGnPXGUWAnWISOH41dxHZIGzWfLK1SQcco99BQG0CV-OtzT72vDTQesqQ6swdG7D1fWRMAsV0aYimaQF-MzTgzjX5K8yPY1GPfje0rzrk17"/>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Director Profile</p>
+<p class="text-[10px] text-slate-500">Active Now</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 z-40 flex justify-between items-center px-8 w-full shadow-[0px_4px_20px_rgba(0,0,0,0.02)]">
+<div class="flex items-center gap-6">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white">Calendar</h1>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-full border border-slate-100">
+<span class="material-symbols-outlined text-blue-600 text-lg" data-icon="event_upcoming">event_upcoming</span>
+<span class="font-body-bold text-blue-600">05.05 Tue 14:00 @Zoom</span>
+<span class="text-slate-400 text-xs px-2 border-l border-slate-200 ml-1">Next Meeting</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-['Inter'] text-sm text-slate-600 dark:text-slate-300">Last updated: 2 mins ago</span>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-blue-600 transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="relative w-48">
+<input class="w-full bg-slate-50 border-none rounded-full px-4 py-1.5 text-xs focus:ring-1 focus:ring-blue-500" placeholder="Search project..." type="text"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 mt-16 p-8 min-h-screen">
+<!-- Top Section: Project Roadmap Timeline -->
+<section class="mb-section-margin">
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-container-padding overflow-hidden">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-headline-md text-on-surface">Q2 Project Roadmap</h2>
+<p class="font-body-base text-secondary">Timeline overview for critical launch phases</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container text-primary font-label-sm rounded-full">April - June 2026</span>
+</div>
+</div>
+<div class="relative pt-8 pb-4">
+<!-- Horizontal Timeline Line -->
+<div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -translate-y-1/2 rounded-full"></div>
+<!-- Active Progress -->
+<div class="absolute top-1/2 left-0 w-1/3 h-1 bg-primary -translate-y-1/2 rounded-full"></div>
+<div class="grid grid-cols-4 relative">
+<!-- Step 1 -->
+<div class="flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50 z-10 mb-4"></div>
+<span class="font-label-sm text-primary mb-1">Phase 1</span>
+<span class="font-body-bold text-on-surface">Initiation</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50 z-10 mb-4"></div>
+<span class="font-label-sm text-primary mb-1">Phase 2</span>
+<span class="font-body-bold text-on-surface">Development</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-slate-300 z-10 mb-4"></div>
+<span class="font-label-sm text-secondary mb-1">Phase 3</span>
+<span class="font-body-bold text-on-surface">Testing</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-slate-200 z-10 mb-4"></div>
+<span class="font-label-sm text-secondary mb-1">Phase 4</span>
+<span class="font-body-bold text-on-surface">Launch</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Section: Three Consecutive Monthly Calendars -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-card-gap">
+<!-- April 2026 -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-6 border border-slate-50">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-on-surface">April 2026</h3>
+<div class="flex gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-y-4 text-center">
+<div class="font-label-sm text-slate-400">S</div>
+<div class="font-label-sm text-slate-400">M</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">W</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">F</div>
+<div class="font-label-sm text-slate-400">S</div>
+<!-- Days -->
+<div class="py-2 text-slate-300 font-body-base">29</div>
+<div class="py-2 text-slate-300 font-body-base">30</div>
+<div class="py-2 text-slate-300 font-body-base">31</div>
+<div class="py-2 font-body-base">1</div>
+<div class="py-2 font-body-base">2</div>
+<div class="py-2 font-body-base">3</div>
+<div class="py-2 font-body-base">4</div>
+<div class="py-2 font-body-base">5</div>
+<div class="py-2 font-body-base relative">
+                        6
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-violet-400 rounded-full"></div>
+</div>
+<div class="py-2 font-body-base">7</div>
+<div class="py-2 font-body-base">8</div>
+<div class="py-2 font-body-base">9</div>
+<div class="py-2 font-body-base">10</div>
+<div class="py-2 font-body-base">11</div>
+<div class="py-2 font-body-base">12</div>
+<div class="py-2 font-body-base">13</div>
+<div class="py-2 font-body-base">14</div>
+<div class="py-2 font-body-base relative">
+                        15
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
+</div>
+<div class="py-2 font-body-base">16</div>
+<div class="py-2 font-body-base">17</div>
+<div class="py-2 font-body-base">18</div>
+<div class="py-2 font-body-base">19</div>
+<div class="py-2 font-body-base">20</div>
+<div class="py-2 font-body-base">21</div>
+<div class="py-2 font-body-base">22</div>
+<div class="py-2 font-body-base">23</div>
+<div class="py-2 font-body-base">24</div>
+<div class="py-2 font-body-base">25</div>
+<div class="py-2 font-body-base">26</div>
+<div class="py-2 font-body-base">27</div>
+<div class="py-2 font-body-base">28</div>
+<div class="py-2 font-body-base">29</div>
+<div class="py-2 font-body-base">30</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="p-3 bg-primary/5 rounded-lg border-l-4 border-primary">
+<span class="block font-caption text-primary uppercase font-bold tracking-wider">Milestone</span>
+<p class="font-body-bold text-on-surface">D+ Promotion Meeting</p>
+</div>
+</div>
+</div>
+<!-- May 2026 -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-6 border border-primary/20 ring-4 ring-primary/5">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-on-surface">May 2026</h3>
+<div class="flex gap-1">
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-y-4 text-center">
+<div class="font-label-sm text-slate-400">S</div>
+<div class="font-label-sm text-slate-400">M</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">W</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">F</div>
+<div class="font-label-sm text-slate-400">S</div>
+<div class="py-2 text-slate-300 font-body-base">26</div>
+<div class="py-2 text-slate-300 font-body-base">27</div>
+<div class="py-2 text-slate-300 font-body-base">28</div>
+<div class="py-2 text-slate-300 font-body-base">29</div>
+<div class="py-2 text-slate-300 font-body-base">30</div>
+<div class="py-2 font-body-base">1</div>
+<div class="py-2 font-body-base">2</div>
+<div class="py-2 font-body-base">3</div>
+<div class="py-2 font-body-base">4</div>
+<div class="py-2 font-body-base bg-primary text-white rounded-full">5</div>
+<div class="py-2 font-body-base">6</div>
+<div class="py-2 font-body-base">7</div>
+<div class="py-2 font-body-base">8</div>
+<div class="py-2 font-body-base">9</div>
+<div class="py-2 font-body-base">10</div>
+<div class="py-2 font-body-base">11</div>
+<div class="py-2 font-body-base relative">
+                        12
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-tertiary rounded-full"></div>
+</div>
+<div class="py-2 font-body-base">13</div>
+<div class="py-2 font-body-base">14</div>
+<div class="py-2 font-body-base">15</div>
+<div class="py-2 font-body-base">16</div>
+<div class="py-2 font-body-base">17</div>
+<div class="py-2 font-body-base">18</div>
+<div class="py-2 font-body-base">19</div>
+<div class="py-2 font-body-base">20</div>
+<div class="py-2 font-body-base">21</div>
+<div class="py-2 font-body-base">22</div>
+<div class="py-2 font-body-base">23</div>
+<div class="py-2 font-body-base">24</div>
+<div class="py-2 font-body-base">25</div>
+<div class="py-2 font-body-base">26</div>
+<div class="py-2 font-body-base">27</div>
+<div class="py-2 font-body-base">28</div>
+<div class="py-2 font-body-base">29</div>
+<div class="py-2 font-body-base">30</div>
+<div class="py-2 font-body-base">31</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="p-3 bg-tertiary-container/10 rounded-lg border-l-4 border-tertiary">
+<span class="block font-caption text-tertiary uppercase font-bold tracking-wider">Product Launch</span>
+<p class="font-body-bold text-on-surface">Peatix Launch</p>
+</div>
+<div class="p-3 bg-primary/5 rounded-lg border-l-4 border-primary">
+<span class="block font-caption text-primary uppercase font-bold tracking-wider">Digital Event</span>
+<p class="font-body-bold text-on-surface">1st Webinar</p>
+</div>
+</div>
+</div>
+<!-- June 2026 -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-6 border border-slate-50">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-on-surface">June 2026</h3>
+<div class="flex gap-1">
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+<span class="w-2 h-2 rounded-full bg-slate-100"></span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-y-4 text-center">
+<div class="font-label-sm text-slate-400">S</div>
+<div class="font-label-sm text-slate-400">M</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">W</div>
+<div class="font-label-sm text-slate-400">T</div>
+<div class="font-label-sm text-slate-400">F</div>
+<div class="font-label-sm text-slate-400">S</div>
+<div class="py-2 font-body-base">1</div>
+<div class="py-2 font-body-base">2</div>
+<div class="py-2 font-body-base">3</div>
+<div class="py-2 font-body-base">4</div>
+<div class="py-2 font-body-base">5</div>
+<div class="py-2 font-body-base">6</div>
+<div class="py-2 font-body-base">7</div>
+<div class="py-2 font-body-base relative">
+                        8
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
+</div>
+<div class="py-2 font-body-base">9</div>
+<div class="py-2 font-body-base">10</div>
+<div class="py-2 font-body-base">11</div>
+<div class="py-2 font-body-base">12</div>
+<div class="py-2 font-body-base">13</div>
+<div class="py-2 font-body-base">14</div>
+<div class="py-2 font-body-base">15</div>
+<div class="py-2 font-body-base">16</div>
+<div class="py-2 font-body-base">17</div>
+<div class="py-2 font-body-base">18</div>
+<div class="py-2 font-body-base">19</div>
+<div class="py-2 font-body-base">20</div>
+<div class="py-2 font-body-base">21</div>
+<div class="py-2 font-body-base">22</div>
+<div class="py-2 font-body-base">23</div>
+<div class="py-2 font-body-base">24</div>
+<div class="py-2 font-body-base">25</div>
+<div class="py-2 font-body-base">26</div>
+<div class="py-2 font-body-base">27</div>
+<div class="py-2 font-body-base">28</div>
+<div class="py-2 font-body-base">29</div>
+<div class="py-2 font-body-base">30</div>
+<div class="py-2 text-slate-300 font-body-base">1</div>
+<div class="py-2 text-slate-300 font-body-base">2</div>
+<div class="py-2 text-slate-300 font-body-base">3</div>
+<div class="py-2 text-slate-300 font-body-base">4</div>
+<div class="py-2 text-slate-300 font-body-base">5</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="p-3 bg-primary/5 rounded-lg border-l-4 border-primary">
+<span class="block font-caption text-primary uppercase font-bold tracking-wider">Digital Event</span>
+<p class="font-body-bold text-on-surface">2nd Webinar</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual Widget: Event Focus -->
+<section class="mt-card-gap">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-card-gap">
+<div class="bg-on-primary-fixed-variant text-white p-container-padding rounded-xl flex items-center justify-between">
+<div>
+<h4 class="font-headline-md">Featured Milestone</h4>
+<p class="opacity-80 font-body-base mt-1">Preparation for Peatix Launch - 05.12</p>
+</div>
+<button class="bg-white text-primary px-6 py-2 rounded-full font-body-bold hover:bg-surface-container-high transition-colors">
+                        View Details
+                    </button>
+</div>
+<div class="bg-surface-container rounded-xl p-container-padding border border-slate-200 flex items-center gap-6">
+<div class="w-16 h-16 rounded-xl bg-white shadow-sm flex flex-col items-center justify-center border border-slate-100">
+<span class="text-xs font-bold text-primary uppercase">Tue</span>
+<span class="text-2xl font-black text-on-surface">05</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-body-bold text-on-surface">Next Meeting: Team Sync</h4>
+<p class="text-secondary font-body-base">14:00 @Zoom · D+ Promotion Plan</p>
+</div>
+<span class="px-2 py-1 bg-error-container text-error rounded-md text-[10px] font-bold">URGENT</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Availability / Quick Glance (Bento Style) -->
+<section class="mt-card-gap grid grid-cols-1 md:grid-cols-4 gap-card-gap">
+<div class="md:col-span-1 bg-white p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+<h5 class="font-body-bold text-on-surface">Team Load</h5>
+<div class="w-full bg-slate-100 h-1.5 rounded-full mt-4">
+<div class="bg-primary h-full w-3/4 rounded-full"></div>
+</div>
+<span class="text-[10px] text-secondary mt-2">75% Capacity</span>
+</div>
+<div class="md:col-span-3 bg-white p-6 rounded-xl border border-slate-100 relative overflow-hidden">
+<div class="flex justify-between items-center mb-4">
+<h5 class="font-body-bold text-on-surface">Calendar Notes</h5>
+<button class="text-primary font-label-sm">Add Note</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-slate-50 p-3 rounded-lg border-l-4 border-violet-400">
+<p class="text-xs text-on-surface italic">"Ensure Peatix integration is tested by May 2nd."</p>
+</div>
+<div class="bg-slate-50 p-3 rounded-lg border-l-4 border-tertiary">
+<p class="text-xs text-on-surface italic">"Book guest speaker for 1st Webinar session."</p>
+</div>
+</div>
+<!-- Subtle texture/decoration -->
+<div class="absolute -bottom-6 -right-6 opacity-5">
+<span class="material-symbols-outlined text-9xl" data-icon="event_note">event_note</span>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB for quick action -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</body></html>
