@@ -8,15 +8,19 @@ error_reporting(E_ALL);
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Asia/Tokyo');
 
-const NOTE_RSS_URL = 'https://note.com/disa_pr/rss';
+const USER_RSS_URL = 'https://note.com/disa_pr/rss';
+const MAGAZINE_RSS_URL = 'https://note.com/disa_pr/m/m47a4d3af0541/rss';
 const DEFAULT_LIMIT = 5;
 const MAX_LIMIT = 20;
 
 try {
+    $mode = $_GET['mode'] ?? 'user';
+    $rssUrl = ($mode === 'magazine') ? MAGAZINE_RSS_URL : USER_RSS_URL;
+    
     $limit = toInt($_GET['limit'] ?? DEFAULT_LIMIT, DEFAULT_LIMIT);
     $limit = max(1, min(MAX_LIMIT, $limit));
 
-    $xml = fetchText(NOTE_RSS_URL);
+    $xml = fetchText($rssUrl);
     if ($xml === '') {
         throw new RuntimeException('RSS取得に失敗しました');
     }
@@ -25,7 +29,8 @@ try {
 
     respond([
         'ok' => true,
-        'source' => NOTE_RSS_URL,
+        'source' => $rssUrl,
+        'mode' => $mode,
         'count' => count($items),
         'items' => $items,
         'time' => gmdate('c'),

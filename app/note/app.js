@@ -3964,6 +3964,7 @@ async function fetchText(url) {
 async function fetchNotePosts() {
   const readers = [
     async () => {
+      // 1. サーバーサイドの PHP プロキシを最優先
       const json = await loadJson(`./api/note-rss.php?limit=${NOTE_HOME_LIMIT}`);
       if (!json || !json.ok || !Array.isArray(json.items)) throw new Error('local proxy failed');
       return (json.items || [])
@@ -3998,9 +3999,9 @@ async function fetchNotePosts() {
   for (const reader of readers) {
     try {
       const posts = await reader();
-      if (posts.length) return posts;
+      if (posts && posts.length) return posts;
     } catch (err) {
-      console.warn('note feed fallback:', err);
+      console.warn('Note feed reader failed:', err);
     }
   }
   return [];

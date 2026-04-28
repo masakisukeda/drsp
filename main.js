@@ -604,6 +604,22 @@ for (const el of targets) {
 
   const fetchLatestNoteFromRss = async () => {
     const readers = [
+      async () => {
+        // 1. サーバーサイドの PHP プロキシを最優先（CORS回避と安定性のため）
+        // 強化月間中の場合は専用のマガジンRSSを取得する
+        const useMagazine = heading && heading.textContent.includes('no+e 強化月間');
+        const proxyUrl = `/app/note/api/note-rss.php?limit=3${useMagazine ? '&mode=magazine' : ''}`;
+        
+        const response = await fetch(proxyUrl, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Proxy HTTP ${response.status}`);
+        const json = await response.json();
+        if (!json.ok || !Array.isArray(json.items)) throw new Error('Invalid proxy response');
+        return json.items.map((item) => ({
+          url: item.link || '',
+          text: item.title || '',
+          date: formatDateLabel(item.date || '')
+        }));
+      },
       async () => parseNoteRss(await fetchText(NOTE_RSS_URL)),
       async () => parseNoteRss(await fetchText(`https://api.allorigins.win/raw?url=${encodeURIComponent(NOTE_RSS_URL)}`)),
       async () => {
